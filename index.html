@@ -1,0 +1,682 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>LES ENTRETIENS</title>
+<meta name="theme-color" content="#11141a">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bitter:wght@500;700&family=Source+Sans+3:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+  :root{
+    --paper:#f5f7f9; --card:#fff; --card2:#eef1f5; --ink:#161a21; --muted:#5c6474; --faint:#8b94a3;
+    --line:#dce1e8; --line-soft:#e9edf2;
+    --brick:#a8342a; --brick-soft:#f4e4e2;
+    --canal:#245c69; --canal-soft:#e1eced;
+    --gold:#8a5a10; --gold-soft:#f8eeda;
+    --good:#1b7a4b; --good-soft:#e2f1e8;
+    --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+    --disp:"Bitter",Georgia,serif;
+    --body:"Source Sans 3",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  }
+  @media (prefers-color-scheme:dark){
+    :root:not([data-theme="light"]){
+      --paper:#0f1217; --card:#171b22; --card2:#1f242d; --ink:#e9edf3; --muted:#99a2b0; --faint:#6f7988;
+      --line:#2a313b; --line-soft:#222932;
+      --brick:#e4705f; --brick-soft:#331f1d;
+      --canal:#74b8c6; --canal-soft:#152a2f;
+      --gold:#e0ad5e; --gold-soft:#2d2517;
+      --good:#58c68d; --good-soft:#15291f;
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper:#0f1217; --card:#171b22; --card2:#1f242d; --ink:#e9edf3; --muted:#99a2b0; --faint:#6f7988;
+    --line:#2a313b; --line-soft:#222932;
+    --brick:#e4705f; --brick-soft:#331f1d;
+    --canal:#74b8c6; --canal-soft:#152a2f;
+    --gold:#e0ad5e; --gold-soft:#2d2517;
+    --good:#58c68d; --good-soft:#15291f;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.6;
+    -webkit-text-size-adjust:100%;-webkit-tap-highlight-color:transparent}
+  .wrap{max-width:680px;margin:0 auto;padding:22px 16px calc(96px + env(safe-area-inset-bottom));
+    display:flex;flex-direction:column;gap:22px}
+  button{font:inherit}
+  .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--faint);margin:0}
+  h1{font-family:var(--disp);font-weight:700;font-size:clamp(25px,6.5vw,33px);line-height:1.1;letter-spacing:-.015em;margin:5px 0 0;text-wrap:balance}
+  h2{font-family:var(--disp);font-weight:700;font-size:20px;letter-spacing:-.01em;margin:0;text-wrap:balance}
+  h3{font-weight:600;font-size:16px;margin:4px 0 -5px}
+  p{margin:0}
+  a{color:var(--brick)}
+
+  header.top{display:flex;align-items:flex-start;gap:12px}
+  header.top .grow{flex:1;min-width:0}
+  .tgl{flex:none;width:38px;height:38px;border-radius:10px;border:1px solid var(--line);background:var(--card);
+    color:var(--muted);cursor:pointer;font-size:16px}
+
+  /* ── liste des entretiens ── */
+  .list{display:flex;flex-direction:column;gap:10px}
+  .ivcard{display:block;width:100%;text-align:left;background:var(--card);border:1px solid var(--line);
+    border-left:4px solid var(--c,var(--brick));border-radius:5px;padding:15px 16px;cursor:pointer;color:inherit}
+  .ivcard:focus-visible{outline:2px solid var(--c,var(--brick));outline-offset:2px}
+  .ivcard .when{font-family:var(--mono);font-size:11.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--c,var(--brick))}
+  .ivcard .name{font-family:var(--disp);font-weight:700;font-size:19px;margin-top:3px;letter-spacing:-.01em}
+  .ivcard .role{color:var(--muted);font-size:14.5px;margin-top:1px}
+  .ivcard .meta{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}
+  .chip{font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;
+    padding:4px 8px;border-radius:99px;background:var(--card2);color:var(--muted)}
+  .chip.cd{background:var(--brick-soft);color:var(--brick)}
+  .chip.ok{background:var(--good-soft);color:var(--good)}
+  .ivcard.done{opacity:.62}
+
+  /* ── fiche ── */
+  .back{align-self:flex-start;background:none;border:0;color:var(--muted);cursor:pointer;padding:0;font-size:15px}
+  nav.secs{display:flex;flex-wrap:wrap;gap:6px}
+  nav.secs button{font-family:var(--mono);font-size:11.5px;letter-spacing:.05em;padding:6px 10px;border-radius:3px;
+    border:1px solid var(--line);background:var(--card);color:var(--muted);cursor:pointer}
+  nav.secs button[aria-pressed="true"]{background:var(--c,var(--brick));border-color:var(--c,var(--brick));color:#fff}
+
+  .panel{display:flex;flex-direction:column;gap:14px}
+  dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:9px 15px;align-items:baseline}
+  dt{font-family:var(--mono);font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--faint);white-space:nowrap}
+  dd{margin:0;font-size:16px}
+  dd small{display:block;color:var(--muted);font-size:14px;line-height:1.45}
+  .box{background:var(--card);border:1px solid var(--line);border-radius:5px;padding:16px;
+    display:flex;flex-direction:column;gap:12px}
+  .figs{display:grid;grid-template-columns:repeat(auto-fit,minmax(135px,1fr));gap:1px;background:var(--line);
+    border:1px solid var(--line);border-radius:5px;overflow:hidden}
+  .figs div{background:var(--card);padding:12px 13px}
+  .figs b{display:block;font-family:var(--disp);font-weight:700;font-size:20px;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+  .figs small{display:block;color:var(--muted);font-size:12.5px;line-height:1.35;margin-top:2px}
+  ul{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:9px}
+  ul li{position:relative;padding-left:16px}
+  ul li::before{content:"";position:absolute;left:1px;top:.62em;width:5px;height:5px;border-radius:50%;
+    background:var(--c,var(--brick));opacity:.75}
+  .key{background:var(--canal-soft);border:1px solid color-mix(in srgb,var(--canal) 30%,transparent);
+    border-radius:5px;padding:13px 15px;font-size:15.5px}
+  .key .lab{display:block;font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--canal);margin-bottom:5px}
+  .warn{background:var(--gold-soft);border:1px solid color-mix(in srgb,var(--gold) 35%,transparent);
+    border-radius:5px;padding:13px 15px;font-size:15.5px}
+  .qa>div+div{margin-top:15px}
+  .qa .q{font-weight:600;font-size:16.5px;margin-bottom:5px}
+  .qa .q::before{content:"« ";color:var(--faint)} .qa .q::after{content:" »";color:var(--faint)}
+  .qa .a{color:var(--muted);border-left:2px solid var(--line);padding-left:12px;font-size:16px}
+  .qa .a b{color:var(--ink);font-weight:600}
+  .trap div{padding:11px 0;font-size:15.5px;border-top:1px solid var(--line-soft)}
+  .trap div:first-child{border-top:0;padding-top:0}
+  .trap b{color:var(--brick);font-weight:600}
+
+  /* ── pitch ── */
+  .langs{display:flex;border:1px solid var(--line);border-radius:3px;overflow:hidden;align-self:flex-start}
+  .langs button{font-family:var(--mono);font-size:11.5px;letter-spacing:.07em;padding:6px 13px;border:0;
+    background:var(--card);color:var(--muted);cursor:pointer}
+  .langs button+button{border-left:1px solid var(--line)}
+  .langs button[aria-pressed="true"]{background:var(--c,var(--brick));color:#fff}
+  .beat{display:grid;grid-template-columns:76px 1fr;gap:13px;padding-top:13px;margin-top:13px;border-top:1px solid var(--line-soft)}
+  .beat:first-child{padding-top:0;margin-top:0;border-top:0}
+  .beat .mk b{display:block;font-family:var(--mono);font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;
+    color:var(--c,var(--brick));font-weight:500}
+  .beat .mk span{font-family:var(--mono);font-size:10.5px;color:var(--faint)}
+  .beat p+p{margin-top:8px}
+  .fill{background:var(--brick-soft);border-bottom:1px solid var(--brick);padding:0 3px;font-style:italic}
+
+  /* ── quiz ── */
+  .qz{display:flex;flex-direction:column;gap:16px}
+  .qblock{background:var(--card);border:1px solid var(--line);border-radius:5px;padding:15px}
+  .qblock .num{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;color:var(--faint);text-transform:uppercase}
+  .qblock .txt{font-weight:600;margin:4px 0 11px}
+  .opts{display:flex;flex-direction:column;gap:7px}
+  .opt{text-align:left;width:100%;padding:10px 12px;border-radius:4px;border:1px solid var(--line);
+    background:var(--card2);color:inherit;cursor:pointer;font-size:15.5px;line-height:1.4}
+  .opt:focus-visible{outline:2px solid var(--c,var(--brick));outline-offset:2px}
+  .opt.good{background:var(--good-soft);border-color:var(--good);color:var(--ink);font-weight:600}
+  .opt.bad{background:var(--brick-soft);border-color:var(--brick);color:var(--ink)}
+  .why{margin-top:10px;font-size:15px;color:var(--muted);border-left:2px solid var(--line);padding-left:12px}
+  .score{background:var(--card);border:1px solid var(--line);border-radius:5px;padding:15px;
+    display:flex;align-items:center;gap:14px}
+  .score b{font-family:var(--disp);font-size:27px;font-variant-numeric:tabular-nums}
+  .score small{color:var(--muted);font-size:14px;display:block}
+  .reset{margin-left:auto;background:none;border:1px solid var(--line);border-radius:4px;color:var(--muted);
+    padding:7px 11px;font-size:13.5px;cursor:pointer}
+
+  /* ── profil ── */
+  .cv{display:flex;flex-direction:column;gap:0}
+  .cv .row{display:grid;grid-template-columns:96px 1fr;gap:13px;padding:12px 0;border-top:1px solid var(--line-soft)}
+  .cv .row:first-child{border-top:0;padding-top:0}
+  .cv .yr{font-family:var(--mono);font-size:11.5px;color:var(--faint);letter-spacing:.04em}
+  .cv b{font-weight:600}
+  .cv small{display:block;color:var(--muted);font-size:14.5px;line-height:1.5;margin-top:2px}
+  table.gloss{width:100%;border-collapse:collapse;font-size:15px}
+  table.gloss td{border-top:1px solid var(--line-soft);padding:7px 0;vertical-align:top}
+  table.gloss tr:first-child td{border-top:0}
+  table.gloss td:first-child{color:var(--muted);padding-right:14px;width:48%}
+  table.gloss td:last-child{font-weight:600}
+
+  /* ── barre du bas ── */
+  .tabbar{position:fixed;left:0;right:0;bottom:0;background:color-mix(in srgb,var(--paper) 92%,transparent);
+    backdrop-filter:blur(12px);border-top:1px solid var(--line);display:flex;
+    padding:7px 8px calc(7px + env(safe-area-inset-bottom))}
+  .tabbar button{flex:1;background:none;border:0;color:var(--muted);cursor:pointer;padding:7px 4px;
+    display:flex;flex-direction:column;align-items:center;gap:3px;font-size:11px;border-radius:9px}
+  .tabbar button .ic{font-size:18px;line-height:1}
+  .tabbar button[aria-pressed="true"]{color:var(--brick);background:var(--brick-soft)}
+  footer{color:var(--faint);font-size:13px;border-top:1px solid var(--line);padding-top:14px}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap" id="app"></div>
+<nav class="tabbar" id="tabbar"></nav>
+
+<script>
+/* ═══════════════════════════════════════════════════════════════
+   LES ENTRETIENS — fiches, profil et quiz, hors ligne.
+   Toutes les données tiennent dans DATA : une entreprise = un objet.
+   ═══════════════════════════════════════════════════════════════ */
+
+const MOI = {
+  nom:"Thomas Niclaeys", tel:"+33 7 49 00 71 34", mail:"thomas.niclaeys@edu.escp.eu",
+  formation:[
+    ["2024-2028","ESCP Business School","Master in Management, M2. Paris et Madrid. Double spécialisation <b>Corporate Finance</b> et <b>Consulting &amp; Strategy</b>."],
+    ["2022-2024","Institution Saint-Jean, Douai","Classe préparatoire aux grandes écoles de commerce. Mathématiques, économie, sociologie, histoire."],
+    ["2020-2022","Lycée Charlotte Perriand, Genech","Baccalauréat mention très bien. Mathématiques, physique, SVT."]
+  ],
+  exp:[
+    ["2025","Caisse des Dépôts — Assistant audit interne","Paris, mai à août. Mission d'audit sur la gestion et la pertinence stratégique des <b>garanties d'emprunt financées par le Fonds d'épargne</b> (plus de 400 Md€). Dépouillement de <b>2 rapports de supervision de l'ACPR</b> et de plusieurs rapports internes, dans une équipe de 4. Identification de <b>4 risques de continuité d'activité</b> sur des processus de prêt encore manuels."],
+    ["2023","Caisse des Dépôts — Analyste temporaire","Lille, juillet à août. Modélisation sous Excel de l'évolution du secteur des <b>consignations en Hauts-de-France</b> (plusieurs millions d'euros), identification des tendances et de leurs moteurs. Recommandations présentées — <b>un poste supplémentaire a été créé</b> dans l'équipe à la suite."],
+    ["depuis 2024","Tuteur indépendant — mathématiques et anglais","Paris. Plans de travail sur mesure pour 4 élèves, <b>+4 points de moyenne</b> en quelques semaines. 6 h par semaine, suivi régulier auprès des parents."]
+  ],
+  autres:[
+    "<b>Kryptosphere</b> — analyse des implications politiques, réglementaires et macroéconomiques des stablecoins ; co-organisation de conférences blockchain et Web3 à plus de 100 participants.",
+    "<b>Vice-président du club d'échecs</b> — organisation de tournois, vainqueur de la coupe Saint-Jean 2024, cours d'initiation aux lycéens.",
+    "<b>Multi-instrumentiste</b> — guitare, piano, batterie.",
+    "<b>Langues</b> — français natif, anglais courant, espagnol conversationnel. <b>Outils</b> — Excel, Word, PowerPoint avancés."
+  ]
+};
+
+/* Le socle du pitch, identique partout : d'où je viens, ce que j'ai fait.
+   Seule la trajectoire change d'une entreprise à l'autre. */
+const SOCLE = {
+  fr:[
+    {t:"Ancrage", s:"0:00", p:[
+      "« Bonjour, je m'appelle Thomas Niclaeys. Je suis en Master in Management à l'ESCP Business School, en double spécialisation <b>Corporate Finance</b> et <b>Consulting &amp; Strategy</b>, entre Paris et Madrid.",
+      "J'ai fait mon <b>bac à Genech</b> et ma <b>prépa à Saint-Jean Douai</b> : je suis des Hauts-de-France. »"]},
+    {t:"Preuve", s:"0:20", p:[
+      "« Mes deux expériences sont à la <b>Caisse des Dépôts</b>.",
+      "L'été 2023, à <b>Lille</b>, j'ai modélisé l'évolution du secteur des consignations en Hauts-de-France et proposé des pistes pour inverser la tendance. Ça s'est traduit concrètement : une personne de plus a été recrutée dans l'équipe.",
+      "L'été 2025, à Paris, j'étais en <b>audit interne</b> sur une mission portant sur la gestion et la pertinence stratégique des garanties d'emprunt financées par le <b>Fonds d'épargne</b> — plus de 400 milliards d'euros. J'y ai dépouillé des rapports de l'<b>ACPR</b>, travaillé dans une équipe de quatre, et identifié des risques de continuité d'activité sur des processus de prêt encore manuels.",
+      "Ce que j'en retiens, c'est le réflexe d'aller vérifier si ce qui est écrit correspond à ce qui se passe vraiment. »"]}
+  ],
+  en:[
+    {t:"Anchor", s:"0:00", p:[
+      "“Hello, my name is Thomas Niclaeys. I'm a Master in Management student at ESCP Business School, with a double specialisation in <b>Corporate Finance</b> and <b>Consulting &amp; Strategy</b>, between Paris and Madrid.",
+      "I did my <b>baccalauréat in Genech</b> and my <b>preparatory class in Douai</b>: I'm from the Hauts-de-France region.”"]},
+    {t:"Proof", s:"0:20", p:[
+      "“Both of my internships were at <b>Caisse des Dépôts</b>, the French public financial institution.",
+      "In summer 2023, in <b>Lille</b>, I modelled how the escrow and consignments business was developing across Hauts-de-France and put forward ways to reverse the trend. It had a concrete outcome: the team hired an additional person.",
+      "In summer 2025, in Paris, I worked in <b>internal audit</b>, on an engagement covering the management and strategic relevance of loan guarantees funded by the <b>Fonds d'épargne</b> — over 400 billion euros. I went through <b>ACPR</b> supervisory reports, worked in a four-person team, and flagged business continuity risks in loan processes that are still manual.",
+      "What I take from it is the habit of checking whether what is written actually matches what happens.”"]}
+  ]
+};
+
+const DATA = [
+  /* ──────────────────────────── ALTUR ──────────────────────────── */
+  {
+    id:"altur", nom:"Altur Investissement", couleur:"#b4793a",
+    poste:"Analyste Private Equity — stage mars 2027",
+    date:"2026-11-09", heure:"18:10", fin:"19:10",
+    format:"Visioconférence Microsoft Teams", lieu:"Code d'accès Bz3nx2iu",
+    gens:[
+      ["Charles-Edouard Potel","Organisateur","Ton contact depuis le début du process. C'est lui qui a décalé le créneau de 17h à 18h10."],
+      ["François Lombard","Président et fondateur","ESSEC, MBA Wharton, PhD Penn. IFC (Banque mondiale) en 1977, puis CCF, CDC Participations, Épargne Partenaires en 1989, Turenne Capital en 1999, Altur en 2006."]
+    ],
+    resume:"Société d'investissement créée en 2006, sortie de la cote en 2024, devenue le single family office de la famille Lombard. Small cap patrimonial et familial.",
+    figs:[["1–5 M€","ticket par investissement direct"],["2–20 M€","de CA des sociétés visées"],["50+","participations depuis 2006"],["9","secteurs de prédilection"]],
+    boite:[
+      "<b>Ex-Turenne Investissement</b>, cotée sur Euronext compartiment C, puis <b>OPAS de Suffren Holding en janvier 2024 à 11 € par action</b> sur 10,48 % du capital, suivie d'un retrait obligatoire. Altur n'est plus cotée.",
+      "Modèle de plateforme à quatre axes : <b>LP dans des fonds</b>, <b>co-investissements</b>, <b>investissements directs</b>, <b>fonds sponsorisés</b>.",
+      "Secteurs : santé, transition écologique, éducation, aménagement urbain, numérique, formation professionnelle, hôtellerie, services aux entreprises, industrie.",
+      "Sorties emblématiques : Webhelp, Menix, Complétude-Kinougarde, Biobank.",
+      "<b>Altur EdTrain</b> : FPCI dédié éducation et formation, premier closing à 10 M€ pour une cible de 30 M€ et un hard cap à 50 M€, article 8 SFDR. Investissements : ArtFX (MBO, avril 2025), Avenir Santé Formation, Opus Formation (LBO, mai 2026).",
+      "Autres opérations récentes : build-up Eléas en septembre 2026 avec Financière Vecteur, extension de série A chez Vizcab en juin 2024.",
+      "Équipe resserrée : François Lombard, Rémy Lombard (DGA, <b>ESCP</b>, ex-Bain), Bertrand Cavalié (DGA, EDHEC-TSE, porte EdTrain), Marie-Laure Moneret (DAF)."
+    ],
+    angles:[
+      "<b>Le retrait de la cote.</b> Ne jamais parler d'Altur comme d'une société cotée. Dire « depuis votre retrait de la cote en 2024 » vaut tous les discours.",
+      "<b>L'audit comme atout.</b> Évaluer une cible, c'est vérifier si les chiffres racontent la même chose que le management. Ton été à la CDC t'a donné ce réflexe.",
+      "<b>Un deal regardé.</b> Opus Formation ou ArtFX : la formation est un bon terrain de PE — revenus récurrents, marché fragmenté donc build-up — mais pose toi-même le risque réglementaire CPF.",
+      "<b>Pourquoi le small cap.</b> Quatre personnes, tickets de 1 à 5 M€, contact direct avec les dirigeants. L'inverse d'un grand fonds où un stagiaire retraite une data room six mois."
+    ],
+    qa:[
+      ["Pourquoi Altur plutôt qu'un grand fonds ?","La taille de l'équipe. Chez vous, un stagiaire voit la thèse, la due diligence et le dirigeant. Ailleurs il voit une tranche."],
+      ["Qu'est-ce qui vous intéresse dans l'éducation et la formation ?","Revenus récurrents, marché très fragmenté donc consolidable par build-up. Le risque, c'est la dépendance au financement public et au CPF — pose-le toi-même, ça montre que tu ne récites pas."],
+      ["Parlez-moi d'un travail d'analyse dont vous êtes fier.","Le secteur des consignations en Hauts-de-France, à la CDC de Lille. Problème, méthode, arbitrage, résultat — et le résultat est un recrutement."]
+    ],
+    poser:[
+      "Après le retrait de la cote, quel équilibre entre capital propre et fonds levés auprès de tiers sur les trois prochaines années ?",
+      "EdTrain : où en êtes-vous entre le premier closing à 10 M€ et la cible de 30 M€ ?",
+      "Dans une équipe de cette taille, quelle est la part de sourcing confiée à un stagiaire par rapport à l'exécution ?",
+      "Le build-up Eléas, c'est une thèse de consolidation du conseil en risques psychosociaux ?"
+    ],
+    pieges:[
+      "Ne parle jamais d'Altur comme d'une <b>société cotée</b>.",
+      "Ne confonds pas <b>Altur et Turenne Capital</b> : Lombard a fondé les deux, Altur est indépendante.",
+      "Ne confonds pas avec <b>Altamir</b> ni <b>Altarea</b>."
+    ],
+    traj:{
+      fr:["« Si je postule chez Altur, c'est pour la taille de la structure. Une équipe de quatre, des tickets de 1 à 5 M€, des sociétés rentables entre 2 et 20 M€ de chiffre d'affaires : à cette échelle, un stagiaire voit la thèse d'investissement, la due diligence et le dirigeant, pas une tranche de data room.",
+        "Et votre verticale éducation et formation m'intéresse particulièrement — Altur EdTrain, Opus Formation, ArtFX : un marché fragmenté, des revenus récurrents, et un vrai sujet de dépendance au financement public. »"],
+      en:["“I'm applying to Altur because of the size of the team. Four people, tickets of €1–5m, profitable companies with €2–20m of revenue: at that scale an intern sees the investment thesis, the due diligence and the founder — not one slice of a data room.”"]
+    },
+    quiz:[
+      ["En quelle année Altur est-elle sortie de la cote ?",["2019","2022","2024","Elle est toujours cotée"],2,"OPAS de Suffren Holding en janvier 2024 à 11 € par action, suivie d'un retrait obligatoire."],
+      ["Quel est le ticket d'un investissement direct ?",["100 à 500 k€","1 à 5 M€","10 à 50 M€","Plus de 100 M€"],1,"1 à 5 M€, dans des sociétés rentables réalisant 2 à 20 M€ de chiffre d'affaires."],
+      ["Qui a fondé Altur ?",["Bertrand Cavalié","Rémy Lombard","François Lombard","Marie-Laure Moneret"],2,"François Lombard, en 2006, après avoir fondé Turenne Capital en 1999."],
+      ["Que désigne Altur EdTrain ?",["Une filiale de formation interne","Un FPCI dédié à l'éducation et la formation","Un fonds d'infrastructure ferroviaire","Un programme de mentorat"],1,"Un FPCI dédié à l'éducation et la formation, premier closing à 10 M€, cible 30 M€."],
+      ["Laquelle de ces sociétés n'est PAS une participation ou une sortie d'Altur ?",["Webhelp","Biobank","Opus Formation","Doctolib"],3,"Webhelp, Menix, Complétude-Kinougarde et Biobank font partie des sorties emblématiques ; Opus Formation est une opération de 2026."],
+      ["Quel est le modèle de plateforme d'Altur ?",["Uniquement du co-investissement","Deux axes : dette et capital","Quatre axes : LP, co-investissement, direct, fonds sponsorisés","Un fonds unique généraliste"],2,"Quatre axes, c'est ce qui distingue Altur d'un fonds classique."],
+      ["Quelle école Rémy Lombard a-t-il faite ?",["HEC","ESCP","EDHEC","ESSEC"],1,"ESCP, comme toi — et il est passé par Bain & Company."]
+    ]
+  },
+
+  /* ────────────────────────── CENORBANK ────────────────────────── */
+  {
+    id:"cenorbank", nom:"Caisse d'Épargne Hauts-de-France", couleur:"#a8342a",
+    alias:"CENORBANK Group",
+    poste:"Stage — Direction Stratégie et Développement International",
+    date:"2026-11-10", heure:"10:00", fin:"10:45",
+    format:"En présentiel — ce n'est pas une visio", lieu:"612 rue de la Chaude Rivière, 59800 Lille",
+    gens:[
+      ["Mathilde Godefroy","Strategy & International Development Manager","Elle t'a appelé, elle organise l'entretien. Diplômée de l'EDHEC. Vraisemblablement ta future manager."],
+      ["Antoine Guignette","CENORBANK Group — développement Benelux","En copie de l'invitation, donc dans la salle. C'est probablement lui qui jugera ton intérêt réel pour l'international."]
+    ],
+    resume:"Banque coopérative régionale, l'une des quinze Caisses d'Épargne du groupe BPCE, en train de devenir un groupe bancaire transfrontalier sous la marque CENORBANK.",
+    figs:[["420 000","sociétaires"],["1,1 M","clients particuliers"],["3 000","collaborateurs"],["283","agences"],["865 M€","de PNB groupe en 2025, +26 %"],["206 M€","de résultat net, +29 %"]],
+    boite:[
+      "Banque <b>coopérative</b> : pas d'actionnaires, 420 000 sociétaires. Président du directoire : <b>Laurent Roubin</b>. Certifiée <b>B Corp</b>.",
+      "En <b>mars 2026</b>, toutes les entités ont été fédérées sous la marque <b>CENORBANK Group</b> — « CE » pour Caisse d'Épargne, « NOR » pour l'ancrage au Nord et le développement vers l'Europe du Nord.",
+      "<b>Nagelmackers</b> : la plus ancienne banque privée de Belgique, fondée en <b>1747</b>, rachetée à Dajia Insurance Group, opération finalisée en <b>mars 2025</b>. 110 000 clients, 4,9 Md€ d'actifs sous gestion.",
+      "<b>CENORBANK Belgium</b> (corporate et immobilier, depuis 2014), <b>CENORBANK Nederland</b> (corporate, depuis 2024), <b>Van Lys Bank</b>, <b>Banque de l'Orme</b> (banque judiciaire).",
+      "Immobilier et logement : Étoile du Nord Foncière et Promotion, Sia Habitat, SIGH, SA HLM de l'Oise, Hosmia.",
+      "Private equity : <b>CENORBANK Capital</b> et <b>CENORBANK Mezzanine</b>. 200 M€ de fonds propres investis en PME et ETI.",
+      "<b>L'international pèse 106 M€ de PNB en 2025, environ 12 % des revenus. L'objectif est 200 M€ en 2030.</b> C'est le chiffre à connaître par cœur."
+    ],
+    angles:[
+      "<b>Le Fonds d'épargne.</b> Ton audit à la CDC portait sur les garanties d'emprunt financées par le Fonds d'épargne — là où remonte une partie de la collecte du Livret A, et ce qui finance le logement social, dont leurs propres bailleurs (Sia Habitat, SIGH, Hosmia). Tu connais leur circuit par l'autre bout. Personne d'autre ne peut dire ça.",
+      "<b>L'ACPR.</b> Un groupe qui rachète une banque belge vit sous agréments. Avoir lu des rapports de supervision te place au-dessus d'un profil purement conseil.",
+      "<b>Lille et le Nord.</b> Bac à Genech, prépa à Douai, premier stage à la CDC de Lille. Formule-le comme un fait : « je suis d'ici ».",
+      "<b>L'anglais.</b> Les deux intitulés de poste sont en anglais. Prépare ta présentation dans les deux langues."
+    ],
+    qa:[
+      ["Pourquoi la Caisse d'Épargne Hauts-de-France ?","La trajectoire. Une coopérative régionale qui construit un groupe transfrontalier avec un objectif chiffré à 2030. Peu de structures de cette taille laissent voir une internationalisation entière, de la cible à l'intégration."],
+      ["Que savez-vous de notre développement international ?","Belgique depuis 2014, Pays-Bas depuis 2024, Nagelmackers bouclé en mars 2025, marque CENORBANK en mars 2026. 106 M€ de PNB international en 2025, cible 200 M€ en 2030."],
+      ["Qu'est-ce qui vous intéresse dans une banque coopérative ?","Pas « la stabilité ». L'horizon de décision : sans actionnaires à servir chaque trimestre, on peut acheter une banque de 1747 et l'intégrer sur dix ans."],
+      ["Vous venez de l'audit interne, pourquoi la stratégie ?","La continuité, pas la rupture. L'audit apprend à vérifier si ce qui est écrit correspond à ce qui se passe — exactement le réflexe pour évaluer une cible ou suivre une intégration."],
+      ["Could you introduce yourself in English?","Deux minutes, pas plus. Formation, les deux stages CDC, pourquoi cette direction. Répète-les à voix haute la veille."]
+    ],
+    poser:[
+      "Pour passer de 106 à 200 M€ d'ici 2030, la croissance viendra-t-elle surtout de nouvelles acquisitions ou du développement organique au Benelux ?",
+      "Comment se répartit le travail entre la direction stratégie groupe et les équipes locales de Nagelmackers et Van Lys ? Où se prennent les décisions ?",
+      "La marque CENORBANK a été lancée en mars : quel effet avez-vous observé côté clients corporate belges et néerlandais ?",
+      "Le statut coopératif et la certification B Corp portent-ils à l'international, ou est-ce un sujet surtout français ?",
+      "Sur quels dossiers un stagiaire travaille concrètement : veille et analyse de cibles, ou suivi d'intégration ?"
+    ],
+    pieges:[
+      "<b>CENORBANK Group</b> est la marque qui fédère ; <b>la Caisse d'Épargne Hauts-de-France</b> est la banque régionale, une entité parmi d'autres. Ne mélange pas.",
+      "<b>Le groupe, c'est BPCE.</b> Les Caisses d'Épargne régionales sont autonomes.",
+      "<b>Pas de vocabulaire d'actionnaire.</b> Il n'y en a pas : il y a 420 000 sociétaires.",
+      "<b>N'arrive pas en disant « je veux faire du M&amp;A ».</b> Le poste est en stratégie et développement international ; l'acquisition n'est qu'un moyen.",
+      "<b>Le Benelux n'est pas un marché unique.</b> La Belgique, dix ans de présence et de la banque privée ; les Pays-Bas, une implantation corporate de 2024."
+    ],
+    traj:{
+      fr:["« Si je postule ici, c'est pour une raison précise. La Caisse d'Épargne Hauts-de-France est en train de devenir un <b>groupe bancaire transfrontalier</b> : la Belgique depuis 2014, les Pays-Bas depuis 2024, Nagelmackers finalisé en mars 2025, et maintenant la marque CENORBANK.",
+        "Vous avez réalisé <b>106 millions d'euros</b> de produit net bancaire à l'international en 2025, et vous visez <b>200 millions en 2030</b>. À cette échelle, une direction groupe voit la stratégie entière — de l'identification d'une cible jusqu'à l'intégration.",
+        "Et il y a une continuité pour moi : j'ai passé un été <b>du côté du Fonds d'épargne</b>, là où remonte une partie de ce que vous collectez. Je connais ce circuit par l'autre bout. »"],
+      en:["“There's a specific reason I'm applying here. Caisse d'Épargne Hauts-de-France is turning into a <b>cross-border banking group</b>: Belgium since 2014, the Netherlands since 2024, Nagelmackers completed in March 2025, and now the CENORBANK brand.",
+        "You posted <b>106 million euros</b> of international net banking income in 2025, and you're targeting <b>200 million by 2030</b>. At that scale a group strategy team sees the whole thing — from identifying a target through to integration.",
+        "And there's a continuity for me: I spent a summer <b>on the Fonds d'épargne side</b>, where part of what you collect ends up. I know that circuit from the other end.”"]
+    },
+    quiz:[
+      ["Que désigne CENORBANK ?",["Une banque néerlandaise rachetée en 2024","La marque institutionnelle qui fédère les entités de la Caisse d'Épargne Hauts-de-France","Une filiale de private equity","Le nouveau nom du groupe BPCE"],1,"Marque lancée en mars 2026 : « CE » pour Caisse d'Épargne, « NOR » pour le Nord."],
+      ["Quel est l'objectif de PNB international pour 2030 ?",["106 M€","150 M€","200 M€","865 M€"],2,"200 M€, contre 106 M€ réalisés en 2025, soit un doublement."],
+      ["En quelle année Nagelmackers a-t-elle été fondée ?",["1747","1847","1947","2014"],0,"1747 : c'est la plus ancienne banque privée de Belgique."],
+      ["Combien la banque compte-t-elle de sociétaires ?",["42 000","420 000","1,1 million","3 000"],1,"420 000 sociétaires. Les 1,1 million, ce sont les clients particuliers."],
+      ["Depuis quand le groupe est-il présent en Belgique ?",["2014","2020","2024","2026"],0,"2014, avec les activités corporate et immobilières. Les Pays-Bas, c'est 2024."],
+      ["Quel est le statut juridique de la Caisse d'Épargne Hauts-de-France ?",["Société cotée sur Euronext","Banque coopérative","Filiale à 100 % de l'État","Fonds d'investissement"],1,"Banque coopérative : pas d'actionnaires, des sociétaires. Et certifiée B Corp."],
+      ["Qui préside le directoire ?",["Laurent Roubin","François Lombard","Mathilde Godefroy","Arnaud Montebourg"],0,"Laurent Roubin."],
+      ["Laquelle de ces entités n'appartient PAS au groupe ?",["Van Lys Bank","Banque de l'Orme","Nagelmackers","Banque de l'Orne"],3,"« Banque de l'Orme » existe — c'est la banque judiciaire du groupe. « Banque de l'Orne » n'existe pas : attention au piège à l'oral."]
+    ]
+  },
+
+  /* ─────────────────────────── VANTIVA ─────────────────────────── */
+  {
+    id:"vantiva", nom:"Vantiva", couleur:"#245c69",
+    poste:"Stage — Contrôle de gestion / FP&A, janvier 2027",
+    date:"2026-11-12", heure:"11:30", fin:"12:00",
+    format:"Visioconférence Microsoft Teams, 30 minutes", lieu:"Code d'accès cD2na2Hy",
+    gens:[
+      ["Emmanuel Cartier","Ton contact","06 29 41 26 60. Il t'a proposé les créneaux lui-même et organise la réunion. Entretien court : 30 minutes, donc des réponses serrées."]
+    ],
+    resume:"Ex-Technicolor, rebaptisée Vantiva, cotée à Paris. Équipementier mondial du CPE : box internet, passerelles, répéteurs Wi-Fi, décodeurs, objets connectés, pour les opérateurs télécoms et de télévision payante.",
+    figs:[["734 M€","de CA au S1 2026, −14,7 %"],["43 M€","d'EBITDA ajusté au S1 2026"],["−7,3 %","de ventes au T3 2026"],["~13 000","collaborateurs"]],
+    boite:[
+      "Née de la scission de <b>Technicolor</b>, Vantiva est cotée sur Euronext Paris, siège à <b>Issy-les-Moulineaux</b>.",
+      "Cœur de métier : le <b>CPE</b> (Customer Premises Equipment) — modems, passerelles, répéteurs Wi-Fi, décodeurs, objets connectés — vendu aux opérateurs et fournisseurs d'accès.",
+      "Répartition : environ <b>60 % broadband, 40 % video</b>. Au T3 2026, le broadband progresse de 1,4 % tandis que la vidéo recule de 46,7 % — deux dynamiques opposées dans la même maison.",
+      "La division <b>Supply Chain Solutions a été cédée en avril 2025</b> : le groupe s'est recentré sur le CPE.",
+      "Intégration de l'activité <b>Home Networks</b> rachetée à CommScope.",
+      "Contrainte majeure du moment : la <b>pénurie et le prix des composants mémoire</b>, qui pèsent sur la visibilité et sur les marges. Refinancement conduit en avril 2026."
+    ],
+    angles:[
+      "<b>Le FP&amp;A ici, c'est de la prévision sous contrainte.</b> Un marché où les volumes dépendent des commandes opérateurs et où le coût des composants bouge : savoir modéliser une marge qui se dérobe est le vrai sujet du poste.",
+      "<b>Ton Excel est un argument, pas une ligne.</b> À la CDC de Lille, tu as construit un modèle sectoriel qui a conduit à une décision d'organisation. C'est très exactement ce qu'on attend d'un contrôleur de gestion.",
+      "<b>L'audit.</b> Le contrôle de gestion et l'audit interne partagent le même réflexe : confronter le chiffre déclaré à la réalité de l'opération.",
+      "<b>Entretien de 30 minutes.</b> Pas de digressions. Présentation en 90 secondes, puis des réponses de deux minutes maximum."
+    ],
+    qa:[
+      ["Pourquoi le contrôle de gestion ?","Parce que c'est le métier où la modélisation sert immédiatement à décider. À la CDC, mon modèle sectoriel a débouché sur une création de poste : c'est ça qui m'a plu."],
+      ["Que savez-vous de Vantiva ?","Issue de Technicolor, recentrée sur le CPE après la cession de Supply Chain Solutions en avril 2025. Broadband en légère croissance, vidéo en fort recul, et une forte contrainte sur les composants mémoire."],
+      ["Quel est votre niveau sur Excel ?","Avancé — et donne l'exemple du modèle de Lille plutôt que l'adjectif."],
+      ["Vous cherchez janvier 2027, confirmez ?","Oui, et c'est cohérent avec ton CV. Sois précis sur la durée."]
+    ],
+    poser:[
+      "Comment le contrôle de gestion travaille-t-il avec les achats sur la volatilité du coût des composants mémoire ?",
+      "Après la cession de Supply Chain Solutions, comment le pilotage financier s'est-il réorganisé autour du seul CPE ?",
+      "Le broadband progresse, la vidéo recule fortement : pilotez-vous les deux activités avec les mêmes indicateurs ?",
+      "Sur quels livrables récurrents un stagiaire FP&A est-il réellement autonome — budget, reforecast, reporting mensuel ?"
+    ],
+    pieges:[
+      "<b>Ne dis pas « Technicolor »</b> au présent. La société s'appelle Vantiva.",
+      "<b>Ne parle pas de la supply chain</b> comme d'une activité du groupe : la division a été cédée en avril 2025.",
+      "<b>N'arrive pas en stratège.</b> Le poste est en contrôle de gestion : on attend de la rigueur de chiffre, pas des recommandations."
+    ],
+    traj:{
+      fr:["« Si je postule chez Vantiva, c'est parce que le contrôle de gestion y est un exercice sous contrainte réelle. Vous êtes recentrés sur le CPE depuis la cession de Supply Chain Solutions, le broadband progresse quand la vidéo recule fortement, et le coût des composants mémoire pèse sur la visibilité.",
+        "Prévoir une marge dans ces conditions, c'est exactement le genre de modélisation qui m'intéresse — et c'est ce que j'ai fait, à plus petite échelle, sur le secteur des consignations à la Caisse des Dépôts. »"],
+      en:["“I'm applying to Vantiva because financial planning here happens under real constraints. The group has refocused on CPE since Supply Chain Solutions was divested, broadband is growing while video falls sharply, and memory component costs weigh on visibility.",
+        "Forecasting a margin in those conditions is exactly the kind of modelling I enjoy — and it's what I did, on a smaller scale, at Caisse des Dépôts.”"]
+    },
+    quiz:[
+      ["Quel était l'ancien nom de Vantiva ?",["Thomson","Technicolor","Alcatel","Sagemcom"],1,"Technicolor. Ne l'emploie jamais au présent en entretien."],
+      ["Quel est le cœur de métier ?",["Les studios de post-production","Le CPE : box, passerelles, décodeurs","La logistique e-commerce","Les semi-conducteurs"],1,"Customer Premises Equipment, vendu aux opérateurs et fournisseurs d'accès."],
+      ["Qu'est devenue la division Supply Chain Solutions ?",["Elle a été cédée en avril 2025","Elle est devenue le premier contributeur","Elle a fusionné avec Home Networks","Elle n'a jamais existé"],0,"Cédée en avril 2025 : le groupe s'est recentré sur le CPE."],
+      ["Quelle est la grande contrainte opérationnelle du moment ?",["Une grève logistique","La pénurie et le prix des composants mémoire","Un litige fiscal","La fin du Wi-Fi 6"],1,"Allocation et prix de la mémoire : cela pèse sur la visibilité et les marges."],
+      ["Comment évoluent broadband et vidéo ?",["Les deux en forte croissance","Broadband en légère hausse, vidéo en fort recul","Les deux en recul équivalent","Vidéo en hausse, broadband en recul"],1,"Broadband +1,4 %, vidéo −46,7 % : deux dynamiques opposées."],
+      ["Où se situe le siège ?",["Rennes","Issy-les-Moulineaux","Lille","Amsterdam"],1,"Issy-les-Moulineaux."]
+    ]
+  },
+
+  /* ──────────────────────────── ALFEOR ─────────────────────────── */
+  {
+    id:"alfeor", nom:"Alfeor", couleur:"#4a6b2f",
+    poste:"Stage — Direction Financière",
+    date:"2026-11-12", heure:"18:30", fin:"19:00",
+    format:"Visioconférence, 30 minutes", lieu:"Lien à venir — Julien Bourgeois ne l'a pas encore envoyé",
+    gens:[
+      ["Julien Bourgeois","Directeur administratif et financier du groupe","06 95 53 54 38. Profil audit et finance industrielle — comme toi, il vient de l'audit. C'est ton meilleur point commun, et il le verra sur ton CV avant que tu l'ouvres."]
+    ],
+    resume:"Le nouvel équipementier de la filière nucléaire française, construit par rachats successifs de PME industrielles. Un projet de consolidation (buy-and-build) porté par Otium Capital et Arnaud Montebourg.",
+    figs:[["5","acquisitions en moins de 18 mois"],["2024","année de création du groupe"],["EDF, Framatome","les donneurs d'ordre visés"]],
+    boite:[
+      "Alfeor fédère des <b>PME sous-traitantes</b> de la filière nucléaire pour en faire un équipementier de rang 1 — l'ambition annoncée est de devenir « une sorte de <b>Valeo du nucléaire</b> ».",
+      "Métiers couverts : forge, fonderie, chaudronnerie, usinage de précision, mécano-soudure, boulonnerie, robinetterie, tuyauterie, traitement de surface, essais mécaniques et métallurgiques, fabrication additive.",
+      "Sociétés acquises : <b>TSM</b> (traitements de surface, usinage de précision, fondée en 1972), <b>Les Ateliers de la Meuse</b> (grande chaudronnerie, soudure, emballages de combustible), <b>Delta Metal</b> (boulonnerie, visserie par forge à chaud, fondée en 1947, environ 40 % de CA nucléaire), <b>Deltafluid</b> (instruments de mesure de pression et de débit, contrôle des fluides), <b>Laboratoire Effitech</b> (essais destructifs et non destructifs).",
+      "Actionnaires : <b>Otium Capital</b> et <b>Les Équipes du Made in France</b>, la holding d'<b>Arnaud Montebourg</b>, qui préside le conseil de surveillance.",
+      "Direction : <b>Éric Druenne</b>, cofondateur et directeur général ; <b>Édouard Sagon</b>, directeur des opérations, ancien de Framatome ; <b>Julien Bourgeois</b>, directeur financier.",
+      "Logique affichée : préserver l'autonomie et l'identité locale de chaque société acquise tout en leur donnant une taille critique, et soutenir la relance du nucléaire et la souveraineté industrielle française."
+    ],
+    angles:[
+      "<b>C'est du private equity, mais de l'intérieur.</b> Un buy-and-build adossé à Otium Capital : la direction financière d'Alfeor fait de l'intégration post-acquisition, de la consolidation de comptes et du pilotage multi-sites. Dis-le, c'est précisément ce qui t'attire.",
+      "<b>Julien Bourgeois vient de l'audit, toi aussi.</b> Parle le même langage : réconciliation, contrôle interne, fiabilité du chiffre dans des PME qui n'avaient pas de reporting groupe.",
+      "<b>« Valider tes motivations sur le choix d'un projet industriel »</b> — c'est sa formulation. Prépare une réponse sincère sur pourquoi l'industrie, et pourquoi le nucléaire maintenant : relance, souveraineté, besoin de recréer une filière de rang 1.",
+      "<b>Ton stage CDC parlait déjà d'intérêt général et de financement long.</b> Le nucléaire, c'est le même horizon : des décisions à trente ans."
+    ],
+    qa:[
+      ["Pourquoi un projet industriel ?","Parce que la valeur s'y crée lentement et se voit. Après un été en audit sur des financements publics de long terme, l'industrie est la suite logique : même horizon, mais on touche l'objet."],
+      ["Pourquoi le nucléaire ?","La relance de la filière crée un besoin de sous-traitants de rang 1 structurés, là où le tissu est fait de PME isolées. C'est exactement le problème qu'Alfeor résout."],
+      ["Qu'est-ce qui vous attire dans une direction financière de groupe en construction ?","Tout est à bâtir : consolidation, reporting commun, contrôle interne dans cinq sociétés qui n'en avaient pas. C'est plus formateur qu'un poste où les processus existent déjà."],
+      ["Vous avez fait de l'audit : qu'en retirez-vous d'utile ici ?","Le réflexe de remonter à la pièce justificative, et l'habitude des environnements où les processus sont encore manuels — c'est ce que j'ai audité à la CDC."]
+    ],
+    poser:[
+      "Après cinq acquisitions en dix-huit mois, où en êtes-vous de l'harmonisation du reporting entre les sociétés ?",
+      "Comment conciliez-vous l'autonomie promise à chaque PME et le besoin d'un contrôle de gestion groupe ?",
+      "Le rythme d'acquisitions se poursuit-il, et quels métiers manquent encore dans la chaîne de valeur ?",
+      "Quelle part du chiffre d'affaires dépend aujourd'hui d'EDF et de Framatome, et cherchez-vous à diversifier vers l'aéronautique ou la défense ?"
+    ],
+    pieges:[
+      "<b>Ne réduis pas Alfeor à Montebourg.</b> Il préside le conseil de surveillance, mais le groupe est dirigé par Éric Druenne et financé par Otium Capital.",
+      "<b>Ne parle pas d'« start-up industrielle ».</b> Ce sont des PME de 1947 et 1972 que l'on fédère, pas une jeune pousse.",
+      "<b>Ne confonds pas rang 1 et sous-traitance.</b> Toute l'ambition est justement de passer de l'un à l'autre."
+    ],
+    traj:{
+      fr:["« Si je postule chez Alfeor, c'est parce que c'est un projet de consolidation industrielle, et que la direction financière y est au centre : cinq acquisitions en dix-huit mois, cinq sociétés avec leurs propres habitudes comptables, et un reporting groupe à construire.",
+        "C'est du private equity vu de l'intérieur, dans une filière — le nucléaire — où la relance crée un vrai besoin d'équipementiers de rang 1. Et mon passage en audit interne à la Caisse des Dépôts m'a donné le réflexe qui sert ici : aller vérifier, dans des processus encore manuels, si le chiffre déclaré correspond à l'opération réelle. »"],
+      en:["“I'm applying to Alfeor because it's an industrial consolidation project where the finance function sits at the centre: five acquisitions in eighteen months, five companies with their own accounting habits, and group reporting still to be built.”"]
+    },
+    quiz:[
+      ["Quelle filière Alfeor sert-elle en priorité ?",["L'aéronautique","Le nucléaire","L'automobile","Le ferroviaire"],1,"La filière nucléaire française, avec EDF et Framatome comme donneurs d'ordre visés."],
+      ["Quel est le modèle de croissance ?",["Croissance organique","Franchise","Buy-and-build : rachat et fédération de PME","Licences technologiques"],2,"Cinq acquisitions en moins de dix-huit mois."],
+      ["Qui préside le conseil de surveillance ?",["Éric Druenne","Arnaud Montebourg","Julien Bourgeois","Édouard Sagon"],1,"Arnaud Montebourg, via Les Équipes du Made in France. Mais le directeur général est Éric Druenne."],
+      ["Quel fonds accompagne Alfeor ?",["Otium Capital","Altur Investissement","Eurazeo","Tikehau"],0,"Otium Capital, aux côtés des Équipes du Made in France."],
+      ["Laquelle de ces sociétés n'a PAS été acquise par Alfeor ?",["Delta Metal","Deltafluid","Les Ateliers de la Meuse","Deltalyo"],3,"TSM, Les Ateliers de la Meuse, Delta Metal, Deltafluid et le Laboratoire Effitech forment les cinq acquisitions."],
+      ["Quelle comparaison le groupe revendique-t-il ?",["« Le Airbus du nucléaire »","« Une sorte de Valeo du nucléaire »","« Le Safran des PME »","« Le Michelin de l'atome »"],1,"Devenir un équipementier de rang 1, comme Valeo l'est pour l'automobile."],
+      ["Quel est le poste de Julien Bourgeois ?",["Directeur des opérations","Directeur général","Directeur administratif et financier","Président du conseil de surveillance"],2,"DAF du groupe, avec un parcours audit et finance industrielle — ton meilleur point commun."]
+    ]
+  }
+];
+
+/* ── état ───────────────────────────────────────────────────────── */
+const SKEY = "entretiens:v1";
+let S = load();
+function load(){ try{ return JSON.parse(localStorage.getItem(SKEY)) || {quiz:{}, lang:"fr"}; }catch(e){ return {quiz:{}, lang:"fr"}; } }
+function save(){ try{ localStorage.setItem(SKEY, JSON.stringify(S)); }catch(e){} }
+
+let vue = "accueil", ouvert = null, onglet = "rdv";
+
+/* ── dates ──────────────────────────────────────────────────────── */
+function auj(){ const d=new Date(); return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0"); }
+function quand(iv){
+  const t = auj();
+  if(iv.date === t) return "aujourd'hui";
+  const j = new Date(iv.date+"T12:00:00"), n = new Date(t+"T12:00:00");
+  const dd = Math.round((j-n)/864e5);
+  if(dd === 1) return "demain";
+  if(dd === -1) return "hier";
+  if(dd < 0) return j.toLocaleDateString("fr-FR",{weekday:"long",day:"numeric",month:"long"});
+  if(dd < 7) return j.toLocaleDateString("fr-FR",{weekday:"long"});
+  return j.toLocaleDateString("fr-FR",{weekday:"long",day:"numeric",month:"long"});
+}
+function passe(iv){ return Date.parse(iv.date+"T"+(iv.fin||iv.heure)+":00") < Date.now(); }
+function compte(iv){
+  const m = Math.round((Date.parse(iv.date+"T"+iv.heure+":00") - Date.now())/6e4);
+  if(m < 0 || m > 2880) return null;
+  if(m < 60) return "dans "+m+" min";
+  const h = Math.floor(m/60);
+  return h < 24 ? "dans "+h+" h"+(m%60 ? " "+String(m%60).padStart(2,"0") : "") : "dans "+Math.round(h/24)+" j";
+}
+const tri = () => DATA.slice().sort((a,b)=>(a.date+a.heure).localeCompare(b.date+b.heure));
+const esc = t => String(t).replace(/[&<>]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]));
+
+/* ── rendu ──────────────────────────────────────────────────────── */
+function render(){
+  const app = document.getElementById("app");
+  app.innerHTML = vue === "accueil" ? accueil() : vue === "profil" ? profil() : fiche();
+  document.getElementById("tabbar").innerHTML = barre();
+  window.scrollTo(0, 0);
+}
+
+function barre(){
+  const b = [["accueil","🗓","Entretiens"],["profil","👤","Mon profil"]];
+  return b.map(([id,ic,l])=>`<button aria-pressed="${vue===id}" onclick="aller('${id}')"><span class="ic">${ic}</span>${l}</button>`).join("");
+}
+
+function accueil(){
+  const L = tri();
+  return `<header class="top">
+      <div class="grow">
+        <p class="eyebrow">Recherche de stage · ${L.filter(x=>!passe(x)).length} à venir</p>
+        <h1>Les entretiens</h1>
+      </div>
+      <button class="tgl" onclick="theme()" aria-label="Changer de thème">◐</button>
+    </header>
+    <div class="list">${L.map(carte).join("")}</div>
+    <footer>Fiches, questions et quiz préparés à partir des échanges par mail et de sources publiques.
+      Les données restent sur cet appareil.</footer>`;
+}
+
+function carte(iv){
+  const cd = compte(iv), fini = passe(iv), q = S.quiz[iv.id];
+  return `<button class="ivcard ${fini?"done":""}" style="--c:${iv.couleur}" onclick="ouvrir('${iv.id}')">
+    <div class="when">${quand(iv)} · ${iv.heure}</div>
+    <div class="name">${esc(iv.nom)}</div>
+    <div class="role">${esc(iv.poste)}</div>
+    <div class="meta">
+      ${fini ? `<span class="chip">passé</span>` : cd ? `<span class="chip cd">${cd}</span>` : ""}
+      <span class="chip">${iv.format.startsWith("En présentiel") ? "présentiel" : "visio"}</span>
+      ${q ? `<span class="chip ok">quiz ${q.bon}/${q.total}</span>` : `<span class="chip">quiz à faire</span>`}
+    </div></button>`;
+}
+
+function ouvrir(id){ ouvert = DATA.find(x=>x.id===id); vue = "fiche"; onglet = "rdv"; render(); }
+function aller(v){ vue = v; render(); }
+function onglets(o){ onglet = o; render(); }
+function theme(){
+  const r = document.documentElement;
+  const sombre = r.getAttribute("data-theme") === "dark" ||
+    (!r.hasAttribute("data-theme") && matchMedia("(prefers-color-scheme:dark)").matches);
+  r.setAttribute("data-theme", sombre ? "light" : "dark");
+  try{ localStorage.setItem("entretiens:theme", sombre ? "light" : "dark"); }catch(e){}
+}
+
+const ONGLETS = [["rdv","Le RDV"],["boite","La boîte"],["angles","Tes angles"],["pitch","Présentation"],["qa","Questions"],["poser","À poser"],["pieges","Pièges"],["quiz","Quiz"]];
+
+function fiche(){
+  const iv = ouvert;
+  return `<header class="top" style="--c:${iv.couleur}">
+      <div class="grow">
+        <button class="back" onclick="aller('accueil')">← Tous les entretiens</button>
+        <h1>${esc(iv.nom)}</h1>
+        <p class="eyebrow" style="margin-top:7px">${esc(iv.poste)}</p>
+      </div>
+    </header>
+    <nav class="secs" style="--c:${iv.couleur}">
+      ${ONGLETS.map(([id,l])=>`<button aria-pressed="${onglet===id}" onclick="onglets('${id}')">${l}</button>`).join("")}
+    </nav>
+    <div class="panel" style="--c:${iv.couleur}">${panneau(iv)}</div>`;
+}
+
+function panneau(iv){
+  const P = {
+    rdv: () => `<div class="box">
+        <dl>
+          <dt>Quand</dt><dd><b>${quand(iv)} ${iv.heure}${iv.fin ? " – "+iv.fin : ""}</b>${compte(iv)?`<small>${compte(iv)}</small>`:""}</dd>
+          <dt>Format</dt><dd><b>${esc(iv.format)}</b><small>${esc(iv.lieu)}</small></dd>
+          <dt>Poste</dt><dd>${esc(iv.poste)}</dd>
+        </dl></div>
+      <p>${esc(iv.resume)}</p>
+      <h3>Qui tu as en face</h3>
+      ${iv.gens.map(g=>`<div class="box"><div><b>${esc(g[0])}</b><br><span style="color:var(--c);font-size:14.5px;font-weight:600">${esc(g[1])}</span></div><p style="color:var(--muted);font-size:15.5px">${g[2]}</p></div>`).join("")}`,
+    boite: () => `${iv.figs?`<div class="figs">${iv.figs.map(f=>`<div><b>${f[0]}</b><small>${f[1]}</small></div>`).join("")}</div>`:""}
+      <ul>${iv.boite.map(x=>`<li>${x}</li>`).join("")}</ul>`,
+    angles: () => `<ul>${iv.angles.map(x=>`<li>${x}</li>`).join("")}</ul>`,
+    pitch: () => pitch(iv),
+    qa: () => `<div class="qa">${iv.qa.map(x=>`<div><p class="q">${esc(x[0])}</p><p class="a">${x[1]}</p></div>`).join("")}</div>`,
+    poser: () => `<p>Quelques-unes suffisent. Elles doivent prouver que tu as compris le dossier.</p><ul>${iv.poser.map(x=>`<li>${esc(x)}</li>`).join("")}</ul>`,
+    pieges: () => `<div class="box trap">${iv.pieges.map(x=>`<div>${x}</div>`).join("")}</div>`,
+    quiz: () => quiz(iv)
+  };
+  return P[onglet]();
+}
+
+function pitch(iv){
+  const l = S.lang || "fr";
+  const beats = SOCLE[l].concat([
+    {t: l==="fr" ? "Trajectoire" : "Trajectory", s:"1:10", p: iv.traj[l] || iv.traj.fr},
+    {t: l==="fr" ? "Demande" : "Ask", s:"1:50", p: l==="fr"
+      ? ["« Je cherche un stage à partir de <span class='fill'>[ta date de début]</span>, et ce que je viens y apprendre, c'est l'exécution. Voilà pour l'essentiel — je suis à votre disposition pour entrer dans le détail. »"]
+      : ["“I'm looking for an internship starting <span class='fill'>[your start date]</span>, and what I want to learn is execution. That's the short version; happy to go deeper wherever it's useful.”"]}
+  ]);
+  return `<div class="key"><span class="lab">La structure</span>
+      <b>Ancrage → Preuve → Trajectoire → Demande.</b> D'où je viens · ce que j'ai déjà fait · pourquoi vous précisément · ce que je viens chercher.</div>
+    <div class="langs">
+      <button aria-pressed="${l==='fr'}" onclick="lang('fr')">FRANÇAIS</button>
+      <button aria-pressed="${l==='en'}" onclick="lang('en')">ENGLISH</button>
+    </div>
+    <div class="box">${beats.map(b=>`<div class="beat"><div class="mk"><b>${b.t}</b><span>${b.s}</span></div>
+      <div>${b.p.map(x=>`<p>${x}</p>`).join("")}</div></div>`).join("")}</div>
+    <p style="color:var(--muted);font-size:15px"><i>Répète-la à voix haute deux fois. Lue dans la tête, elle ne tient pas en bouche.</i></p>`;
+}
+function lang(l){ S.lang = l; save(); render(); }
+
+function quiz(iv){
+  const r = (S.quiz[iv.id] && S.quiz[iv.id].rep) || {};
+  const faits = Object.keys(r).length;
+  const bons = Object.keys(r).filter(i => r[i] === iv.quiz[i][2]).length;
+  return `<div class="score"><b>${bons}/${iv.quiz.length}</b>
+      <div><small>${faits ? faits+" question"+(faits>1?"s":"")+" répondue"+(faits>1?"s":"") : "Pas encore commencé"}</small>
+      <small>${bons === iv.quiz.length ? "Tu connais le dossier." : "Réponds, la correction s'affiche aussitôt."}</small></div>
+      ${faits ? `<button class="reset" onclick="razQuiz('${iv.id}')">Recommencer</button>` : ""}</div>
+    <div class="qz">${iv.quiz.map((q,i)=>{
+      const rep = r[i];
+      return `<div class="qblock"><div class="num">Question ${i+1}</div><div class="txt">${esc(q[0])}</div>
+        <div class="opts">${q[1].map((o,j)=>{
+          let cls = "";
+          if(rep !== undefined) cls = j === q[2] ? " good" : (j === rep ? " bad" : "");
+          return `<button class="opt${cls}" ${rep!==undefined?"disabled":""} onclick="rep('${iv.id}',${i},${j})">${esc(o)}</button>`;
+        }).join("")}</div>
+        ${rep !== undefined ? `<p class="why">${esc(q[3])}</p>` : ""}</div>`;
+    }).join("")}</div>`;
+}
+function rep(id, i, j){
+  const iv = DATA.find(x=>x.id===id);
+  if(!S.quiz[id]) S.quiz[id] = {rep:{}, bon:0, total:iv.quiz.length};
+  S.quiz[id].rep[i] = j;
+  S.quiz[id].bon = Object.keys(S.quiz[id].rep).filter(k => S.quiz[id].rep[k] === iv.quiz[k][2]).length;
+  save(); render();
+}
+function razQuiz(id){ delete S.quiz[id]; save(); render(); }
+
+function profil(){
+  return `<header class="top">
+      <div class="grow"><p class="eyebrow">Ce que tu peux dire de toi</p><h1>Mon profil</h1></div>
+      <button class="tgl" onclick="theme()" aria-label="Changer de thème">◐</button>
+    </header>
+    <div class="box"><b>${MOI.nom}</b><small style="color:var(--muted)">${MOI.tel} · ${MOI.mail}</small></div>
+    <h2>Formation</h2>
+    <div class="box cv">${MOI.formation.map(r=>`<div class="row"><span class="yr">${r[0]}</span><div><b>${r[1]}</b><small>${r[2]}</small></div></div>`).join("")}</div>
+    <h2>Expérience</h2>
+    <div class="box cv">${MOI.exp.map(r=>`<div class="row"><span class="yr">${r[0]}</span><div><b>${r[1]}</b><small>${r[2]}</small></div></div>`).join("")}</div>
+    <h2>Le reste</h2>
+    <div class="box"><ul>${MOI.autres.map(x=>`<li>${x}</li>`).join("")}</ul></div>
+    <h2>Vocabulaire anglais</h2>
+    <div class="box"><table class="gloss">
+      <tr><td>épargne réglementée</td><td>regulated savings</td></tr>
+      <tr><td>garantie d'emprunt</td><td>loan guarantee</td></tr>
+      <tr><td>audit interne, mission d'audit</td><td>internal audit, audit engagement</td></tr>
+      <tr><td>risque de continuité d'activité</td><td>business continuity risk</td></tr>
+      <tr><td>contrôle de gestion</td><td>financial planning &amp; analysis</td></tr>
+      <tr><td>produit net bancaire</td><td>net banking income</td></tr>
+      <tr><td>rachat, opération finalisée</td><td>acquisition, deal completed</td></tr>
+      <tr><td>intégration post-acquisition</td><td>post-merger integration</td></tr>
+      <tr><td>sous-traitant de rang 1</td><td>tier-one supplier</td></tr>
+      <tr><td>stage, stagiaire</td><td>internship, intern</td></tr>
+    </table></div>
+    <footer>Tiré de ton CV. Si tu le mets à jour, pense à corriger cette page.</footer>`;
+}
+
+/* ── démarrage ──────────────────────────────────────────────────── */
+try{ const t = localStorage.getItem("entretiens:theme"); if(t) document.documentElement.setAttribute("data-theme", t); }catch(e){}
+render();
+setInterval(() => { if(vue === "accueil") render(); }, 60000);
+if("serviceWorker" in navigator) addEventListener("load", () => navigator.serviceWorker.register("sw.js").catch(()=>{}));
+</script>
+</body>
+</html>
