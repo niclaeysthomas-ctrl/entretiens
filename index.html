@@ -160,6 +160,35 @@
   table.gloss td:first-child{color:var(--muted);padding-right:14px;width:48%}
   table.gloss td:last-child{font-weight:600}
 
+  /* ── termes cliquables et fiche de définition ── */
+  .gterm{display:inline;background:none;border:0;padding:0;margin:0;cursor:pointer;color:inherit;
+    font:inherit;text-align:left;border-bottom:1.5px dotted var(--c,var(--brick));line-height:inherit}
+  .gterm i{font-style:normal;font-size:.68em;vertical-align:super;color:var(--c,var(--brick));
+    font-family:var(--mono);margin-left:1px}
+  .gterm:focus-visible{outline:2px solid var(--c,var(--brick));outline-offset:2px}
+  #modal{position:fixed;inset:0;background:rgba(8,10,14,.62);z-index:50;display:flex;align-items:flex-end;
+    justify-content:center;padding:0}
+  #modal .sheet{background:var(--paper);border-top-left-radius:16px;border-top-right-radius:16px;
+    width:100%;max-width:640px;max-height:86vh;display:flex;flex-direction:column;
+    border:1px solid var(--line);border-bottom:0}
+  #modal .shead{display:flex;align-items:center;gap:12px;padding:16px 18px 10px;border-bottom:1px solid var(--line)}
+  #modal .shead h2{flex:1;font-size:19px}
+  #modal .x{flex:none;width:34px;height:34px;border-radius:50%;border:1px solid var(--line);
+    background:var(--card);color:var(--muted);cursor:pointer}
+  #modal .sbody{overflow-y:auto;padding:16px 18px calc(26px + env(safe-area-inset-bottom));
+    display:flex;flex-direction:column;gap:12px;font-size:16px}
+  #modal .sbody p{line-height:1.62}
+  @media (min-width:700px){ #modal{align-items:center;padding:24px}
+    #modal .sheet{border-radius:14px;border-bottom:1px solid var(--line)} }
+
+  /* ── histoire récente ── */
+  .hist{display:flex;flex-direction:column}
+  .hist .ev{display:grid;grid-template-columns:76px 1fr;gap:14px;padding:12px 0;border-top:1px solid var(--line-soft)}
+  .hist .ev:first-child{border-top:0;padding-top:0}
+  .hist .yr{font-family:var(--mono);font-size:11.5px;color:var(--c,var(--brick));letter-spacing:.04em;padding-top:2px}
+  .hist b{font-weight:600;display:block}
+  .hist small{display:block;color:var(--muted);font-size:14.5px;line-height:1.5;margin-top:2px}
+
   /* ── barre du bas ── */
   .tabbar{position:fixed;left:0;right:0;bottom:0;background:color-mix(in srgb,var(--paper) 92%,transparent);
     backdrop-filter:blur(12px);border-top:1px solid var(--line);display:flex;
@@ -175,6 +204,7 @@
 <body>
 <div class="wrap" id="app"></div>
 <nav class="tabbar" id="tabbar"></nav>
+<div id="modal" hidden></div>
 
 <script>
 /* ═══════════════════════════════════════════════════════════════
@@ -183,7 +213,7 @@
    ═══════════════════════════════════════════════════════════════ */
 
 const MOI = {
-  nom:"Thomas Niclaeys", tel:"+33 7 49 00 71 34", mail:"thomas.niclaeys@edu.escp.eu",
+  nom:"Thomas Niclaeys", tel:"", mail:"",
   formation:[
     ["2024-2028","ESCP Business School","Master in Management, M2. Paris et Madrid. Double spécialisation <b>Corporate Finance</b> et <b>Consulting &amp; Strategy</b>."],
     ["2022-2024","Institution Saint-Jean, Douai","Classe préparatoire aux grandes écoles de commerce. Mathématiques, économie, sociologie, histoire."],
@@ -233,7 +263,7 @@ const DATA = [
     id:"altur", nom:"Altur Investissement", couleur:"#b4793a",
     poste:"Analyste Private Equity — stage mars 2027",
     date:"2026-11-09", heure:"18:10", fin:"19:10",
-    format:"Visioconférence Microsoft Teams", lieu:"Code d'accès Bz3nx2iu",
+    format:"Visioconférence Microsoft Teams", lieu:"Le lien et le code sont dans l'invitation Teams, dans ta boîte mail",
     gens:[
       ["Charles-Edouard Potel","Organisateur","Ton contact depuis le début du process. C'est lui qui a décalé le créneau de 17h à 18h10."],
       ["François Lombard","Président et fondateur","ESSEC, MBA Wharton, PhD Penn. IFC (Banque mondiale) en 1977, puis CCF, CDC Participations, Épargne Partenaires en 1989, Turenne Capital en 1999, Altur en 2006."]
@@ -241,13 +271,23 @@ const DATA = [
     resume:"Société d'investissement créée en 2006, sortie de la cote en 2024, devenue le single family office de la famille Lombard. Small cap patrimonial et familial.",
     figs:[["1–5 M€","ticket par investissement direct"],["2–20 M€","de CA des sociétés visées"],["50+","participations depuis 2006"],["9","secteurs de prédilection"]],
     boite:[
-      "<b>Ex-Turenne Investissement</b>, cotée sur Euronext compartiment C, puis <b>OPAS de Suffren Holding en janvier 2024 à 11 € par action</b> sur 10,48 % du capital, suivie d'un retrait obligatoire. Altur n'est plus cotée.",
-      "Modèle de plateforme à quatre axes : <b>LP dans des fonds</b>, <b>co-investissements</b>, <b>investissements directs</b>, <b>fonds sponsorisés</b>.",
-      "Secteurs : santé, transition écologique, éducation, aménagement urbain, numérique, formation professionnelle, hôtellerie, services aux entreprises, industrie.",
-      "Sorties emblématiques : Webhelp, Menix, Complétude-Kinougarde, Biobank.",
-      "<b>Altur EdTrain</b> : FPCI dédié éducation et formation, premier closing à 10 M€ pour une cible de 30 M€ et un hard cap à 50 M€, article 8 SFDR. Investissements : ArtFX (MBO, avril 2025), Avenir Santé Formation, Opus Formation (LBO, mai 2026).",
-      "Autres opérations récentes : build-up Eléas en septembre 2026 avec Financière Vecteur, extension de série A chez Vizcab en juin 2024.",
-      "Équipe resserrée : François Lombard, Rémy Lombard (DGA, <b>ESCP</b>, ex-Bain), Bertrand Cavalié (DGA, EDHEC-TSE, porte EdTrain), Marie-Laure Moneret (DAF)."
+      "<b>Ce que c'est :</b> une société d'investissement en [[small-cap|capital-développement]], c'est-à-dire qu'elle prend des participations dans des entreprises non cotées déjà rentables, pour financer leur croissance ou organiser leur transmission. Elle n'est pas un fonds classique mais un [[fo|single family office]] : l'argent est d'abord celui de la famille Lombard.",
+      "<b>Son calibre :</b> des tickets de <b>1 à 5 M€</b> dans des sociétés réalisant <b>2 à 20 M€</b> de chiffre d'affaires, en majoritaire comme en minoritaire. C'est du small cap patrimonial et familial — rien à voir avec le [[lbo|LBO]] large cap.",
+      "<b>Un modèle de plateforme à quatre axes :</b> [[lp|LP dans des fonds tiers, co-investissement, investissement direct et fonds sponsorisés]]. Cette diversité est la réponse d'une petite structure à un problème simple : un seul fonds de 50 M€ ne permet pas de voir assez d'affaires.",
+      "<b>Neuf secteurs :</b> santé, transition écologique, éducation, aménagement urbain, numérique, formation professionnelle, hôtellerie, services aux entreprises, industrie. Dans les faits, la verticale éducation et formation est le moteur actuel.",
+      "<b>Altur EdTrain :</b> un [[fpci]] dédié à l'éducation et à la formation, [[closing|premier closing à 10 M€]] pour une cible de 30 M€ et un hard cap à 50 M€, classé [[sfdr|article 8 SFDR]] et éligible au [[b150|150-0 B ter]]. Il porte ArtFX, Avenir Santé Formation et Opus Formation.",
+      "<b>Le track record :</b> plus de 50 participations depuis 2006, avec Webhelp, Menix, Complétude-Kinougarde et Biobank parmi les sorties emblématiques.",
+      "<b>L'équipe, quatre personnes :</b> François Lombard (président), Rémy Lombard (DG adjoint, <b>ESCP</b>, ex-Bain, arrivé en 2022), Bertrand Cavalié (DG adjoint, EDHEC et Toulouse School of Economics, ex-Société Générale Private Banking et Grant Thornton, il porte EdTrain), Marie-Laure Moneret (directrice administrative et financière)."
+    ],
+    histoire:[
+      ["2006","Création sous le nom Turenne Investissement","À l'initiative de François Lombard, qui avait déjà fondé Épargne Partenaires en 1989 puis Turenne Capital en 1999."],
+      ["2015","Cotation sur Euronext","Compartiment C. La société devient un véhicule coté de capital-développement, accessible aux particuliers."],
+      ["2020","Reprise d'un portefeuille en secondaire","Rachat d'un bloc de six participations d'un coup — une façon rapide de reconstituer un portefeuille."],
+      ["jan. 2024","Sortie de la Bourse","[[opas|OPAS]] de Suffren Holding, la holding familiale, à 11 € par action sur les 10,48 % du capital qu'elle ne détenait pas, suivie d'un [[retrait|retrait obligatoire]]. Altur redevient privée et se réinvente en family office."],
+      ["juin 2024","Vizcab","Participation à l'extension de la série A de cet éditeur lyonnais de logiciels de budget carbone — la verticale transition écologique."],
+      ["avril 2025","ArtFX et le lancement d'EdTrain","[[mbo|MBO]] de l'école d'animation et d'effets visuels, au moment même du premier closing du fonds EdTrain."],
+      ["mai 2026","Opus Formation","Premier [[lbo|LBO]] de cet organisme de formation professionnelle lyonnais."],
+      ["sept. 2026","Build-up Eléas","Le cabinet francilien de conseil et de formation sur les risques psychosociaux réalise une acquisition, aux côtés de Financière Vecteur. Un [[buildup|build-up]] classique."]
     ],
     angles:[
       "<b>Le retrait de la cote.</b> Ne jamais parler d'Altur comme d'une société cotée. Dire « depuis votre retrait de la cote en 2024 » vaut tous les discours.",
@@ -301,13 +341,23 @@ const DATA = [
     resume:"Banque coopérative régionale, l'une des quinze Caisses d'Épargne du groupe BPCE, en train de devenir un groupe bancaire transfrontalier sous la marque CENORBANK.",
     figs:[["420 000","sociétaires"],["1,1 M","clients particuliers"],["3 000","collaborateurs"],["283","agences"],["865 M€","de PNB groupe en 2025, +26 %"],["206 M€","de résultat net, +29 %"]],
     boite:[
-      "Banque <b>coopérative</b> : pas d'actionnaires, 420 000 sociétaires. Président du directoire : <b>Laurent Roubin</b>. Certifiée <b>B Corp</b>.",
-      "En <b>mars 2026</b>, toutes les entités ont été fédérées sous la marque <b>CENORBANK Group</b> — « CE » pour Caisse d'Épargne, « NOR » pour l'ancrage au Nord et le développement vers l'Europe du Nord.",
-      "<b>Nagelmackers</b> : la plus ancienne banque privée de Belgique, fondée en <b>1747</b>, rachetée à Dajia Insurance Group, opération finalisée en <b>mars 2025</b>. 110 000 clients, 4,9 Md€ d'actifs sous gestion.",
-      "<b>CENORBANK Belgium</b> (corporate et immobilier, depuis 2014), <b>CENORBANK Nederland</b> (corporate, depuis 2024), <b>Van Lys Bank</b>, <b>Banque de l'Orme</b> (banque judiciaire).",
-      "Immobilier et logement : Étoile du Nord Foncière et Promotion, Sia Habitat, SIGH, SA HLM de l'Oise, Hosmia.",
-      "Private equity : <b>CENORBANK Capital</b> et <b>CENORBANK Mezzanine</b>. 200 M€ de fonds propres investis en PME et ETI.",
-      "<b>L'international pèse 106 M€ de PNB en 2025, environ 12 % des revenus. L'objectif est 200 M€ en 2030.</b> C'est le chiffre à connaître par cœur."
+      "<b>Ce que c'est, d'abord :</b> une banque de détail régionale de plein exercice, qui couvre le Nord, le Pas-de-Calais, la Somme, l'Aisne et l'Oise. 1,1 million de clients particuliers, 283 agences, 3 000 collaborateurs. Son métier d'origine, celui qui lui a donné son nom, c'est de collecter l'épargne populaire — le [[livret|Livret A]] — et de financer le territoire avec.",
+      "<b>Elle n'appartient à personne d'extérieur.</b> C'est une [[cooperative|banque coopérative]] : 420 000 sociétaires la détiennent à travers des sociétés locales d'épargne. Il n'y a pas d'actionnaire à rémunérer, et une voix ne dépend pas du nombre de parts détenues. Président du directoire : <b>Laurent Roubin</b>. Elle est certifiée [[b-corp|B Corp]].",
+      "<b>Sa place dans le paysage :</b> elle est l'une des quinze Caisses d'Épargne régionales qui, avec les Banques Populaires, détiennent l'organe central [[bpce]] — et non l'inverse. Chaque caisse garde sa stratégie. C'est ce qui rend possible qu'une banque régionale rachète seule une banque belge.",
+      "<b>Ce qui la rend inhabituelle :</b> aucune autre caisse régionale ne mène une croissance externe à l'étranger. Depuis 2014, celle-ci construit un groupe transfrontalier sur le Benelux, et c'est tout le sujet du poste.",
+      "<b>Trois piliers d'activité.</b> Banque et assurance : la caisse régionale, [[banque-privee|Nagelmackers]] en banque privée belge, Van Lys Bank, CENORBANK Belgium et CENORBANK Nederland en corporate, et Banque de l'Orme pour les entreprises en difficulté. Immobilier et logement : Étoile du Nord Foncière et Promotion, et les bailleurs Sia Habitat, SIGH, SA HLM de l'Oise et Hosmia. Private equity : CENORBANK Capital et CENORBANK [[mezz|Mezzanine]].",
+      "<b>Les chiffres 2025 du groupe :</b> 865 M€ de [[pnb|produit net bancaire]], en hausse de 26 %, et 206 M€ de [[rn|résultat net]], en hausse de 29 %. 6,4 Md€ de nouveaux crédits accordés, et 200 M€ de fonds propres investis dans des PME et des ETI du territoire.",
+      "<b>Et le chiffre à connaître par cœur :</b> l'international pèse <b>106 M€ de PNB en 2025, environ 12 % des revenus</b>. L'objectif affiché est de le porter à <b>200 M€ en 2030</b>. Le plan repose sur trois jambes : diversification des métiers, structuration du groupe, croissance internationale.",
+      "<b>Le lien avec ton stage à la Caisse des Dépôts :</b> une partie de ce que cette banque collecte sur les livrets réglementés est centralisée au [[fonds-epargne|Fonds d'épargne]] — celui-là même dont tu as audité les garanties d'emprunt — et c'est ce Fonds qui prête à très long terme aux bailleurs sociaux, dont ceux du groupe. Tu connais leur circuit par l'autre bout."
+    ],
+    histoire:[
+      ["2014","Première implantation en Belgique","Activités corporate et immobilières, qui deviendront CENORBANK Belgium. C'est le point de départ de tout : dix ans avant la marque, la stratégie était déjà là."],
+      ["2014","CENORBANK Mezzanine","Création de la holding de financement [[mezz|mezzanine]], premier signe de la diversification au-delà de la banque de détail."],
+      ["2024","Ouverture aux Pays-Bas","CENORBANK Nederland, sur le corporate. Le Benelux cesse d'être une excursion belge pour devenir une zone."],
+      ["mars 2025","Rachat de Nagelmackers","Finalisation de l'acquisition de 100 % de la plus ancienne banque privée de Belgique, fondée en <b>1747</b>, auprès de Dajia Insurance Group. 110 000 clients et <b>4,9 Md€</b> d'[[aum|actifs sous gestion]]. Six mois se sont écoulés entre l'annonce et la clôture, le temps d'obtenir les autorisations — voir [[agrement|agrément bancaire]]. Reste maintenant l'[[pmi|intégration]], la partie difficile."],
+      ["2025","Une année record","865 M€ de PNB (+26 %), 206 M€ de résultat net (+29 %), dont 106 M€ de PNB réalisés hors de France."],
+      ["mars 2026","Naissance de la marque CENORBANK Group","Toutes les entités de France et du Benelux sont fédérées sous une marque institutionnelle commune. « CE » pour Caisse d'Épargne, « NOR » pour l'ancrage au Nord et le développement vers l'Europe du Nord. Ce n'est pas un changement de nom de la caisse régionale : c'est la création d'une identité de groupe au-dessus d'elle."],
+      ["2030","L'objectif","Doubler le PNB international, de 106 à 200 M€. C'est la raison d'être de la direction où tu postules."]
     ],
     angles:[
       "<b>Le Fonds d'épargne.</b> Ton audit à la CDC portait sur les garanties d'emprunt financées par le Fonds d'épargne — là où remonte une partie de la collecte du Livret A, et ce qui finance le logement social, dont leurs propres bailleurs (Sia Habitat, SIGH, Hosmia). Tu connais leur circuit par l'autre bout. Personne d'autre ne peut dire ça.",
@@ -361,19 +411,27 @@ const DATA = [
     id:"vantiva", nom:"Vantiva", couleur:"#245c69",
     poste:"Stage — Contrôle de gestion / FP&A, janvier 2027",
     date:"2026-11-12", heure:"11:30", fin:"12:00",
-    format:"Visioconférence Microsoft Teams, 30 minutes", lieu:"Code d'accès cD2na2Hy",
+    format:"Visioconférence Microsoft Teams, 30 minutes", lieu:"Le lien et le code sont dans l'invitation Teams, dans ta boîte mail",
     gens:[
-      ["Emmanuel Cartier","Ton contact","06 29 41 26 60. Il t'a proposé les créneaux lui-même et organise la réunion. Entretien court : 30 minutes, donc des réponses serrées."]
+      ["Emmanuel Cartier","Ton contact","Son numéro est dans son mail. Il t'a proposé les créneaux lui-même et organise la réunion. Entretien court : 30 minutes, donc des réponses serrées."]
     ],
     resume:"Ex-Technicolor, rebaptisée Vantiva, cotée à Paris. Équipementier mondial du CPE : box internet, passerelles, répéteurs Wi-Fi, décodeurs, objets connectés, pour les opérateurs télécoms et de télévision payante.",
     figs:[["734 M€","de CA au S1 2026, −14,7 %"],["43 M€","d'EBITDA ajusté au S1 2026"],["−7,3 %","de ventes au T3 2026"],["~13 000","collaborateurs"]],
     boite:[
-      "Née de la scission de <b>Technicolor</b>, Vantiva est cotée sur Euronext Paris, siège à <b>Issy-les-Moulineaux</b>.",
-      "Cœur de métier : le <b>CPE</b> (Customer Premises Equipment) — modems, passerelles, répéteurs Wi-Fi, décodeurs, objets connectés — vendu aux opérateurs et fournisseurs d'accès.",
-      "Répartition : environ <b>60 % broadband, 40 % video</b>. Au T3 2026, le broadband progresse de 1,4 % tandis que la vidéo recule de 46,7 % — deux dynamiques opposées dans la même maison.",
-      "La division <b>Supply Chain Solutions a été cédée en avril 2025</b> : le groupe s'est recentré sur le CPE.",
-      "Intégration de l'activité <b>Home Networks</b> rachetée à CommScope.",
-      "Contrainte majeure du moment : la <b>pénurie et le prix des composants mémoire</b>, qui pèsent sur la visibilité et sur les marges. Refinancement conduit en avril 2026."
+      "<b>Ce que c'est :</b> un industriel qui conçoit et fabrique les boîtiers que ton opérateur te livre à la maison — box internet, passerelle Wi-Fi, répéteur, décodeur TV, objets connectés. Le métier s'appelle le [[cpe|CPE]].",
+      "<b>Son client n'est pas toi.</b> Vantiva vend aux <b>opérateurs télécoms et aux fournisseurs de télévision payante</b>, par appels d'offres et par volumes énormes. Peu de clients, très gros, donc une pression permanente sur les prix et des volumes qui suivent les cycles d'investissement des opérateurs — pas la demande des particuliers.",
+      "<b>D'où elle vient :</b> de la scission de <b>Technicolor</b>, l'ancien Thomson. Vantiva est cotée sur Euronext Paris et son siège est à Issy-les-Moulineaux. Environ 13 000 collaborateurs dans le monde après l'intégration de l'activité Home Networks rachetée à CommScope.",
+      "<b>Deux activités de sens contraire.</b> Le mix est d'environ 60 % broadband et 40 % vidéo. Au troisième trimestre 2026, le <b>broadband progresse de 1,4 %</b> pendant que la <b>vidéo recule de 46,7 %</b> : les opérateurs continuent d'équiper en connectivité mais abandonnent le décodeur, remplacé par les applications sur téléviseur connecté.",
+      "<b>Le recentrage :</b> la division Supply Chain Solutions a été <b>cédée en avril 2025</b>. Vantiva n'est plus un groupe à deux jambes, c'est un pur acteur du CPE — ne parle donc pas de logistique comme d'une activité maison.",
+      "<b>La contrainte du moment, et c'est le sujet de ton poste :</b> l'allocation et le prix des <b>composants mémoire</b>. Quand le coût d'un composant s'envole entre le moment où le prix de vente est négocié et celui où l'on produit, la marge prévue disparaît. Prévoir dans ces conditions, c'est très exactement le métier du [[fpa|contrôle de gestion]] ici."
+    ],
+    histoire:[
+      ["2022","Naissance de Vantiva","La scission de Technicolor sépare les activités créatives des activités industrielles. La partie équipements prend le nom de Vantiva."],
+      ["2024","Rachat de Home Networks à CommScope","Une opération de consolidation qui fait de Vantiva l'un des grands acteurs mondiaux du CPE et porte l'effectif autour de 13 000 personnes."],
+      ["avril 2025","Cession de Supply Chain Solutions","Le groupe se recentre entièrement sur le CPE. C'est la rupture la plus importante à connaître sur son périmètre actuel."],
+      ["avril 2026","Refinancement","Conduit en même temps que la publication du premier trimestre — un signe que la structure financière était un sujet."],
+      ["S1 2026","Un semestre difficile","734 M€ de chiffre d'affaires, en recul de 14,7 %, et un [[ebitda|EBITDA ajusté]] de 43 M€ contre 66 M€ un an plus tôt. L'EBITA ajusté reste positif à 17 M€."],
+      ["T3 2026","La tendance se poursuit","Ventes en baisse de 7,3 % sur un an. Broadband +1,4 %, vidéo −46,7 %. La visibilité reste limitée par la pénurie de mémoire."]
     ],
     angles:[
       "<b>Le FP&amp;A ici, c'est de la prévision sous contrainte.</b> Un marché où les volumes dépendent des commandes opérateurs et où le coût des composants bouge : savoir modéliser une marge qui se dérobe est le vrai sujet du poste.",
@@ -421,17 +479,25 @@ const DATA = [
     date:"2026-11-12", heure:"18:30", fin:"19:00",
     format:"Visioconférence, 30 minutes", lieu:"Lien à venir — Julien Bourgeois ne l'a pas encore envoyé",
     gens:[
-      ["Julien Bourgeois","Directeur administratif et financier du groupe","06 95 53 54 38. Profil audit et finance industrielle — comme toi, il vient de l'audit. C'est ton meilleur point commun, et il le verra sur ton CV avant que tu l'ouvres."]
+      ["Julien Bourgeois","Directeur administratif et financier du groupe","Profil audit et finance industrielle — comme toi, il vient de l'audit. C'est ton meilleur point commun, et il le verra sur ton CV avant que tu l'ouvres."]
     ],
     resume:"Le nouvel équipementier de la filière nucléaire française, construit par rachats successifs de PME industrielles. Un projet de consolidation (buy-and-build) porté par Otium Capital et Arnaud Montebourg.",
     figs:[["5","acquisitions en moins de 18 mois"],["2024","année de création du groupe"],["EDF, Framatome","les donneurs d'ordre visés"]],
     boite:[
-      "Alfeor fédère des <b>PME sous-traitantes</b> de la filière nucléaire pour en faire un équipementier de rang 1 — l'ambition annoncée est de devenir « une sorte de <b>Valeo du nucléaire</b> ».",
-      "Métiers couverts : forge, fonderie, chaudronnerie, usinage de précision, mécano-soudure, boulonnerie, robinetterie, tuyauterie, traitement de surface, essais mécaniques et métallurgiques, fabrication additive.",
-      "Sociétés acquises : <b>TSM</b> (traitements de surface, usinage de précision, fondée en 1972), <b>Les Ateliers de la Meuse</b> (grande chaudronnerie, soudure, emballages de combustible), <b>Delta Metal</b> (boulonnerie, visserie par forge à chaud, fondée en 1947, environ 40 % de CA nucléaire), <b>Deltafluid</b> (instruments de mesure de pression et de débit, contrôle des fluides), <b>Laboratoire Effitech</b> (essais destructifs et non destructifs).",
-      "Actionnaires : <b>Otium Capital</b> et <b>Les Équipes du Made in France</b>, la holding d'<b>Arnaud Montebourg</b>, qui préside le conseil de surveillance.",
-      "Direction : <b>Éric Druenne</b>, cofondateur et directeur général ; <b>Édouard Sagon</b>, directeur des opérations, ancien de Framatome ; <b>Julien Bourgeois</b>, directeur financier.",
-      "Logique affichée : préserver l'autonomie et l'identité locale de chaque société acquise tout en leur donnant une taille critique, et soutenir la relance du nucléaire et la souveraineté industrielle française."
+      "<b>Ce que c'est :</b> un groupe industriel créé de toutes pièces en rachetant des PME, pour fabriquer un <b>[[rang1|équipementier de rang 1]]</b> de la filière nucléaire française. L'ambition est revendiquée telle quelle : devenir « une sorte de <b>Valeo du nucléaire</b> ».",
+      "<b>Le problème qu'il résout :</b> la relance du nucléaire suppose des fournisseurs capables de livrer des sous-ensembles complets à EDF et Framatome. Or le tissu français est fait de PME isolées, souvent familiales, excellentes dans un métier mais trop petites pour porter la responsabilité d'un ensemble. Alfeor les fédère pour leur donner une taille critique.",
+      "<b>La méthode :</b> un [[buildup|build-up]] — <b>cinq acquisitions en moins de dix-huit mois</b> — avec une promesse faite aux sociétés rachetées : garder leur autonomie, leur nom et leur ancrage local, tout en bénéficiant d'une structure de groupe.",
+      "<b>Les cinq sociétés.</b> <b>TSM</b>, traitements de surface et usinage de précision, fondée en 1972. <b>Les Ateliers de la Meuse</b>, grande chaudronnerie, soudure et emballages de combustible nucléaire. <b>Delta Metal</b>, boulonnerie et visserie par forge à chaud, fondée en 1947, environ 40 % de son chiffre d'affaires dans le nucléaire, près d'un million de pièces par an. <b>Deltafluid</b>, instruments de mesure de pression et de débit et contrôle des fluides, une trentaine de salariés. <b>Laboratoire Effitech</b>, essais destructifs et non destructifs.",
+      "<b>La chaîne de valeur couverte :</b> forge, fonderie, chaudronnerie, usinage, mécano-soudure, boulonnerie, robinetterie, tuyauterie, fabrication additive, traitement de surface, essais mécaniques et métallurgiques. Les métiers se complètent au lieu de se concurrencer — c'est ce qui permet de vendre un ensemble.",
+      "<b>Qui est derrière :</b> <b>Otium Capital</b>, la société d'investissement de Pierre-Édouard Stérin, et <b>Les Équipes du Made in France</b>, la holding d'<b>Arnaud Montebourg</b>, ancien ministre de l'Économie, qui préside le conseil de surveillance. La direction opérationnelle revient à <b>Éric Druenne</b>, cofondateur et directeur général, à <b>Édouard Sagon</b>, directeur des opérations, ancien de Framatome, et à <b>Julien Bourgeois</b>, directeur financier — celui que tu as en face jeudi.",
+      "<b>Pourquoi c'est intéressant pour toi :</b> une direction financière de groupe en construction, c'est de la [[pmi|consolidation post-acquisition]] à l'état pur — harmoniser cinq plans comptables, bâtir un reporting commun, installer un contrôle interne là où il n'y en avait pas. C'est du [[lbo|private equity]] vu de l'intérieur de l'entreprise."
+    ],
+    histoire:[
+      ["2024","Création du groupe","Alfeor naît de l'association entre Les Équipes du Made in France et Otium Capital, avec l'objectif annoncé de contribuer à la souveraineté industrielle française."],
+      ["avril 2024","L'équipe se constitue","Nominations au sein de l'équipe chargée des partenariats et des acquisitions — avant même les premiers rachats. L'ordre est révélateur : on bâtit d'abord la capacité à acheter."],
+      ["mai–juin 2024","Les premières acquisitions","Deux séries d'opérations en six semaines font entrer dans le groupe des entreprises clés de la filière nucléaire."],
+      ["2025","Deltafluid rejoint le groupe","Le contrôle des fluides et l'instrumentation de mesure complètent la chaîne : Alfeor ne vend plus seulement de la pièce mécanique, mais aussi de la mesure."],
+      ["mi-2025","Cinq sociétés fédérées","TSM, Les Ateliers de la Meuse, Delta Metal, Deltafluid et le Laboratoire Effitech. Moins de dix-huit mois depuis la première opération."]
     ],
     angles:[
       "<b>C'est du private equity, mais de l'intérieur.</b> Un buy-and-build adossé à Otium Capital : la direction financière d'Alfeor fait de l'intégration post-acquisition, de la consolidation de comptes et du pilotage multi-sites. Dis-le, c'est précisément ce qui t'attire.",
@@ -472,6 +538,163 @@ const DATA = [
     ]
   }
 ];
+
+
+/* ═══════════════════════════════════════════════════════════════
+   LE LEXIQUE — chaque notion technique citée dans les fiches est
+   marquée [[cle|texte]] et devient cliquable. Écrit pour quelqu'un
+   qui n'a jamais travaillé en banque : pas de définition circulaire.
+   ═══════════════════════════════════════════════════════════════ */
+const GLOSSAIRE = {
+  prudentiel:{t:"Supervision prudentielle", d:`
+    <p>« Prudentiel » veut dire : qui sert à éviter la faillite. Une banque prête de l'argent qu'elle ne possède pas — elle le doit à ses déposants. Si elle prête trop, ou trop mal, elle tombe, et les déposants avec elle. La supervision prudentielle, c'est la surveillance publique qui vérifie en permanence qu'une banque reste capable de tenir ses engagements.</p>
+    <p>Concrètement, un superviseur contrôle trois choses : les <b>fonds propres</b> (l'argent qui appartient vraiment à la banque et qui absorbe les pertes), la <b>liquidité</b> (sa capacité à rendre l'argent tout de suite si beaucoup de clients le réclament en même temps), et la <b>qualité des risques</b> pris (à qui elle prête, et avec quelles garanties).</p>
+    <p>Le superviseur a de vrais pouvoirs : exiger plus de fonds propres, interdire une opération, retirer un agrément. C'est pour ça qu'un rachat de banque prend des mois : il faut son feu vert.</p>
+    <p>En France, c'est l'[[acpr|ACPR]] ; pour les plus grandes banques de la zone euro, c'est la Banque centrale européenne.</p>`},
+  acpr:{t:"ACPR", d:`
+    <p>Autorité de contrôle prudentiel et de résolution. C'est le gendarme des banques et des assurances en France, adossé à la Banque de France.</p>
+    <p>Deux missions dans son nom. <b>Contrôle prudentiel</b> : elle surveille la solidité des établissements (voir [[prudentiel|supervision prudentielle]]). <b>Résolution</b> : elle prépare et organise ce qu'on fait d'une banque qui tombe, pour que ça ne contamine pas le reste et que l'État n'ait pas à payer.</p>
+    <p>Elle produit des rapports de contrôle sur chaque établissement : constats, demandes de correction, délais. C'est exactement ce type de document que tu as dépouillé à la Caisse des Dépôts — et en entretien, le dire suffit : ça prouve que tu as déjà vu de l'intérieur à quoi ressemble la régulation bancaire.</p>`},
+  "fonds-epargne":{t:"Le Fonds d'épargne", d:`
+    <p>Un circuit financier géré par la Caisse des Dépôts, et l'un des plus gros d'Europe : plus de 400 milliards d'euros.</p>
+    <p>Le principe : quand tu déposes de l'argent sur un [[livret|Livret A]], ta banque n'en garde qu'une partie. Une fraction importante est <b>centralisée</b>, c'est-à-dire envoyée à la Caisse des Dépôts, qui la réunit dans le Fonds d'épargne.</p>
+    <p>Cet argent sert ensuite à prêter très long — jusqu'à quarante ou soixante ans — pour le <b>logement social</b> et les équipements publics. Aucune banque privée ne prête sur ces durées ; le Fonds d'épargne le peut parce que l'encours des livrets, lui, ne disparaît jamais vraiment.</p>
+    <p>C'est pour ça que ton stage parle directement à la Caisse d'Épargne : elle collecte en amont, le Fonds d'épargne redistribue en aval, et les bailleurs sociaux du groupe (Sia Habitat, SIGH, Hosmia) empruntent justement de ce côté-là.</p>`},
+  livret:{t:"Épargne réglementée et Livret A", d:`
+    <p>« Réglementée » signifie que ce n'est pas la banque qui fixe les règles, mais l'État : le taux, le plafond, l'absence d'impôt. Livret A, LDDS, LEP fonctionnent ainsi.</p>
+    <p>L'épargnant y gagne un placement sans risque et disponible. L'État y gagne un réservoir d'argent stable qu'il oriente vers l'intérêt général. La banque, elle, perçoit une commission pour la part qu'elle centralise.</p>
+    <p>Le Livret A est le produit historique des Caisses d'Épargne — c'est leur métier d'origine, et c'est pour ça que l'enseigne s'appelle ainsi.</p>`},
+  cooperative:{t:"Banque coopérative et sociétaires", d:`
+    <p>Une banque coopérative n'a pas d'actionnaires. Elle appartient à ses <b>sociétaires</b> : des clients qui ont acheté des parts sociales. La Caisse d'Épargne Hauts-de-France en compte 420 000.</p>
+    <p>La différence n'est pas cosmétique. Un actionnaire cherche une plus-value et un dividende croissant ; une part sociale, elle, ne monte pas en valeur — elle rapporte un intérêt plafonné. Et surtout la règle de vote est « une personne, une voix », pas « une action, une voix » : détenir mille parts ne donne pas mille voix.</p>
+    <p>Conséquence stratégique, et c'est l'argument à tenir en entretien : <b>personne n'exige un résultat trimestriel en hausse</b>. La banque peut acheter une maison fondée en 1747 et mettre dix ans à l'intégrer. Un groupe coté ne le ferait pas de la même façon.</p>
+    <p>Ne dis donc jamais « créer de la valeur pour l'actionnaire » en face d'eux : il n'y en a pas.</p>`},
+  bpce:{t:"Le groupe BPCE", d:`
+    <p>Deuxième groupe bancaire français, né en 2009 de la fusion des organes centraux des Banques Populaires et des Caisses d'Épargne.</p>
+    <p>Point important : BPCE n'est pas la maison mère au sens classique. Ce sont les <b>quinze Caisses d'Épargne régionales et les Banques Populaires qui détiennent BPCE</b>, et non l'inverse. L'organe central assure la solidarité financière, la liquidité et le respect de la réglementation ; chaque caisse régionale garde son autonomie de décision, son conseil et sa stratégie.</p>
+    <p>C'est ce qui rend possible qu'une caisse régionale rachète seule une banque belge. Si tu dis « la Caisse d'Épargne » comme s'il s'agissait d'une entité nationale unique, tu te trompes de maison.</p>`},
+  pnb:{t:"Produit net bancaire (PNB)", d:`
+    <p>L'équivalent du chiffre d'affaires, mais pour une banque. On ne peut pas additionner bêtement les montants prêtés : ce n'est pas un revenu, c'est de l'argent qui repart.</p>
+    <p>Le PNB additionne donc trois choses : la <b>marge d'intérêt</b> (ce que la banque encaisse sur ses prêts moins ce qu'elle paie sur les dépôts et ses propres emprunts), les <b>commissions</b> (tenue de compte, assurance, gestion de patrimoine), et les <b>gains sur ses activités de marché</b>.</p>
+    <p>En anglais : <i>net banking income</i>. Le groupe CENORBANK a réalisé 865 M€ de PNB en 2025, dont 106 M€ à l'international.</p>`},
+  rn:{t:"Résultat net", d:`
+    <p>Ce qui reste à la fin : le [[pnb|PNB]] moins les charges d'exploitation (salaires, informatique, agences), moins le <b>coût du risque</b> — les provisions passées sur les crédits qu'on pense ne pas récupérer — moins l'impôt.</p>
+    <p>Dans une banque, le coût du risque est la ligne qui fait basculer un exercice. Une année calme et un bon résultat ; une récession et des provisions qui doublent.</p>
+    <p>Chez une coopérative, ce résultat n'est pas distribué à des actionnaires : il alimente les fonds propres, ce qui permet de prêter davantage l'année suivante.</p>`},
+  "b-corp":{t:"Certification B Corp", d:`
+    <p>Un label privé, décerné par l'ONG B Lab, qui évalue une entreprise sur son impact social et environnemental, sa gouvernance, son traitement des salariés et de ses clients.</p>
+    <p>L'évaluation est chiffrée, il faut dépasser un seuil, et elle est à repasser tous les trois ans. Ce n'est pas une déclaration d'intention : c'est un audit avec un score.</p>
+    <p>Pour une banque coopérative, c'est une manière de rendre vérifiable un discours que tout le monde tient. En entretien, c'est une bonne porte d'entrée si tu veux parler de ton modèle Net Zero.</p>`},
+  opas:{t:"OPAS — offre publique d'achat simplifiée", d:`
+    <p>Une offre publique d'achat, c'est quand quelqu'un propose publiquement de racheter les actions d'une société cotée, à un prix annoncé, pendant une période ouverte à tous.</p>
+    <p>Elle est <b>simplifiée</b> quand l'initiateur contrôle déjà la société — il ne cherche pas à en prendre le contrôle, seulement à ramasser le flottant restant. La procédure est allégée et plus courte.</p>
+    <p>Chez Altur : en janvier 2024, Suffren Holding, la holding de la famille Lombard, a offert 11 € par action pour les 10,48 % qu'elle ne détenait pas, puis a enchaîné sur un [[retrait|retrait obligatoire]].</p>`},
+  retrait:{t:"Retrait obligatoire", d:`
+    <p>En anglais <i>squeeze-out</i>. Quand, à l'issue d'une offre, il reste moins de 10 % du capital entre les mains des actionnaires minoritaires, l'initiateur peut exiger de racheter ce reliquat <b>même contre leur volonté</b>, au même prix que l'offre.</p>
+    <p>C'est la dernière marche de la sortie de la Bourse : une fois le retrait réalisé, l'action cesse d'être cotée et la société redevient entièrement privée.</p>
+    <p>Le but n'est pas de spolier qui que ce soit — le prix est contrôlé par l'AMF et un expert indépendant — mais d'éviter qu'une société reste cotée avec une poignée d'actionnaires, ce qui coûte cher en obligations de publication pour rien.</p>`},
+  fpci:{t:"FPCI", d:`
+    <p>Fonds professionnel de capital investissement. C'est le véhicule juridique français dans lequel on met l'argent destiné à acheter des parts de sociétés non cotées.</p>
+    <p>« Professionnel » signifie qu'il est réservé à des investisseurs avertis — institutions, family offices, particuliers fortunés — avec un ticket d'entrée élevé. En contrepartie, la réglementation est plus légère que pour un fonds grand public.</p>
+    <p>Un FPCI a une durée de vie finie, souvent dix ans : on lève l'argent, on investit pendant quatre ou cinq ans, on accompagne, puis on revend tout et on rend l'argent aux souscripteurs. Altur EdTrain est un FPCI.</p>`},
+  closing:{t:"Closing, cible, hard cap", d:`
+    <p>Lever un fonds ne se fait pas en une fois. Le <b>premier closing</b> est le moment où l'on a réuni assez d'engagements pour commencer à investir, sans attendre d'avoir tout collecté. On continue ensuite à lever pendant un an ou deux.</p>
+    <p>La <b>cible</b> est le montant visé. Le <b>hard cap</b> est le plafond absolu : au-delà, on refuse l'argent, parce qu'un fonds trop gros pour sa stratégie serait contraint de faire des opérations plus grosses que ce qu'il sait faire.</p>
+    <p>Altur EdTrain : premier closing à 10 M€, cible 30 M€, hard cap 50 M€.</p>`},
+  lbo:{t:"LBO", d:`
+    <p><i>Leveraged buy-out</i> : rachat avec effet de levier. On crée une société holding qui emprunte une grosse partie du prix, et c'est cette holding qui achète l'entreprise cible.</p>
+    <p>La dette est ensuite remboursée par les bénéfices que l'entreprise rachetée remonte à la holding. L'investisseur n'a donc mis qu'une fraction du prix en argent propre, ce qui démultiplie son rendement si tout se passe bien — et ses pertes sinon.</p>
+    <p>Le point de vigilance, c'est que l'entreprise doit générer un cash-flow régulier et prévisible pour tenir l'échéancier. D'où l'attrait du PE pour les activités à revenus récurrents, comme la formation.</p>`},
+  mbo:{t:"MBO", d:`
+    <p><i>Management buy-out</i> : un LBO dans lequel ce sont les <b>dirigeants en place</b> qui rachètent leur propre entreprise, avec l'appui financier d'un fonds.</p>
+    <p>C'est souvent la solution d'une transmission : le fondateur veut sortir, l'équipe connaît la maison, le fonds apporte l'argent et la discipline. ArtFX, chez Altur, est un MBO.</p>`},
+  buildup:{t:"Build-up", d:`
+    <p>Stratégie qui consiste à acheter une première société — la « plateforme » — puis à lui faire racheter des concurrents ou des métiers voisins pour construire un ensemble plus gros.</p>
+    <p>L'intérêt est double. Opérationnel : on mutualise les achats, les fonctions support, la force commerciale. Financier : un petit groupe se valorise à un multiple plus faible qu'un grand, donc en additionnant des petits on crée mécaniquement de la valeur à la revente.</p>
+    <p>C'est exactement le modèle d'<b>Alfeor</b> dans le nucléaire, et celui d'Eléas chez Altur.</p>`},
+  lp:{t:"LP, co-investissement, fonds sponsorisé", d:`
+    <p><b>LP</b> veut dire <i>limited partner</i> : l'investisseur qui met de l'argent dans le fonds de quelqu'un d'autre et n'intervient pas dans les décisions. Celui qui gère, lui, est le <i>general partner</i>.</p>
+    <p><b>Co-investissement</b> : au lieu de passer seulement par le fonds, on met aussi de l'argent directement dans une opération précise, aux côtés du gérant. Moins de frais, mais il faut savoir juger le dossier soi-même.</p>
+    <p><b>Fonds sponsorisé</b> : on apporte sa marque, son réseau et une part de l'argent à une équipe de gestion, qui lève le reste auprès de tiers.</p>
+    <p>Les quatre axes d'Altur sont là : LP, co-investissement, investissement direct, fonds sponsorisé.</p>`},
+  dd:{t:"Due diligence", d:`
+    <p>L'enquête menée avant d'acheter. On ouvre les comptes, les contrats, les contentieux, les contrats de travail, les assurances, l'outil informatique, et on vérifie que la réalité correspond à ce que le vendeur raconte.</p>
+    <p>Elle se découpe par métier : financière, juridique, fiscale, sociale, technique, et de plus en plus environnementale. Chacune peut faire baisser le prix, ajouter une garantie au contrat, ou faire renoncer à l'opération.</p>
+    <p>C'est le point où ton passage en audit interne est un atout direct : la méthode est la même — remonter du chiffre déclaré à la pièce qui le justifie.</p>`},
+  pmi:{t:"Intégration post-acquisition", d:`
+    <p><i>Post-merger integration</i>. C'est ce qui se passe après la signature, et c'est là que la plupart des opérations réussissent ou échouent.</p>
+    <p>Il faut fusionner des plans comptables, des systèmes informatiques, des grilles de rémunération, des cultures de travail — et le faire sans faire fuir les clients ni les équipes qui font la valeur de la cible.</p>
+    <p>Pour une banque privée comme Nagelmackers, dont l'actif est la confiance de 110 000 clients, c'est particulièrement délicat : intégrer trop vite détruit précisément ce qu'on a acheté. C'est un très bon sujet de question à poser en entretien.</p>`},
+  sfdr:{t:"Article 8 SFDR", d:`
+    <p>SFDR est le règlement européen qui oblige les fonds à dire ce qu'ils font vraiment en matière de durabilité, pour limiter le <i>greenwashing</i>.</p>
+    <p>Il classe les fonds en trois familles : <b>article 6</b>, pas d'objectif durable particulier ; <b>article 8</b>, le fonds promeut des caractéristiques environnementales ou sociales et doit le documenter ; <b>article 9</b>, la durabilité est l'objectif même du fonds, et les exigences sont les plus lourdes.</p>
+    <p>Altur EdTrain est classé article 8.</p>`},
+  b150:{t:"Le 150-0 B ter", d:`
+    <p>Un article du code général des impôts, souvent appelé « apport-cession ».</p>
+    <p>Le mécanisme : un entrepreneur qui vend sa société apporte d'abord ses titres à une holding qu'il contrôle, ce qui met l'impôt sur la plus-value en attente. Pour que ce report dure, il doit <b>réinvestir une part du produit de la vente dans une activité économique</b> dans un délai fixé — et un FPCI éligible compte comme réinvestissement.</p>
+    <p>C'est pour cela que les fonds mettent cette éligibilité en avant : elle leur ouvre l'argent des entrepreneurs qui viennent de vendre.</p>`},
+  anr:{t:"Actif net réévalué (ANR)", d:`
+    <p>La mesure de ce que vaut une société d'investissement. On réestime chaque participation à sa valeur du moment — et non à son prix d'achat — on additionne, on retranche les dettes, et on divise par le nombre d'actions.</p>
+    <p>C'est l'indicateur que publient les véhicules cotés comme l'était Altur, parce que leur cours de Bourse ne dit rien d'utile : il reflète surtout la liquidité du titre.</p>
+    <p>En anglais : <i>net asset value</i>, NAV.</p>`},
+  fo:{t:"Family office", d:`
+    <p>La structure qui gère le patrimoine d'une famille fortunée : placements, immobilier, participations dans des entreprises, transmission, fiscalité.</p>
+    <p>On parle de <i>single family office</i> quand elle ne sert qu'une seule famille — c'est ce que revendique Altur depuis sa sortie de la cote — et de <i>multi family office</i> quand elle en sert plusieurs.</p>
+    <p>La conséquence pratique : l'horizon d'investissement est celui d'une famille, pas celui d'un fonds qui doit rendre l'argent au bout de dix ans.</p>`},
+  aum:{t:"Actifs sous gestion", d:`
+    <p><i>Assets under management</i>, AuM. Le montant total que des clients confient à un gérant. Ce n'est <b>pas</b> l'argent du gérant : c'est celui des clients, dont il tire des commissions proportionnelles.</p>
+    <p>C'est l'indicateur de taille de la banque privée et de la gestion d'actifs. Nagelmackers : 4,9 milliards d'euros pour 110 000 clients.</p>`},
+  "banque-privee":{t:"Banque privée", d:`
+    <p>Le métier qui consiste à gérer le patrimoine de clients fortunés : placements financiers, immobilier, crédit, structuration de la transmission, parfois philanthropie.</p>
+    <p>Ce métier plaît aux banques parce qu'il consomme peu de fonds propres et rapporte des <b>commissions récurrentes</b> — à la différence du crédit, qui immobilise du capital. D'où l'attrait de Nagelmackers.</p>`},
+  cpe:{t:"CPE", d:`
+    <p><i>Customer Premises Equipment</i> : les équipements installés chez l'abonné. Box internet, passerelle Wi-Fi, répéteur, décodeur TV, objets connectés.</p>
+    <p>Particularité du marché : le client final ne choisit pas et ne paie pas directement. C'est l'<b>opérateur</b> qui achète en volume et distribue. Quelques clients énormes, donc, des appels d'offres, une pression permanente sur les prix, et des volumes qui dépendent des cycles d'investissement des opérateurs.</p>
+    <p>C'est le cœur de métier de Vantiva : environ 60 % broadband, 40 % vidéo.</p>`},
+  fpa:{t:"FP&A — contrôle de gestion", d:`
+    <p><i>Financial planning and analysis</i>. L'équipe qui construit le budget, le révise en cours d'année (<i>reforecast</i>), produit le reporting mensuel et explique les écarts entre ce qui était prévu et ce qui s'est passé.</p>
+    <p>Différence avec la comptabilité : le comptable enregistre le passé et doit être exact ; le contrôleur de gestion éclaire l'avenir et doit être utile. Différence avec l'audit : l'audit vérifie, le FP&amp;A pilote.</p>
+    <p>Chez Vantiva, l'exercice est rendu difficile par la volatilité du prix des composants mémoire : la marge prévue en janvier peut ne plus exister en juin.</p>`},
+  ebitda:{t:"EBITDA et EBITDA ajusté", d:`
+    <p>L'EBITDA est le résultat d'exploitation avant amortissements : grossièrement, ce que l'activité dégage en cash avant de tenir compte de l'usure des machines, des intérêts et de l'impôt. On l'utilise pour comparer des entreprises sans se laisser brouiller par leur dette ou leur fiscalité.</p>
+    <p>« <b>Ajusté</b> » veut dire qu'on en a retiré des éléments jugés exceptionnels : coûts de restructuration, frais d'acquisition, litiges. C'est utile pour voir la performance courante — et c'est aussi la ligne où une direction financière peut embellir le tableau. Regarde toujours ce qui a été ajusté.</p>
+    <p>Vantiva : 43 M€ d'EBITDA ajusté au premier semestre 2026, contre 66 M€ un an plus tôt.</p>`},
+  mezz:{t:"Dette mezzanine", d:`
+    <p>Un financement intermédiaire entre le prêt bancaire classique et le capital. En cas de faillite, le mezzaneur est remboursé <b>après</b> les banques mais <b>avant</b> les actionnaires.</p>
+    <p>Comme il prend plus de risque, il est mieux payé : taux élevé, intérêts souvent capitalisés, et parfois un accès au capital par des bons de souscription.</p>
+    <p>C'est ce qui permet de boucler un [[lbo|LBO]] quand les banques refusent de prêter davantage mais que l'acheteur ne veut pas diluer son capital. CENORBANK Mezzanine fait ce métier.</p>`},
+  rang1:{t:"Équipementier de rang 1", d:`
+    <p>Dans une filière industrielle, les fournisseurs sont classés par étages. Le <b>rang 1</b> livre directement le donneur d'ordre — EDF, Framatome, Airbus — et lui vend un sous-ensemble complet dont il assume la conception, la qualité et les délais. Le rang 2 et au-delà fournissent des pièces au rang 1.</p>
+    <p>Passer du rang 2 au rang 1 change tout : marges supérieures, contrats pluriannuels, relation directe avec le client. Mais il faut la taille, les certifications et la capacité d'ingénierie pour porter la responsabilité de l'ensemble.</p>
+    <p>C'est précisément le projet d'Alfeor : fédérer des PME de rang 2 pour fabriquer un rang 1 — « une sorte de Valeo du nucléaire ».</p>`},
+  agrement:{t:"Agrément bancaire", d:`
+    <p>L'autorisation d'exercer le métier de banque. Sans elle, il est interdit de recevoir des dépôts du public.</p>
+    <p>Elle est délivrée par le superviseur (voir [[prudentiel|supervision prudentielle]]) après examen du capital, des dirigeants, du dispositif de contrôle interne et du plan d'affaires. Et elle n'est pas acquise : le superviseur peut la retirer.</p>
+    <p>Elle est <b>attachée à l'établissement</b>, pas à son propriétaire : racheter une banque suppose donc l'accord du superviseur sur le nouvel actionnaire. C'est ce qui explique les six mois entre l'annonce du rachat de Nagelmackers et sa finalisation.</p>`},
+  "small-cap":{t:"Small cap et capital-développement", d:`
+    <p><b>Small cap</b> désigne les petites entreprises — chez Altur, de 2 à 20 M€ de chiffre d'affaires. Le marché y est moins concurrentiel qu'en large cap : moins de fonds en face, des prix d'entrée plus bas, mais un travail d'accompagnement bien plus lourd.</p>
+    <p><b>Capital-développement</b> : on entre au capital d'une société déjà rentable pour financer sa croissance, souvent en minoritaire, sans dette d'acquisition massive. C'est le contraire du [[lbo|LBO]] de transmission, où l'on rachète pour prendre le contrôle.</p>`}
+};
+
+/* [[cle|texte]] devient un bouton ; [[cle]] affiche le titre du terme. */
+function gl(t){
+  return String(t).replace(/\[\[([a-z0-9-]+)(?:\|([^\]]+))?\]\]/g, (m, k, lab) => {
+    const e = GLOSSAIRE[k];
+    if(!e) return lab || k;
+    return `<button class="gterm" onclick="voirTerme('${k}')">${lab || e.t}<i>?</i></button>`;
+  });
+}
+function voirTerme(k){
+  const e = GLOSSAIRE[k]; if(!e) return;
+  const d = document.getElementById("modal");
+  d.innerHTML = `<div class="sheet" role="dialog" aria-modal="true" aria-label="${e.t}">
+      <div class="shead"><h2>${e.t}</h2><button class="x" onclick="fermerTerme()" aria-label="Fermer">✕</button></div>
+      <div class="sbody">${gl(e.d)}</div></div>`;
+  d.hidden = false; document.body.style.overflow = "hidden";
+  d.onclick = ev => { if(ev.target === d) fermerTerme(); };
+}
+function fermerTerme(){ const d = document.getElementById("modal"); d.hidden = true; document.body.style.overflow = ""; }
+addEventListener("keydown", e => { if(e.key === "Escape") fermerTerme(); });
 
 /* ── état ───────────────────────────────────────────────────────── */
 const SKEY = "entretiens:v1";
@@ -556,7 +779,7 @@ function theme(){
   try{ localStorage.setItem("entretiens:theme", sombre ? "light" : "dark"); }catch(e){}
 }
 
-const ONGLETS = [["rdv","Le RDV"],["boite","La boîte"],["angles","Tes angles"],["pitch","Présentation"],["qa","Questions"],["poser","À poser"],["pieges","Pièges"],["quiz","Quiz"]];
+const ONGLETS = [["rdv","Le RDV"],["boite","La boîte"],["angles","Tes angles"],["pitch","Présentation"],["qa","Questions"],["poser","À poser"],["pieges","Pièges"],["quiz","Quiz"],["lex","Lexique"]];
 
 function fiche(){
   const iv = ouvert;
@@ -581,17 +804,20 @@ function panneau(iv){
           <dt>Format</dt><dd><b>${esc(iv.format)}</b><small>${esc(iv.lieu)}</small></dd>
           <dt>Poste</dt><dd>${esc(iv.poste)}</dd>
         </dl></div>
-      <p>${esc(iv.resume)}</p>
+      <p>${gl(iv.resume)}</p>
       <h3>Qui tu as en face</h3>
-      ${iv.gens.map(g=>`<div class="box"><div><b>${esc(g[0])}</b><br><span style="color:var(--c);font-size:14.5px;font-weight:600">${esc(g[1])}</span></div><p style="color:var(--muted);font-size:15.5px">${g[2]}</p></div>`).join("")}`,
+      ${iv.gens.map(g=>`<div class="box"><div><b>${esc(g[0])}</b><br><span style="color:var(--c);font-size:14.5px;font-weight:600">${esc(g[1])}</span></div><p style="color:var(--muted);font-size:15.5px">${gl(g[2])}</p></div>`).join("")}`,
     boite: () => `${iv.figs?`<div class="figs">${iv.figs.map(f=>`<div><b>${f[0]}</b><small>${f[1]}</small></div>`).join("")}</div>`:""}
-      <ul>${iv.boite.map(x=>`<li>${x}</li>`).join("")}</ul>`,
-    angles: () => `<ul>${iv.angles.map(x=>`<li>${x}</li>`).join("")}</ul>`,
+      <h3>Ce qu'elle est</h3>
+      <ul>${iv.boite.map(x=>`<li>${gl(x)}</li>`).join("")}</ul>
+      ${iv.histoire?`<h3>Son histoire récente</h3><div class="box hist">${iv.histoire.map(h=>`<div class="ev"><span class="yr">${h[0]}</span><div><b>${gl(h[1])}</b><small>${gl(h[2])}</small></div></div>`).join("")}</div>`:""}`,
+    angles: () => `<ul>${iv.angles.map(x=>`<li>${gl(x)}</li>`).join("")}</ul>`,
     pitch: () => pitch(iv),
-    qa: () => `<div class="qa">${iv.qa.map(x=>`<div><p class="q">${esc(x[0])}</p><p class="a">${x[1]}</p></div>`).join("")}</div>`,
+    qa: () => `<div class="qa">${iv.qa.map(x=>`<div><p class="q">${esc(x[0])}</p><p class="a">${gl(x[1])}</p></div>`).join("")}</div>`,
     poser: () => `<p>Quelques-unes suffisent. Elles doivent prouver que tu as compris le dossier.</p><ul>${iv.poser.map(x=>`<li>${esc(x)}</li>`).join("")}</ul>`,
-    pieges: () => `<div class="box trap">${iv.pieges.map(x=>`<div>${x}</div>`).join("")}</div>`,
-    quiz: () => quiz(iv)
+    pieges: () => `<div class="box trap">${iv.pieges.map(x=>`<div>${gl(x)}</div>`).join("")}</div>`,
+    quiz: () => quiz(iv),
+    lex: () => lexique()
   };
   return P[onglet]();
 }
@@ -611,7 +837,7 @@ function pitch(iv){
       <button aria-pressed="${l==='en'}" onclick="lang('en')">ENGLISH</button>
     </div>
     <div class="box">${beats.map(b=>`<div class="beat"><div class="mk"><b>${b.t}</b><span>${b.s}</span></div>
-      <div>${b.p.map(x=>`<p>${x}</p>`).join("")}</div></div>`).join("")}</div>
+      <div>${b.p.map(x=>`<p>${gl(x)}</p>`).join("")}</div></div>`).join("")}</div>
     <p style="color:var(--muted);font-size:15px"><i>Répète-la à voix haute deux fois. Lue dans la tête, elle ne tient pas en bouche.</i></p>`;
 }
 function lang(l){ S.lang = l; save(); render(); }
@@ -644,18 +870,25 @@ function rep(id, i, j){
 }
 function razQuiz(id){ delete S.quiz[id]; save(); render(); }
 
+
+function lexique(){
+  const cles = Object.keys(GLOSSAIRE).sort((a,b)=>GLOSSAIRE[a].t.localeCompare(GLOSSAIRE[b].t,"fr"));
+  return `<p>Toutes les notions techniques employées dans les fiches. Touche un terme pour l'explication complète.</p>
+    <div class="box"><ul>${cles.map(k=>`<li>${gl("[["+k+"]]")} <span style="color:var(--muted);font-size:14.5px">— ${esc(GLOSSAIRE[k].d.replace(/<[^>]+>/g," ").replace(/\[\[[a-z0-9-]+\|?([^\]]*)\]\]/g,"$1").replace(/\s+/g," ").trim().slice(0,95))}…</span></li>`).join("")}</ul></div>`;
+}
+
 function profil(){
   return `<header class="top">
       <div class="grow"><p class="eyebrow">Ce que tu peux dire de toi</p><h1>Mon profil</h1></div>
       <button class="tgl" onclick="theme()" aria-label="Changer de thème">◐</button>
     </header>
-    <div class="box"><b>${MOI.nom}</b><small style="color:var(--muted)">${MOI.tel} · ${MOI.mail}</small></div>
+    <div class="box"><b>${MOI.nom}</b><small style="color:var(--muted)">Master in Management, ESCP Business School</small></div>
     <h2>Formation</h2>
-    <div class="box cv">${MOI.formation.map(r=>`<div class="row"><span class="yr">${r[0]}</span><div><b>${r[1]}</b><small>${r[2]}</small></div></div>`).join("")}</div>
+    <div class="box cv">${MOI.formation.map(r=>`<div class="row"><span class="yr">${r[0]}</span><div><b>${r[1]}</b><small>${gl(r[2])}</small></div></div>`).join("")}</div>
     <h2>Expérience</h2>
-    <div class="box cv">${MOI.exp.map(r=>`<div class="row"><span class="yr">${r[0]}</span><div><b>${r[1]}</b><small>${r[2]}</small></div></div>`).join("")}</div>
+    <div class="box cv">${MOI.exp.map(r=>`<div class="row"><span class="yr">${r[0]}</span><div><b>${r[1]}</b><small>${gl(r[2])}</small></div></div>`).join("")}</div>
     <h2>Le reste</h2>
-    <div class="box"><ul>${MOI.autres.map(x=>`<li>${x}</li>`).join("")}</ul></div>
+    <div class="box"><ul>${MOI.autres.map(x=>`<li>${gl(x)}</li>`).join("")}</ul></div>
     <h2>Vocabulaire anglais</h2>
     <div class="box"><table class="gloss">
       <tr><td>épargne réglementée</td><td>regulated savings</td></tr>
