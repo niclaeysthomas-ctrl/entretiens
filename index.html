@@ -860,14 +860,17 @@ function pitch(iv){
   return `<div class="key"><span class="lab">La structure</span>
       <b>Ancrage → Preuve → Trajectoire → Demande.</b> D'où je viens · ce que j'ai déjà fait · pourquoi vous précisément · ce que je viens chercher.</div>
     <div class="langs">
-      <button aria-pressed="${l==='fr'}" onclick="lang('fr')">FRANÇAIS</button>
-      <button aria-pressed="${l==='en'}" onclick="lang('en')">ENGLISH</button>
+      <button aria-pressed="${l==='fr'}" onclick="majLangue('fr')">FRANÇAIS</button>
+      <button aria-pressed="${l==='en'}" onclick="majLangue('en')">ENGLISH</button>
     </div>
     <div class="box">${beats.map(b=>`<div class="beat"><div class="mk"><b>${b.t}</b><span>${b.s}</span></div>
       <div>${b.p.map(x=>`<p>${gl(x)}</p>`).join("")}</div></div>`).join("")}</div>
     <p style="color:var(--muted);font-size:15px"><i>Répète-la à voix haute deux fois. Lue dans la tête, elle ne tient pas en bouche.</i></p>`;
 }
-function lang(l){ S.lang = l; save(); render(); }
+/* « lang » est une propriété de tout élément HTML : dans un attribut onclick,
+   le navigateur résout button.lang (une chaîne vide) avant la fonction globale.
+   D'où un nom qui n'entre en collision avec rien. */
+function majLangue(l){ S.lang = l; save(); render(); }
 
 function quiz(iv){
   const r = (S.quiz[iv.id] && S.quiz[iv.id].rep) || {};
