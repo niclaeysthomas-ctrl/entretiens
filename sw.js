@@ -1,5 +1,5 @@
 // LES ENTRETIENS — service worker : network-first, repli cache (lisible hors ligne, dans le train)
-const CACHE = "entretiens-v1";
+const CACHE = "entretiens-v2-2tours";
 const ASSETS = ["./", "./index.html", "./manifest.webmanifest", "./icon-192.png", "./icon-512.png"];
 
 self.addEventListener("install", e => {
