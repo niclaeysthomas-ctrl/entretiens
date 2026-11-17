@@ -147,6 +147,67 @@
   .reset{margin-left:auto;background:none;border:1px solid var(--line);border-radius:4px;color:var(--muted);
     padding:7px 11px;font-size:13.5px;cursor:pointer}
 
+  /* ── niveaux de difficulté ── */
+  .nivs{display:flex;flex-wrap:wrap;gap:6px}
+  .nv{font-family:var(--mono);font-size:11px;letter-spacing:.05em;padding:6px 10px;border-radius:99px;
+    border:1px solid var(--line);background:var(--card);color:var(--muted);cursor:pointer}
+  .nv.on{background:var(--c,var(--brick));border-color:var(--c,var(--brick));color:#fff}
+  .nivd{color:var(--muted);font-size:14.5px;font-style:italic;margin-top:-6px}
+
+  /* ── accordéon (masterclass et cas) ── */
+  .tout{display:flex;align-items:center;gap:10px}
+  .tout button{font-family:var(--mono);font-size:11px;letter-spacing:.06em;padding:6px 11px;border-radius:3px;
+    border:1px solid var(--line);background:var(--card);color:var(--muted);cursor:pointer;text-transform:uppercase}
+  .tout span{font-family:var(--mono);font-size:11px;color:var(--faint)}
+  .acc{display:flex;flex-direction:column;background:var(--line);border:1px solid var(--line);
+    border-radius:5px;overflow:hidden;gap:1px}
+  .ac{background:var(--card)}
+  .ach{display:flex;align-items:baseline;gap:11px;width:100%;text-align:left;background:none;border:0;
+    padding:13px 14px;cursor:pointer;color:inherit}
+  .ach .n{font-family:var(--mono);font-size:11px;color:var(--faint);flex:none;padding-top:2px}
+  .ach b{flex:1;font-weight:600;font-size:16px;line-height:1.35}
+  .ach .ar{flex:none;font-family:var(--mono);font-size:16px;color:var(--c,var(--brick));line-height:1}
+  .ac.on .ach b{color:var(--c,var(--brick))}
+  .acb{padding:0 14px 15px;display:flex;flex-direction:column;gap:11px;font-size:16px}
+  .acb p{line-height:1.62}
+
+  /* ── les cas ── */
+  .cas{display:flex;flex-direction:column;gap:8px}
+  .cs{background:var(--card);border:1px solid var(--line);border-radius:5px;overflow:hidden}
+  .cs.on{border-color:var(--c,var(--brick))}
+  .csh{display:flex;align-items:center;gap:11px;width:100%;text-align:left;background:none;border:0;
+    padding:13px 14px;cursor:pointer;color:inherit}
+  .lvl{flex:none;font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;padding:3px 7px;border-radius:3px;
+    background:var(--card2);color:var(--muted)}
+  .lvl.l1{background:var(--good-soft);color:var(--good)}
+  .lvl.l2{background:var(--canal-soft);color:var(--canal)}
+  .lvl.l3{background:var(--gold-soft);color:var(--gold)}
+  .lvl.l4{background:var(--gold-soft);color:var(--gold)}
+  .lvl.l5{background:var(--brick-soft);color:var(--brick)}
+  .csg{flex:1;min-width:0}
+  .csg b{display:block;font-weight:600;font-size:16px;line-height:1.3}
+  .csg small{display:block;color:var(--muted);font-size:13.5px;line-height:1.4;margin-top:2px}
+  .csp{flex:none;font-family:var(--mono);font-size:11.5px;color:var(--faint)}
+  .csb{padding:0 14px 15px;display:flex;flex-direction:column;gap:13px}
+  .don{background:var(--card2);border-radius:4px;padding:12px 14px;font-size:15.5px}
+  .don .lab{display:block;font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--faint);margin-bottom:7px}
+  .et{border-top:1px solid var(--line-soft);padding-top:12px}
+  .et .num{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;color:var(--faint);text-transform:uppercase}
+  .et .txt{font-weight:600;margin:3px 0 9px;line-height:1.45}
+  .voir{font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;padding:7px 12px;
+    border-radius:3px;border:1px dashed var(--line);background:none;color:var(--muted);cursor:pointer}
+  .attente{font-size:14.5px;color:var(--faint);font-style:italic;border-top:1px solid var(--line-soft);padding-top:12px}
+  .voir:hover{border-style:solid;color:var(--c,var(--brick));border-color:var(--c,var(--brick))}
+
+  /* ── quiz : la question répondue se replie sur sa correction ── */
+  .qblock.ans{background:var(--card2)}
+  .num .vg{color:var(--good);font-size:13px} .num .vb{color:var(--brick);font-size:13px}
+  .sol{display:flex;flex-direction:column;gap:5px;font-size:15.5px}
+  .sol .ko{color:var(--muted);text-decoration:line-through}
+  .sol .ok{font-weight:600;color:var(--ink)}
+  .sol .ok::before{content:"→ ";color:var(--good);font-weight:700}
+
   /* ── profil ── */
   .cv{display:flex;flex-direction:column;gap:0}
   .cv .row{display:grid;grid-template-columns:96px 1fr;gap:13px;padding:12px 0;border-top:1px solid var(--line-soft)}
@@ -438,33 +499,227 @@ const DATA = [
       ["Quelle opération récente illustre le mieux la verticale moteur d'Altur ?",["Vizcab","Opus Formation","Webhelp","Biobank"],1,"LBO de mai 2026 dans la formation professionnelle, au cœur de la verticale éducation portée par EdTrain. Webhelp et Biobank sont des sorties historiques."]
     ],
     quizMet:[
-      ["Amortissements +100, IS 25 % : effet sur le résultat net et la trésorerie ?",["RN −100, trésorerie −100","RN −75, trésorerie +25","RN −75, trésorerie 0","RN −100, trésorerie +25"],1,"Résultat net −75, et on rajoute les 100 non décaissés dans le tableau de flux : +25, soit exactement l'économie d'impôt. Au bilan, immobilisations −100 et capitaux propres −75."],
-      ["Achat d'une machine 100, payée comptant : effet immédiat sur les trois états ?",["Charge de 100 au compte de résultat","Aucun effet au compte de résultat, trésorerie −100, immobilisations +100","Résultat net −100","Capitaux propres −100"],1,"L'acquisition est un investissement, pas une charge : le compte de résultat ne bouge pas le jour de l'achat. L'effet y arrive ensuite, année après année, par l'amortissement."],
-      ["Pourquoi l'EBITDA est-il la base des multiples en private equity ?",["Il est audité","Il neutralise dette, fiscalité et politique d'amortissement, donc il compare","Il inclut les investissements","Il est toujours positif"],1,"C'est aussi la base des covenants bancaires. Mais il ignore capex, BFR et impôt — et IFRS 16 le gonfle."],
-      ["Pourquoi IFRS 16 gonfle-t-il l'EBITDA ?",["Il ajoute des produits financiers","Le loyer devient amortissement et intérêt, donc passe sous l'EBITDA","Il supprime les provisions","Il change le taux d'impôt"],1,"Deux sociétés identiques, l'une propriétaire et l'autre locataire, affichent dès lors des EBITDA comparables là où ils ne l'étaient pas."],
-      ["Comment passe-t-on de l'EBITDA au free cash flow ?",["EBITDA − intérêts − dividendes","EBITDA − IS normatif sur l'EBIT − capex − hausse du BFR","EBITDA − amortissements","EBITDA × (1 − taux d'IS)"],1,"L'impôt se calcule sur le résultat d'exploitation, pas sur l'EBITDA : c'est l'erreur classique."],
-      ["Que mesure la conversion cash ?",["La marge brute","La part de l'EBITDA qui finit réellement en trésorerie","Le délai de paiement","Le taux d'endettement"],1,"(EBITDA − capex − variation du BFR) ÷ EBITDA. Deux sociétés au même EBITDA ne valent pas le même prix si l'une convertit 80 % et l'autre 30 %."],
-      ["Pourquoi le BFR est-il critique dans une PME en croissance ?",["Il réduit l'impôt","Il grossit avec le chiffre d'affaires : une société rentable peut manquer de cash","Il augmente la marge","Il n'a pas d'effet sur la trésorerie"],1,"Stocks + créances clients − dettes fournisseurs. Croître consomme du cash avant d'en rapporter."],
-      ["Comment passe-t-on de la valeur d'entreprise à la valeur des titres ?",["VE + dette − trésorerie","VE − dette nette − éléments assimilés à de la dette","VE × (1 − taux d'IS)","VE − capitaux propres"],1,"Et les assimilés comptent autant : indemnités de fin de carrière, dettes fiscales échues, earn-out, BFR sous son niveau normatif."],
-      ["Comment valorise-t-on une PME non cotée, en pratique ?",["Un DCF seul","Transactions comparables d'abord, boursiers avec décote, DCF pour tester le plan, LBO pour le prix maximum","La valeur comptable","La capitalisation boursière du secteur"],1,"On recoupe les méthodes, puis le prix se négocie. Aucune ne donne la réponse à elle seule."],
-      ["Dans un DCF à cinq ans, quel poste pèse le plus lourd ?",["La première année","La valeur terminale, souvent les deux tiers","Les investissements","Le besoin en fonds de roulement"],1,"C'est l'hypothèse la plus fragile de l'exercice. Le dire spontanément, puis donner une sensibilité, fait toute la différence."],
-      ["Que contient le coût des fonds propres d'une PME, en plus du MEDAF ?",["Une décote de liquidité du marché","Une prime de taille et une prime d'illiquidité","Le taux d'inflation","La marge d'EBITDA"],1,"Un actionnaire qui ne peut pas revendre quand il veut exige davantage."],
-      ["À combien se traitent les PME mid-market de la zone euro au T2 2026 ?",["6,2× l'EBITDA","8,8× l'EBITDA","12,5× l'EBITDA","15× l'EBITDA"],1,"Argos Index du deuxième trimestre 2026, en hausse de 2,3 %. Fonds d'investissement à 10,2×, acquéreurs industriels à 7,9×."],
-      ["Quelle nuance ajouter quand on cite l'Argos Index devant Altur ?",["Qu'il est trimestriel","Qu'il couvre le mid-market, bien au-dessus du segment d'Altur","Qu'il est britannique","Qu'il exclut les fonds"],1,"L'indice porte sur des valeurs d'entreprise d'environ 15 à 500 M€. Altur investit nettement en dessous : citer l'indice est bon, préciser qu'il ne couvre pas leur segment est meilleur."],
-      ["Quels sont les quatre effets de levier d'un LBO ?",["Commercial, industriel, social, fiscal","Financier, fiscal, juridique, managérial","Prix, volume, mix, change","Senior, unitranche, mezzanine, equity"],1,"Financier par la dette, fiscal par l'intégration, juridique par le contrôle avec moins de capital, managérial par l'investissement des dirigeants."],
-      ["Quel seuil de détention ouvre l'intégration fiscale en France ?",["50 %","66 %","95 %","100 %"],2,"95 %. C'est ce qui permet d'imputer les intérêts portés par la holding sur le bénéfice de la société rachetée."],
-      ["Paper LBO : EBITDA 10, achat à 8×, dette 4×. Combien d'equity apporte-t-on ?",["20","40","80","100"],1,"Valeur d'entreprise 80, dette 40, donc apport de 40."],
-      ["Suite : EBITDA +6 % par an sur 5 ans, 25 de dette remboursée, sortie à 8×. Que vaut l'equity ?",["environ 67","environ 92","environ 107","environ 120"],1,"EBITDA 10 × 1,06⁵ = 13,38. VE = 13,38 × 8 ≈ 107. Dette restante 40 − 25 = 15. Equity ≈ 92."],
-      ["Toujours ce cas : multiple et TRI sur cinq ans ?",["1,8× et 12 %","2,3× et 18 %","2,8× et 23 %","3,2× et 26 %"],1,"92 ÷ 40 = 2,3×, et 2,3^(1/5) − 1 ≈ 18 %. Le gain se décompose en +27 de croissance et +25 de désendettement."],
-      ["Qu'est-ce qu'un OBO, et quel est le point de vigilance fiscal ?",["Une cession à un industriel ; la TVA","Le dirigeant se vend à lui-même via une holding endettée ; l'amendement Charasse","Une introduction en Bourse ; le prospectus","Un rachat par les salariés ; l'agrément"],1,"Il encaisse du cash tout en gardant la main. L'amendement Charasse limite la déduction des intérêts quand on rachète à ses propres actionnaires de contrôle."],
-      ["Primaire ou secondaire : où va l'argent ?",["Toujours à la société","En primaire à la société, en secondaire au vendeur","Toujours au vendeur","À la banque"],1,"En primaire, l'augmentation de capital finance la croissance ; en secondaire, on rachète les titres d'un actionnaire sortant."],
-      ["Laquelle de ces clauses ne protège PAS le minoritaire ?",["Le tag-along","Le drag-along","L'anti-dilution","Le droit de veto"],1,"Le drag-along oblige le minoritaire à vendre si le majoritaire a trouvé un acheteur pour 100 %. C'est une clause de sortie, pas une protection — l'erreur la plus fréquente sur le sujet."],
-      ["À quoi sert la garantie d'actif et de passif ?",["À garantir le prix de vente","À couvrir les passifs révélés après la vente mais nés avant","À financer l'acquisition","À protéger les salariés"],1,"Et elle se négocie sur quatre points : plafond, franchise, durée, et la garantie de la garantie — séquestre ou caution."],
-      ["Au-delà de quel seuil l'équipe de gestion touche-t-elle son carried ?",["Dès le premier euro de plus-value","Après remboursement de la mise et un rendement préférentiel d'environ 8 %","Après cinq ans","Après la revente de tout le portefeuille"],1,"Le hurdle. Ensuite viennent le catch-up puis le partage, typiquement 80 / 20."],
-      ["Que se passe-t-il, en pratique, au franchissement d'un covenant ?",["La banque saisit immédiatement","On négocie un waiver contre commission, puis on restructure si ça dure","Le fonds est liquidé","Rien, c'est purement indicatif"],1,"Le défaut juridique immédiat est l'exception. Savoir décrire la séquence réelle montre qu'on connaît le terrain."],
-      ["TRI ou multiple : lequel mesure la richesse créée ?",["Le TRI","Le multiple","Les deux pareil","Aucun des deux"],1,"Le TRI dépend du calendrier et récompense la vitesse ; le multiple dit combien d'euros ont été créés. On regarde toujours les deux."],
-      ["Cas : CA 20 M€, EBITDA 3 M€, dette nette 3 M€, multiple 7×. Que vaut une cession de 30 % ?",["4,2 M€","5,4 M€","6,3 M€","9,0 M€"],1,"VE = 3 × 7 = 21. Titres = 21 − 3 = 18. 30 % de 18 = 5,4 M€, avant négociation et avant décote de minoritaire."],
-      ["Dans ce même cas, que regardes-tu en premier ?",["Le taux d'impôt","Pourquoi il vend, la récurrence du CA, la dépendance au fondateur et la conversion cash","Le nombre de salariés","La valeur des murs"],1,"La motivation du vendeur est la première question d'un investisseur en small cap, avant tout chiffre."]
+      ["Amortissements +100, IS 25 % : effet sur le résultat net et la trésorerie ?",["RN −100, trésorerie −100","RN −75, trésorerie +25","RN −75, trésorerie 0","RN −100, trésorerie +25"],1,"Résultat net −75, et on rajoute les 100 non décaissés dans le tableau de flux : +25, soit exactement l'économie d'impôt. Au bilan, immobilisations −100 et capitaux propres −75.",1],
+      ["Achat d'une machine 100, payée comptant : effet immédiat sur les trois états ?",["Charge de 100 au compte de résultat","Aucun effet au compte de résultat, trésorerie −100, immobilisations +100","Résultat net −100","Capitaux propres −100"],1,"L'acquisition est un investissement, pas une charge : le compte de résultat ne bouge pas le jour de l'achat. L'effet y arrive ensuite, année après année, par l'amortissement.",1],
+      ["Pourquoi l'EBITDA est-il la base des multiples en private equity ?",["Il est audité","Il neutralise dette, fiscalité et politique d'amortissement, donc il compare","Il inclut les investissements","Il est toujours positif"],1,"C'est aussi la base des covenants bancaires. Mais il ignore capex, BFR et impôt — et IFRS 16 le gonfle.",1],
+      ["Pourquoi IFRS 16 gonfle-t-il l'EBITDA ?",["Il ajoute des produits financiers","Le loyer devient amortissement et intérêt, donc passe sous l'EBITDA","Il supprime les provisions","Il change le taux d'impôt"],1,"Deux sociétés identiques, l'une propriétaire et l'autre locataire, affichent dès lors des EBITDA comparables là où ils ne l'étaient pas.",3],
+      ["Comment passe-t-on de l'EBITDA au free cash flow ?",["EBITDA − intérêts − dividendes","EBITDA − IS normatif sur l'EBIT − capex − hausse du BFR","EBITDA − amortissements","EBITDA × (1 − taux d'IS)"],1,"L'impôt se calcule sur le résultat d'exploitation, pas sur l'EBITDA : c'est l'erreur classique.",2],
+      ["Que mesure la conversion cash ?",["La marge brute","La part de l'EBITDA qui finit réellement en trésorerie","Le délai de paiement","Le taux d'endettement"],1,"(EBITDA − capex − variation du BFR) ÷ EBITDA. Deux sociétés au même EBITDA ne valent pas le même prix si l'une convertit 80 % et l'autre 30 %.",2],
+      ["Pourquoi le BFR est-il critique dans une PME en croissance ?",["Il réduit l'impôt","Il grossit avec le chiffre d'affaires : une société rentable peut manquer de cash","Il augmente la marge","Il n'a pas d'effet sur la trésorerie"],1,"Stocks + créances clients − dettes fournisseurs. Croître consomme du cash avant d'en rapporter.",1],
+      ["Comment passe-t-on de la valeur d'entreprise à la valeur des titres ?",["VE + dette − trésorerie","VE − dette nette − éléments assimilés à de la dette","VE × (1 − taux d'IS)","VE − capitaux propres"],1,"Et les assimilés comptent autant : indemnités de fin de carrière, dettes fiscales échues, earn-out, BFR sous son niveau normatif.",2],
+      ["Comment valorise-t-on une PME non cotée, en pratique ?",["Un DCF seul","Transactions comparables d'abord, boursiers avec décote, DCF pour tester le plan, LBO pour le prix maximum","La valeur comptable","La capitalisation boursière du secteur"],1,"On recoupe les méthodes, puis le prix se négocie. Aucune ne donne la réponse à elle seule.",3],
+      ["Dans un DCF à cinq ans, quel poste pèse le plus lourd ?",["La première année","La valeur terminale, souvent les deux tiers","Les investissements","Le besoin en fonds de roulement"],1,"C'est l'hypothèse la plus fragile de l'exercice. Le dire spontanément, puis donner une sensibilité, fait toute la différence.",2],
+      ["Que contient le coût des fonds propres d'une PME, en plus du MEDAF ?",["Une décote de liquidité du marché","Une prime de taille et une prime d'illiquidité","Le taux d'inflation","La marge d'EBITDA"],1,"Un actionnaire qui ne peut pas revendre quand il veut exige davantage.",3],
+      ["À combien se traitent les PME mid-market de la zone euro au T2 2026 ?",["6,2× l'EBITDA","8,8× l'EBITDA","12,5× l'EBITDA","15× l'EBITDA"],1,"Argos Index du deuxième trimestre 2026, en hausse de 2,3 %. Fonds d'investissement à 10,2×, acquéreurs industriels à 7,9×.",1],
+      ["Quelle nuance ajouter quand on cite l'Argos Index devant Altur ?",["Qu'il est trimestriel","Qu'il couvre le mid-market, bien au-dessus du segment d'Altur","Qu'il est britannique","Qu'il exclut les fonds"],1,"L'indice porte sur des valeurs d'entreprise d'environ 15 à 500 M€. Altur investit nettement en dessous : citer l'indice est bon, préciser qu'il ne couvre pas leur segment est meilleur.",4],
+      ["Quels sont les quatre effets de levier d'un LBO ?",["Commercial, industriel, social, fiscal","Financier, fiscal, juridique, managérial","Prix, volume, mix, change","Senior, unitranche, mezzanine, equity"],1,"Financier par la dette, fiscal par l'intégration, juridique par le contrôle avec moins de capital, managérial par l'investissement des dirigeants.",1],
+      ["Quel seuil de détention ouvre l'intégration fiscale en France ?",["50 %","66 %","95 %","100 %"],2,"95 %. C'est ce qui permet d'imputer les intérêts portés par la holding sur le bénéfice de la société rachetée.",1],
+      ["Paper LBO : EBITDA 10, achat à 8×, dette 4×. Combien d'equity apporte-t-on ?",["20","40","80","100"],1,"Valeur d'entreprise 80, dette 40, donc apport de 40.",1],
+      ["Suite : EBITDA +6 % par an sur 5 ans, 25 de dette remboursée, sortie à 8×. Que vaut l'equity ?",["environ 67","environ 92","environ 107","environ 120"],1,"EBITDA 10 × 1,06⁵ = 13,38. VE = 13,38 × 8 ≈ 107. Dette restante 40 − 25 = 15. Equity ≈ 92.",2],
+      ["Toujours ce cas : multiple et TRI sur cinq ans ?",["1,8× et 12 %","2,3× et 18 %","2,8× et 23 %","3,2× et 26 %"],1,"92 ÷ 40 = 2,3×, et 2,3^(1/5) − 1 ≈ 18 %. Le gain se décompose en +27 de croissance et +25 de désendettement.",2],
+      ["Qu'est-ce qu'un OBO, et quel est le point de vigilance fiscal ?",["Une cession à un industriel ; la TVA","Le dirigeant se vend à lui-même via une holding endettée ; l'amendement Charasse","Une introduction en Bourse ; le prospectus","Un rachat par les salariés ; l'agrément"],1,"Il encaisse du cash tout en gardant la main. L'amendement Charasse limite la déduction des intérêts quand on rachète à ses propres actionnaires de contrôle.",4],
+      ["Primaire ou secondaire : où va l'argent ?",["Toujours à la société","En primaire à la société, en secondaire au vendeur","Toujours au vendeur","À la banque"],1,"En primaire, l'augmentation de capital finance la croissance ; en secondaire, on rachète les titres d'un actionnaire sortant.",1],
+      ["Laquelle de ces clauses ne protège PAS le minoritaire ?",["Le tag-along","Le drag-along","L'anti-dilution","Le droit de veto"],1,"Le drag-along oblige le minoritaire à vendre si le majoritaire a trouvé un acheteur pour 100 %. C'est une clause de sortie, pas une protection — l'erreur la plus fréquente sur le sujet.",4],
+      ["À quoi sert la garantie d'actif et de passif ?",["À garantir le prix de vente","À couvrir les passifs révélés après la vente mais nés avant","À financer l'acquisition","À protéger les salariés"],1,"Et elle se négocie sur quatre points : plafond, franchise, durée, et la garantie de la garantie — séquestre ou caution.",3],
+      ["Au-delà de quel seuil l'équipe de gestion touche-t-elle son carried ?",["Dès le premier euro de plus-value","Après remboursement de la mise et un rendement préférentiel d'environ 8 %","Après cinq ans","Après la revente de tout le portefeuille"],1,"Le hurdle. Ensuite viennent le catch-up puis le partage, typiquement 80 / 20.",3],
+      ["Que se passe-t-il, en pratique, au franchissement d'un covenant ?",["La banque saisit immédiatement","On négocie un waiver contre commission, puis on restructure si ça dure","Le fonds est liquidé","Rien, c'est purement indicatif"],1,"Le défaut juridique immédiat est l'exception. Savoir décrire la séquence réelle montre qu'on connaît le terrain.",5],
+      ["TRI ou multiple : lequel mesure la richesse créée ?",["Le TRI","Le multiple","Les deux pareil","Aucun des deux"],1,"Le TRI dépend du calendrier et récompense la vitesse ; le multiple dit combien d'euros ont été créés. On regarde toujours les deux.",2],
+      ["Cas : CA 20 M€, EBITDA 3 M€, dette nette 3 M€, multiple 7×. Que vaut une cession de 30 % ?",["4,2 M€","5,4 M€","6,3 M€","9,0 M€"],1,"VE = 3 × 7 = 21. Titres = 21 − 3 = 18. 30 % de 18 = 5,4 M€, avant négociation et avant décote de minoritaire.",3],
+      ["Dans ce même cas, que regardes-tu en premier ?",["Le taux d'impôt","Pourquoi il vend, la récurrence du CA, la dépendance au fondateur et la conversion cash","Le nombre de salariés","La valeur des murs"],1,"La motivation du vendeur est la première question d'un investisseur en small cap, avant tout chiffre.",5]
+    ],
+    cas:[
+      [1,"Le cas socle","Celui dont tous les autres dérivent — aucune variation",
+        ["EBITDA de 10, racheté à <b>8× la valeur d'entreprise</b>.",
+         "Dette levée : <b>4× l'EBITDA</b>, soit 40.",
+         "L'EBITDA croît de <b>6 % par an pendant 5 ans</b>.",
+         "Sur la période, <b>25 de dette</b> sont remboursés par le [[sweep|cash sweep]].",
+         "Sortie au <b>même multiple de 8×</b>."],
+        [["Valeur d'entreprise à l'entrée, et apport en fonds propres ?",
+          "VE = 10 × 8 = <b>80</b>. Dette = 4 × 10 = <b>40</b>. L'apport est le solde : <b>40</b>.<br>Le réflexe à garder : le multiple donne le prix, le levier donne la dette, l'equity est <i>ce qui reste</i>. On ne calcule jamais l'apport directement."],
+         ["EBITDA de sortie ?",
+          "10 × 1,06⁵ = <b>13,38</b>. De tête : 6 % pendant 5 ans, c'est un peu plus de +30 % (règle des 72 : on double en 12 ans à 6 %). 33,8 % exactement."],
+         ["Valeur d'entreprise de sortie et dette résiduelle ?",
+          "VE = 13,38 × 8 = <b>107</b>. Dette = 40 − 25 = <b>15</b>."],
+         ["Valeur des fonds propres, multiple et [[tri|TRI]] ?",
+          "Equity = 107 − 15 = <b>92</b>. Multiple = 92 ÷ 40 = <b>2,30×</b>. TRI = 2,30^(1/5) − 1 = <b>18,1 %</b>.<br>Trois ancrages à connaître de tête, sur 5 ans : <b>2× ≈ 15 %</b>, <b>2,5× ≈ 20 %</b>, <b>3× ≈ 25 %</b>. Ils permettent de donner un TRI à l'oral sans calculatrice."],
+         ["D'où viennent les 52 de gain ?",
+          "Croissance de l'EBITDA valorisée au multiple d'entrée : (13,38 − 10) × 8 = <b>27</b>. Désendettement : <b>25</b>. Total 52, et l'equity passe bien de 40 à 92.<br>Aucune expansion de multiple : on entre et on sort à 8×."]],
+        "Dans un LBO sans expansion de multiple, le gain se partage presque à moitié entre <b>ce que la société a gagné</b> et <b>ce que la dette a remboursé</b>. Et le second terme ne demande aucun talent : il demande du cash."],
+
+      [1,"Du prix à l'apport","Le passage valeur d'entreprise → prix des titres",
+        ["EBITDA 3, multiple négocié <b>7×</b>, soit une VE de <b>21</b>.",
+         "Dette financière 4, trésorerie 1.",
+         "Indemnités de fin de carrière non provisionnées : 0,6.",
+         "[[earnout|Earn-out]] dû à l'ancien vendeur : 0,5.",
+         "Le [[bfr|BFR]] à la date de closing est <b>1,2 en dessous</b> de son niveau normatif."],
+        [["Dette nette, puis valeur des titres avant ajustements ?",
+          "Dette nette = 4 − 1 = <b>3</b>. Titres = 21 − 3 = <b>18</b>. C'est le chiffre que le vendeur a en tête, et c'est celui qu'il annoncera à sa famille."],
+         ["Quels sont les éléments assimilés à de la dette, et pourquoi ?",
+          "Les trois, pour <b>2,3</b> au total. Les indemnités de fin de carrière (0,6) sont une dette envers les salariés que l'acheteur devra payer. L'earn-out (0,5) est une dette envers un tiers, née avant la vente. Le BFR sous son normatif (1,2) signifie que l'acheteur devra remettre 1,2 de cash dans l'exploitation dès les premières semaines — le vendeur a « vidé » le fonds de roulement, souvent sans malice, en accélérant les encaissements avant la vente."],
+         ["Prix effectif des titres ?",
+          "18 − 2,3 = <b>15,7</b>, soit <b>13 % de moins</b> que les 18 affichés. Le multiple n'a pas bougé d'un dixième."]],
+        "Le multiple se discute une fois ; la ligne des <b>assimilés à de la dette</b> se discute jusqu'au [[closing|closing]]. C'est là que la [[dd|due diligence]] se transforme en euros — et c'est précisément le travail qu'on confie à un stagiaire."],
+
+      [2,"Bullet contre amortissable","On ne change que le profil de remboursement",
+        ["Le cas socle : EBITDA 10, entrée et sortie à 8×, croissance 6 %, dette 40.",
+         "Trois structures possibles pour les mêmes 40 : <b>bullet</b> (rien remboursé avant l'échéance), <b>amortissement linéaire</b> de 8 par an (40 remboursés), et le cas socle (<b>25</b> remboursés par cash sweep)."],
+        [["Valeur des fonds propres à la sortie dans les trois cas ?",
+          "VE de sortie commune : 107. Bullet : 107 − 40 = <b>67</b>. Amortissable : 107 − 0 = <b>107</b>. Cas socle : 107 − 15 = <b>92</b>."],
+         ["Multiple et TRI dans les trois cas ?",
+          "Bullet : 1,68× → <b>10,9 %</b>. Cas socle : 2,30× → <b>18,1 %</b>. Amortissable : 2,68× → <b>21,8 %</b>.<br><b>Près de 11 points de TRI</b> séparent les deux extrêmes, sur le même actif, au même prix, au même multiple de sortie."],
+         ["Alors pourquoi ne choisit-on pas toujours l'amortissable ?",
+          "Parce que les 8 par an doivent <b>sortir du cash flow, contractuellement, chaque année</b>. Si la société ne dégage que 5 de cash disponible, l'échéance n'est pas payée : c'est un défaut, immédiat et non négociable, là où un cash sweep s'adapte au cash réellement disponible.<br>L'amortissable est plus rentable <i>et</i> plus risqué. C'est la même phrase."]],
+        "Le métier d'un fonds n'est pas d'emprunter le maximum qu'une banque accepte, mais <b>le maximum que le cash flow supporte</b>. Entre les deux, il y a onze points de TRI et tous les dossiers qui se restructurent."],
+
+      [2,"Le multiple de sortie","On ne change que le multiple de sortie",
+        ["Le cas socle : EBITDA de sortie 13,38, dette résiduelle 15, apport 40.",
+         "On teste quatre sorties : <b>6×, 7×, 8×, 9×</b>."],
+        [["Valeur des fonds propres dans les quatre cas ?",
+          "6× : 80,3 − 15 = <b>65</b>. 7× : 93,7 − 15 = <b>79</b>. 8× : 107,1 − 15 = <b>92</b>. 9× : 120,4 − 15 = <b>105</b>."],
+         ["TRI correspondants ?",
+          "<b>10,3 % · 14,5 % · 18,1 % · 21,4 %</b>. Les quatre sur le même actif, la même croissance, la même dette."],
+         ["Que vaut un tour de multiple, en euros et en points de TRI ?",
+          "Un tour de multiple vaut l'EBITDA de sortie, soit <b>13,4 d'equity</b> — un tiers de l'apport initial — et <b>environ 3,5 points de TRI</b>.<br>À comparer : deux ans de croissance à 6 % ajoutent 1,2 d'EBITDA, soit 9,6 d'equity au multiple de 8×. <b>Un tour de multiple vaut plus que deux ans de croissance.</b>"]],
+        "C'est pour cette raison qu'aucun fonds sérieux ne construit son cas d'investissement sur une expansion de multiple : il la <b>prend si elle vient</b>, il ne la promet pas à son comité. Le cas de base se fait toujours à multiple constant, et le cas bas à multiple comprimé."],
+
+      [2,"Les trois moteurs, séparés","Sortie à 9× pour que les trois jouent ensemble",
+        ["Le cas socle, mais <b>sortie à 9×</b> au lieu de 8×.",
+         "Equity de sortie 105,4, apport 40, donc un gain de <b>65,4</b>.",
+         "Question : combien chacun des trois moteurs y contribue-t-il ?"],
+        [["Part de la croissance de l'EBITDA ?",
+          "On la valorise <b>au multiple d'entrée</b> : (13,38 − 10) × 8 = <b>27,1</b>."],
+         ["Part de l'expansion de multiple ?",
+          "On applique l'écart de multiple <b>à l'EBITDA de sortie</b> : 13,38 × (9 − 8) = <b>13,4</b>."],
+         ["Part du désendettement ?",
+          "Exactement la dette remboursée : <b>25</b>. Chaque euro remboursé est un euro qui passe du prêteur à l'actionnaire, sans rien changer à la valeur de l'entreprise."],
+         ["Vérification ?",
+          "27,1 + 13,4 + 25 = <b>65,5</b>, contre 65,4 de gain constaté — l'écart est un arrondi.<br>Attention à l'ordre : croissance au multiple d'<b>entrée</b>, puis écart de multiple sur l'EBITDA de <b>sortie</b>. L'inverse compte deux fois le même euro."]],
+        "C'est la question la plus discriminante qu'on puisse te poser sur un LBO, parce qu'elle sépare ce que le fonds <b>pilote</b> (la croissance), ce qui est <b>mécanique</b> (le désendettement) et ce qu'il <b>subit</b> (le multiple). Un candidat qui décompose spontanément a compris le métier ; un candidat qui annonce seulement un TRI a appris une formule."],
+
+      [3,"La conversion cash","Même EBITDA, même multiple, deux sociétés différentes",
+        ["Deux sociétés jumelles : EBITDA 10, rachetées 8×, dette 40, croissance 6 %.",
+         "EBITDA cumulé sur les cinq ans : <b>59,8</b>.",
+         "Après intérêts et impôt, <b>A</b> laisse <b>42 %</b> de son EBITDA disponible pour rembourser la dette ; <b>B</b> seulement <b>20 %</b> — capex de maintenance lourd, BFR qui grossit avec le chiffre d'affaires."],
+        [["Combien chacune rembourse-t-elle sur cinq ans ?",
+          "A : 0,42 × 59,8 = <b>25</b>. B : 0,20 × 59,8 = <b>12</b>."],
+         ["Valeur des fonds propres, multiple et TRI ?",
+          "A : 107 − 15 = 92, soit 2,30× et <b>18,1 %</b>. B : 107 − 28 = 79, soit 1,98× et <b>14,6 %</b>.<br><b>3,5 points de TRI</b> d'écart, à EBITDA identique et multiple identique."],
+         ["Où est l'écart, concrètement ?",
+          "Nulle part dans l'EBITDA. Il est dans le <b>capex de maintenance</b> (une flotte de camions contre un logiciel), dans le <b>BFR</b> (90 jours de stock contre un paiement comptant), dans la <b>saisonnalité</b> (un pic de trésorerie en décembre masque un trou en juin), et dans le <b>recouvrement</b> (un client public paie à 90 jours)."]],
+        "Deux sociétés au même EBITDA et au même multiple <b>ne valent pas le même prix</b>. La due diligence financière ne cherche pas l'EBITDA — il est dans les comptes — elle cherche le <b>cash</b>. C'est ton pont le plus direct avec l'audit interne : tu as déjà passé un été à vérifier que ce qui est écrit correspond à ce qui se passe."],
+
+      [3,"Le build-up","On ajoute une acquisition payée moins cher que la plateforme",
+        ["La plateforme du cas socle : EBITDA 10, valorisée 8×, dette 40, apport 40.",
+         "En année 0, on rachète un concurrent : <b>EBITDA 3, payé 6×</b>, soit 18, financé <b>entièrement par dette additionnelle</b>.",
+         "Le groupe, à 13 d'EBITDA, croît de 6 % par an et se revend <b>8×</b>.",
+         "Conversion cash inchangée : 42 % de l'EBITDA sert la dette."],
+        [["Quelle valeur crée-t-on le jour de l'acquisition ?",
+          "3 × (8 − 6) = <b>6</b>. On paie 18 ce qui, dans un ensemble valorisé 8×, vaut 24. C'est l'<b>arbitrage de multiple</b> — la prime de taille : un groupe de 13 d'EBITDA se vend plus cher, par tour de multiple, qu'une société de 3."],
+         ["Quel est le levier juste après l'opération ?",
+          "58 ÷ 13 = <b>4,5×</b>. On est au plafond de ce qu'un prêteur accepte sur ce type d'actif : la prochaine acquisition devra être financée en equity, ou attendre que l'EBITDA ait monté. <b>Un [[buildup|build-up]] n'est jamais une suite infinie d'acquisitions à crédit.</b>"],
+         ["EBITDA, VE et dette à la sortie ?",
+          "EBITDA = 13 × 1,06⁵ = <b>17,4</b>. VE = 17,4 × 8 = <b>139</b>. Cash cumulé disponible = 42 % × (13 × 5,98) = <b>33</b>. Dette = 58 − 33 = <b>25</b>."],
+         ["Multiple et TRI, comparés au cas socle ?",
+          "Equity = 139 − 25 = <b>114</b>, sur un apport inchangé de 40 : <b>2,85× et 23,3 %</b>, contre 2,30× et 18,1 % sans l'acquisition.<br><b>+5 points de TRI</b> sans que le multiple de sortie ait bougé d'un dixième."]],
+        "C'est la seule création de valeur qui ne dépende <b>ni du marché ni de la croissance</b>. Mais elle a un prix : il faut <b>intégrer</b> — un plan de comptes commun, un ERP, un reporting consolidé, des équipes qui ne se connaissent pas. C'est le risque numéro un d'un build-up, et c'est exactement ce que raconte Alfeor avec cinq acquisitions en dix-huit mois : le levier est acheté, la valeur reste à construire."],
+
+      [3,"La mezzanine à PIK","On change la nature d'un étage de dette, pas son montant",
+        ["Le cas socle, mais les 40 de dette sont en deux étages : <b>32 de senior à 6 %</b> et <b>8 de [[mezz|mezzanine]] à 10 %</b>, dont 4 % payés en cash et <b>6 % capitalisés</b> ([[pik|PIK]]).",
+         "Le cash disponible reste 25, affecté <b>en priorité au senior</b>.",
+         "Variante à comparer : <b>pas de mezzanine du tout</b> — 32 de senior et <b>48 d'apport</b>."],
+        [["Que doit-on à la mezzanine à la sortie ?",
+          "8 × 1,06⁵ = <b>10,7</b>. Les 6 % non payés se sont ajoutés au capital chaque année : la dette a grossi toute seule, sans qu'un euro soit sorti de la trésorerie."],
+         ["Dette totale et valeur des fonds propres à la sortie ?",
+          "Senior = 32 − 25 = <b>7</b>. Total = 7 + 10,7 = <b>17,7</b>. Equity = 107 − 17,7 = <b>89,4</b>."],
+         ["Multiple et TRI ?",
+          "89,4 ÷ 40 = <b>2,23×</b>, soit <b>17,4 %</b>. Légèrement sous le cas socle, puisque la mezzanine coûte plus cher que le senior qu'elle remplace."],
+         ["Et sans mezzanine, avec 8 d'equity en plus ?",
+          "Dette de sortie 7, equity 100, sur un apport de 48 : 2,08×, soit <b>15,8 %</b>.<br>La mezzanine coûte 10 % mais rapporte <b>1,6 point de TRI</b>, parce que les 8 qu'elle finance travaillent à bien plus de 10 %."]],
+        "Un étage de dette plus cher reste créateur de valeur tant que <b>le rendement de l'actif dépasse son coût</b>. Et le PIK ne pèse pas sur la trésorerie — il pèse sur l'<b>equity de sortie</b>, ce qui le rend dangereux exactement là où on l'oublie : dans le scénario où la valeur de sortie déçoit, c'est l'actionnaire qui absorbe tout."],
+
+      [4,"Le ratchet","Le même deal, mais on regarde ce que touche le fonds",
+        ["Le cas socle. Les 40 d'equity sont apportés <b>36 par le fonds</b> et <b>4 par les dirigeants</b> — 10 %, du [[sweet|sweet equity]].",
+         "Le [[pacte|pacte]] prévoit un <b>[[ratchet|ratchet]]</b> : au-delà de <b>2,5×</b> sur l'equity total, la part des managers passe de 10 % à <b>18 %</b>."],
+        [["À 8× de sortie, le ratchet se déclenche-t-il ?",
+          "Equity total 92, soit <b>2,30×</b> : sous le seuil. Les managers prennent 10 % = 9,2 ; le fonds 90 % = 82,8 sur 36 apportés, soit <b>2,30×</b> lui aussi. Tant que le ratchet ne joue pas, tout le monde fait le même multiple."],
+         ["À 9× de sortie ?",
+          "Equity total 105,4, soit 2,64× : <b>le seuil est franchi</b>. Managers 18 % = <b>19,0</b> ; fonds 82 % = <b>86,5</b>."],
+         ["Que coûte le ratchet au fonds ?",
+          "86,5 ÷ 36 = <b>2,40×</b> au lieu de 2,64×, soit <b>19,2 % de TRI au lieu de 21,4 %</b>. Le ratchet lui coûte <b>2,2 points</b>, et il ne les coûte que dans le bon scénario."],
+         ["Alors pourquoi l'accepter ?",
+          "Parce que c'est une <b>option vendue aux dirigeants</b> : elle ne se paie que quand tout va bien, et elle ne coûte rien quand tout va mal. 19,2 % avec une équipe qui joue sa fortune personnelle vaut mieux que 18,1 % avec une équipe salariée. Le ratchet n'est pas un cadeau, c'est un alignement payé au résultat."]],
+        "On négocie un ratchet sur deux chiffres : <b>le seuil et la pente</b>. Et on le modélise toujours dans le cas haut, le seul où il coûte.<br>Erreur classique en entretien : calculer le TRI du <i>deal</i> et le présenter comme le TRI du <i>fonds</i>. Ce n'est pas le même, et l'écart s'appelle le [[management-package|management package]]."],
+
+      [4,"Le minoritaire sans levier","Le cas Altur : pas de contrôle, pas de dette d'acquisition",
+        ["Une société familiale : <b>20 M€ de CA, 3 M€ d'EBITDA</b>, dette nette 3, valorisée <b>7×</b> — VE 21, titres 18.",
+         "Altur entre à <b>30 % pour 5,4 M€</b>.",
+         "<b>Aucune dette d'acquisition</b> : la société ne s'endette pas pour l'opération, c'est du capital-développement.",
+         "Cinq ans plus tard : EBITDA <b>4,5 M€</b> (+8,5 % par an), dette nette retombée à 1, multiple de sortie inchangé à 7×."],
+        [["Que valent les titres à la sortie, et la part d'Altur ?",
+          "VE = 4,5 × 7 = <b>31,5</b>. Titres = 31,5 − 1 = <b>30,5</b>. Part d'Altur : 30 % = <b>9,2 M€</b>."],
+         ["Multiple et TRI ?",
+          "9,2 ÷ 5,4 = <b>1,70×</b>, soit <b>11,2 %</b> sur cinq ans. Avec une croissance d'EBITDA de 50 % et un désendettement complet de la société."],
+         ["Que faudrait-il pour atteindre 20 % de TRI ?",
+          "5,4 × 1,20⁵ = <b>13,4 M€</b>, donc des titres à 44,8 et une VE de 45,8 : un multiple de sortie de <b>10,2×</b> sur le même EBITDA.<br>Autrement dit : sans levier, il faut <b>soit une croissance bien plus forte, soit une expansion de multiple, soit des dividendes en route</b>. Il n'y a pas de quatrième porte."],
+         ["Quelle conséquence pratique sur le pacte d'actionnaires ?",
+          "Sans contrôle, Altur <b>ne décide pas de la sortie</b>. Il lui faut une <b>liquidité contractuelle</b> : fenêtre de sortie à une échéance donnée, obligation d'engager un process, [[pacte|tag-along]], parfois promesse de rachat par le dirigeant.<br>Un minoritaire sans clause de liquidité n'a pas un investissement : il a un cadeau."]],
+        "C'est le cas qui compte vraiment pour mercredi. Altur fait du <b>capital-développement patrimonial</b>, pas du LBO de manuel : pas de levier d'acquisition, donc un rendement qui ne peut venir que de la croissance, du multiple ou du dividende — et une obsession pour la <b>liquidité</b> et pour l'homme en face.<br>Dire cela montre que tu as compris <i>leur</i> métier, et pas seulement celui des manuels."],
+
+      [4,"L'OBO","Le vendeur reste au capital — et c'est lui l'acheteur",
+        ["Un dirigeant détient <b>100 %</b> de sa société : 3 M€ d'EBITDA, titres valorisés <b>18 M€</b>.",
+         "Montage : une holding rachète 100 % des titres, financée par <b>9 de dette</b> (3× l'EBITDA) et <b>9 d'equity</b>, dont <b>4,5 réapportés par le dirigeant</b> et 4,5 par le fonds — 50/50."],
+        [["Combien le dirigeant encaisse-t-il ?",
+          "18 − 4,5 = <b>13,5 M€</b>, avant impôt sur la plus-value. Il a vendu sa société, et il la dirige toujours le lundi suivant."],
+         ["Que détient-il encore, économiquement ?",
+          "50 % de la holding, qui détient 100 % de la société : <b>50 % de l'économie</b> contre 100 % avant. Il a échangé la moitié de son patrimoine professionnel contre de la liquidité — et contre un associé."],
+         ["L'[[integration-fiscale|intégration fiscale]] est-elle acquise ?",
+          "Oui : la holding détient 100 %, bien au-delà des <b>95 %</b> requis. Les intérêts de la dette d'acquisition s'imputent donc sur le résultat de la société rachetée, ce qui est tout l'intérêt du schéma."],
+         ["Et le piège ?",
+          "L'<b>amendement Charasse</b>. Quand une holding rachète les titres à un actionnaire qui la contrôle — ici le dirigeant lui-même — la déduction de ces intérêts est <b>limitée</b>. C'est le premier point qu'un conseil fiscal regarde sur un [[obo|OBO]], et la question qui sépare celui qui a lu la définition de celui qui a compris le montage."]],
+        "L'OBO est une <b>vente à soi-même</b>, et c'est exactement le profil de vendeur qu'Altur rencontre : un dirigeant de 55 ans qui veut sécuriser son patrimoine sans partir, et qui n'a aucune envie d'un fonds majoritaire. En dérouler la mécanique, c'est parler de leurs dossiers plutôt que des tiens."],
+
+      [5,"Le covenant franchi","L'EBITDA baisse de 25 % en année 2",
+        ["Dette 40, EBITDA 10 à l'entrée : levier <b>4,0×</b>.",
+         "Deux [[covenant|covenants]] testés trimestriellement : <b>levier net ≤ 4,5×</b> et <b>couverture d'intérêts ≥ 2,0×</b>.",
+         "Année 2 : l'EBITDA tombe à <b>7,5</b>, la dette est à 36, les intérêts annuels à 2,2."],
+        [["Les covenants sont-ils respectés ?",
+          "Levier : 36 ÷ 7,5 = <b>4,8×</b> > 4,5 → <b>franchi</b>. Couverture : 7,5 ÷ 2,2 = 3,4× > 2,0 → respectée.<br>Un seul suffit : l'évènement de défaut est constitué, et il ouvre tous les droits du prêteur sur toute la dette."],
+         ["Que se passe-t-il en pratique ?",
+          "Personne ne saisit. La séquence réelle, dans cet ordre : <b>un</b>, informer le prêteur <i>avant</i> le test, jamais après — c'est ce qui conserve la crédibilité ; <b>deux</b>, négocier un <b>waiver</b> contre commission (souvent 0,5 à 1 % de l'encours), marge majorée, parfois <i>covenant reset</i> ; <b>trois</b>, si la dégradation dure, <b>restructurer</b> : rééchelonnement, dette convertie en capital, equity nouvelle."],
+         ["Combien faut-il pour revenir dans les clous ?",
+          "Par <b>[[cure|equity cure]]</b> : il faut un EBITDA de test de 36 ÷ 4,5 = 8,0, donc une injection de <b>0,5</b> réputée l'augmenter.<br>Par remboursement : il faut une dette ≤ 4,5 × 7,5 = 33,75, donc <b>2,25</b> à rembourser.<br>L'equity cure est <b>quatre fois moins chère</b> : c'est pour cela qu'on la négocie à l'entrée, quand elle ne coûte rien."],
+         ["Qui a le pouvoir dans cette négociation ?",
+          "Celui qui a <b>le cash et le temps</b>. Un fonds en début de vie, avec du <i>dry powder</i> et un horizon, négocie bien ; un fonds en fin de période d'investissement, beaucoup moins. Et le prêteur, de son côté, ne veut surtout pas les clés d'une PME industrielle : il veut être remboursé."]],
+        "Un covenant n'est pas une sanction, c'est un <b>déclencheur de négociation</b>. Citer l'equity cure montre que tu sais que le levier se <i>pilote</i>, et pas seulement qu'il se calcule."],
+
+      [5,"Le LBO à l'envers","On connaît le TRI cible, on cherche le prix",
+        ["Le fonds exige <b>25 % de TRI sur 5 ans</b>.",
+         "Hypothèses d'exploitation du cas socle : EBITDA 10, +6 % par an, sortie à 8×, dette levée à 4× l'EBITDA, 25 remboursés.",
+         "Question : <b>quel prix peut-on payer ?</b>"],
+        [["Quel multiple sur les fonds propres faut-il viser ?",
+          "1,25⁵ = <b>3,05×</b>. Le TRI cible se traduit toujours d'abord en multiple : c'est lui qu'on manipule dans un calcul de tête."],
+         ["Quelle est la valeur des fonds propres à la sortie ?",
+          "<b>92</b> — et c'est le point qui surprend : elle <b>ne dépend pas du prix d'entrée</b>. VE de sortie 107 moins dette résiduelle 15. Le prix d'entrée ne change que le montant de dette levée et l'apport."],
+         ["Quel apport maximum, et donc quel prix maximum ?",
+          "Apport max = 92 ÷ 3,05 = <b>30,2</b>. Prix max = 30,2 + 40 de dette = <b>70</b>, soit <b>7,0× l'EBITDA</b>.<br>À 8×, le vendeur ne trouve pas preneur chez un fonds qui exige 25 %."],
+         ["Pourquoi l'[[argos|Argos Index]] dit-il alors l'inverse ?",
+          "Au T2 2026, les fonds d'investissement ont payé <b>10,2×</b> contre 7,9× pour les acquéreurs industriels. Le modèle donne un <b>plafond théorique</b> ; la concurrence le pousse au-delà. Les fonds se battent sur les actifs à forte croissance, acceptent davantage de levier, et acceptent des TRI cibles plus bas que les 25 % des manuels.<br>Citer le chiffre, c'est bien. Expliquer la tension entre le chiffre et le modèle, c'est ce qui distingue."]],
+        "Tout LBO se construit <b>à l'envers</b> : on part du rendement exigé, on remonte au prix. Dérouler dans ce sens-là en entretien montre que tu as compris que <b>le prix est une conclusion, pas une donnée</b> — et c'est exactement le raisonnement d'un comité d'investissement."],
+
+      [5,"La sortie dégradée","Croissance, multiple et BFR se liguent",
+        ["Le cas socle, avec trois dégradations simultanées :",
+         "croissance de l'EBITDA à <b>2 %</b> au lieu de 6 % ;",
+         "multiple de sortie à <b>6,5×</b> au lieu de 8× ;",
+         "le BFR dérape de 6, donc <b>19 remboursés</b> au lieu de 25."],
+        [["EBITDA et valeur d'entreprise de sortie ?",
+          "10 × 1,02⁵ = <b>11,0</b>. VE = 11,0 × 6,5 = <b>71,8</b>. Le prix payé à l'entrée était de 80 : <b>la société vaut moins qu'à l'achat</b>, alors que son EBITDA a monté."],
+         ["Dette résiduelle et valeur des fonds propres ?",
+          "Dette = 40 − 19 = <b>21</b>. Equity = 71,8 − 21 = <b>50,8</b>."],
+         ["Multiple et TRI ?",
+          "50,8 ÷ 40 = <b>1,27×</b>, soit <b>4,9 %</b> sur cinq ans."],
+         ["Qu'est-ce que cela donne pour l'équipe de gestion ?",
+          "<b>Rien.</b> Le [[waterfall|hurdle]] est à 8 % : en dessous, aucun [[carried|carried]] ne se déclenche. Les investisseurs récupèrent leur mise et un rendement préférentiel partiel ; l'équipe a passé cinq ans sur ce dossier pour ses seuls frais de gestion."]],
+        "4,9 % n'est pas une perte, c'est pire : le capital est immobilisé cinq ans <b>sous son coût d'opportunité</b> et aucun carried ne se déclenche. Cela explique un comportement qui surprend souvent les candidats — un fonds préfère souvent un dossier risqué à fort potentiel plutôt qu'un dossier sûr à rendement moyen. Sa rémunération l'y pousse."]
     ],
     quiz:[
       ["En quelle année Altur est-elle sortie de la cote ?",["2019","2022","2024","Elle est toujours cotée"],2,"OPAS de Suffren Holding en janvier 2024 à 11 € par action, suivie d'un retrait obligatoire."],
@@ -659,6 +914,15 @@ const DATA = [
         "<b>Le compte de résultat</b> mesure la performance sur une période : chiffre d'affaires, moins les coûts, jusqu'au résultat net. <b>Le bilan</b> photographie une situation à une date : ce qu'on possède d'un côté, ce qu'on doit et ce qui appartient aux actionnaires de l'autre. <b>Le tableau de flux</b> explique le mouvement de trésorerie entre deux photographies, réparti en exploitation, investissement et financement.",
         "Les trois soudures à connaître. <b>Un :</b> le résultat net du compte de résultat alimente les capitaux propres au bilan, et constitue la première ligne du tableau de flux. <b>Deux :</b> la trésorerie finale du tableau de flux est exactement la ligne de trésorerie à l'actif du bilan. <b>Trois :</b> les variations de stocks, de créances clients et de dettes fournisseurs relient le bilan au tableau de flux par la variation du [[bfr|besoin en fonds de roulement]].",
         "<b>La règle qui sauve :</b> toute charge non décaissée — amortissement, provision — se soustrait au compte de résultat puis se rajoute dans le tableau de flux. Elle réduit le résultat et l'impôt, mais pas la trésorerie."]],
+      ["Du résultat au cash : où sont les stocks",[
+        "C'est la question qui sépare un contrôleur de gestion d'un comptable, et elle tombe sous une forme ou une autre à chaque entretien : <b>pourquoi une société rentable peut-elle manquer de trésorerie ?</b>",
+        "La formule à savoir écrire est celle du <b>free cash flow to the firm</b> — le cash que dégage l'exploitation, avant de savoir qui se le partage entre prêteurs et actionnaires :<br><b>FCFF = NOPAT + D&amp;A − Capex − ΔBFR</b>",
+        "<b>Attention au premier terme.</b> C'est le <b>NOPAT</b> — l'EBIT après impôt, soit le résultat d'exploitation diminué de l'impôt qu'on paierait sans dette — et <b>pas le résultat net</b>. Le résultat net est déjà passé par les charges financières : partir de lui donne un flux qui revient aux seuls actionnaires, le FCFE. Un recruteur qui t'entend dire « résultat net » sur un FCFF le relève immédiatement.",
+        "<b>Les amortissements reviennent (+ D&amp;A)</b> parce qu'ils ont été déduits du résultat sans qu'un euro ne sorte. <b>Les investissements partent (− Capex)</b> parce qu'ils sortent sans passer par le résultat. Ces deux lignes font l'essentiel de l'écart entre un résultat et un flux chez un industriel.",
+        "<b>Et les stocks ? Ils sont dans le ΔBFR.</b> Le [[bfr|besoin en fonds de roulement]] n'est pas un poste, c'est une somme de trois :<br><b>BFR = stocks + créances clients − dettes fournisseurs</b><br>Donc le terme « − ΔBFR » se développe en <b>− Δstocks − Δcréances + Δdettes fournisseurs</b>. Les stocks ne sont pas absents de la formule : ils y sont agrégés, et chez un fabricant de matériel ils en sont le poste dominant.",
+        "<b>Chiffré, chez Vantiva.</b> Une [[cpe|box]] est un objet physique : composants achetés d'avance, encours chez le sous-traitant, produits finis en attente de livraison à l'opérateur. Si le stock passe de 300 à 240 M€, le free cash flow encaisse <b>+60 M€</b> — sans qu'un euro de chiffre d'affaires ni un point de marge n'aient bougé. L'inverse s'est produit pendant la pénurie de [[dram|DRAM]] : il fallait sécuriser les composants à l'avance, donc immobiliser du cash dans des cartons.",
+        "<b>La conclusion à tenir en entretien.</b> Chez un industriel à faible marge, un free cash flow positif ne vient presque jamais de la marge seule. Il vient de <b>trois leviers séparés</b> : la marge brute, la discipline de capex, et la rotation du BFR — dont les stocks. Les confondre est exactement l'erreur qu'un contrôleur de gestion ne fait pas, et les nommer séparément est ce qu'on attend de toi sur un écart de clôture.",
+        "<b>Le piège symétrique.</b> Une baisse de stock n'est pas toujours une bonne nouvelle : elle peut signifier qu'on n'a pas pu produire, ou qu'on a déstocké pour tenir un objectif de trésorerie de fin d'année — avec un rattrapage mécanique au trimestre suivant. Un bon commentaire d'écart dit <b>d'où vient le cash</b>, pas seulement qu'il est là."]],
       ["L'exercice qui tombe : « une charge augmente de 100, que se passe-t-il ? »",[
         "On te donne une variation et tu dois dérouler les trois états. Méthode : <b>résultat, puis trésorerie, puis bilan</b>, dans cet ordre, à voix haute.",
         "Prenons l'amortissement, le cas d'école. <b>Amortissement +100, impôt à 25 %.</b>",
@@ -722,14 +986,20 @@ const DATA = [
         "And the only guidance you maintain for 2026 is positive free cash flow — which tells me the steering happens on inventory and working capital as much as on margin. Forecasting in those conditions is exactly the kind of modelling I enjoy, and it's what I did on a smaller scale at Caisse des Dépôts.”"]
     },
     quizMet:[
-      ["Amortissement +100, impôt 25 % : de combien varie la trésorerie ?",["−100","−75","+25","0"],2,"Le résultat net baisse de 75, on rajoute les 100 non décaissés : +25, soit exactement l'économie d'impôt."],
-      ["Quelle ligne relie le tableau de flux au bilan ?",["Le chiffre d'affaires","La trésorerie finale","Les capitaux propres","Les immobilisations"],1,"La trésorerie finale du tableau de flux est la ligne de trésorerie à l'actif du bilan. Et le résultat net relie le compte de résultat aux capitaux propres."],
-      ["Comment calcule-t-on l'effet volume dans un bridge ?",["(volume N − volume N−1) × prix N","(volume N − volume N−1) × prix N−1","(prix N − prix N−1) × volume N","volume N × prix N"],1,"On fait varier un seul facteur à la fois : le volume bouge, le prix reste figé à sa valeur de référence."],
-      ["Que mesure le cycle de trésorerie ?",["La durée d'un exercice comptable","Le nombre de jours pendant lesquels l'entreprise avance l'argent","Le délai de production","La durée d'amortissement"],1,"Jours de stock + délai clients − délai fournisseurs."],
-      ["Chez Vantiva, un jour de délai de paiement vaut environ…",["400 000 €","4 M€","40 M€","400 M€"],1,"1 170 M€ sur neuf mois ÷ 273 jours ≈ 4,3 M€ par jour."],
-      ["Pourquoi préférer INDEX+EQUIV à RECHERCHEV ?",["C'est plus rapide à écrire","La colonne de retour peut être à gauche et l'insertion d'une colonne ne casse rien","Ça gère les erreurs tout seul","Ça fonctionne sur plusieurs classeurs"],1,"Les deux raisons qu'on attend : flexibilité du sens de recherche et robustesse à l'insertion de colonnes."],
-      ["Une provision passée au compte de résultat, sans décaissement, fait quoi à la trésorerie ?",["Elle la réduit du même montant","Elle ne la change pas directement et l'augmente via l'économie d'impôt","Elle la double","Elle n'a aucun effet nulle part"],1,"Même logique que l'amortissement : charge non décaissée, donc réintégrée dans le tableau de flux, avec un effet net positif égal à l'économie d'impôt."],
-      ["Quel effet du bridge portera la hausse du prix de la mémoire ?",["L'effet volume","L'effet prix","L'effet coût matière","L'effet change"],2,"(coût N − coût N−1) × volume N. C'est l'effet le plus surveillé chez un fabricant dont le coût matière fait 70 à 85 % du prix."]
+      ["Amortissement +100, impôt 25 % : de combien varie la trésorerie ?",["−100","−75","+25","0"],2,"Le résultat net baisse de 75, on rajoute les 100 non décaissés : +25, soit exactement l'économie d'impôt.",1],
+      ["Quelle ligne relie le tableau de flux au bilan ?",["Le chiffre d'affaires","La trésorerie finale","Les capitaux propres","Les immobilisations"],1,"La trésorerie finale du tableau de flux est la ligne de trésorerie à l'actif du bilan. Et le résultat net relie le compte de résultat aux capitaux propres.",2],
+      ["Comment calcule-t-on l'effet volume dans un bridge ?",["(volume N − volume N−1) × prix N","(volume N − volume N−1) × prix N−1","(prix N − prix N−1) × volume N","volume N × prix N"],1,"On fait varier un seul facteur à la fois : le volume bouge, le prix reste figé à sa valeur de référence.",1],
+      ["Que mesure le cycle de trésorerie ?",["La durée d'un exercice comptable","Le nombre de jours pendant lesquels l'entreprise avance l'argent","Le délai de production","La durée d'amortissement"],1,"Jours de stock + délai clients − délai fournisseurs.",2],
+      ["Chez Vantiva, un jour de délai de paiement vaut environ…",["400 000 €","4 M€","40 M€","400 M€"],1,"1 170 M€ sur neuf mois ÷ 273 jours ≈ 4,3 M€ par jour.",3],
+      ["Pourquoi préférer INDEX+EQUIV à RECHERCHEV ?",["C'est plus rapide à écrire","La colonne de retour peut être à gauche et l'insertion d'une colonne ne casse rien","Ça gère les erreurs tout seul","Ça fonctionne sur plusieurs classeurs"],1,"Les deux raisons qu'on attend : flexibilité du sens de recherche et robustesse à l'insertion de colonnes.",2],
+      ["Une provision passée au compte de résultat, sans décaissement, fait quoi à la trésorerie ?",["Elle la réduit du même montant","Elle ne la change pas directement et l'augmente via l'économie d'impôt","Elle la double","Elle n'a aucun effet nulle part"],1,"Même logique que l'amortissement : charge non décaissée, donc réintégrée dans le tableau de flux, avec un effet net positif égal à l'économie d'impôt.",1],
+      ["Quel effet du bridge portera la hausse du prix de la mémoire ?",["L'effet volume","L'effet prix","L'effet coût matière","L'effet change"],2,"(coût N − coût N−1) × volume N. C'est l'effet le plus surveillé chez un fabricant dont le coût matière fait 70 à 85 % du prix.",3],
+      ["Dans FCFF = NOPAT + D&A − Capex − ΔBFR, que désigne le premier terme ?",["Le résultat net","L'EBIT après impôt, avant charges financières","L'EBITDA","Le résultat avant impôt"],1,"NOPAT = EBIT × (1 − taux d'IS). Partir du résultat net donnerait un flux revenant aux seuls actionnaires (FCFE), puisqu'il est déjà passé par les intérêts.",2],
+      ["Où les stocks apparaissent-ils dans le calcul du free cash flow ?",["Ils n'y apparaissent pas","Dans le ΔBFR, avec les créances clients et les dettes fournisseurs","Dans le capex","Dans les amortissements"],1,"BFR = stocks + créances clients − dettes fournisseurs. Le terme « − ΔBFR » se développe en « − Δstocks − Δcréances + Δdettes fournisseurs ».",1],
+      ["Le stock passe de 300 à 240 M€, tout le reste égal. Effet sur le free cash flow ?",["−60 M€","+60 M€","Aucun effet","+60 M€ de résultat net"],1,"Du cash immobilisé dans des cartons revient en trésorerie. Ni le chiffre d'affaires ni la marge n'ont bougé : c'est purement du BFR.",1],
+      ["Pourquoi ajoute-t-on les amortissements et retranche-t-on le capex ?",["Pour lisser le résultat","Les amortissements ont été déduits sans décaissement, le capex décaisse sans passer par le résultat","Pour respecter les IFRS","Pour neutraliser l'impôt"],1,"Ces deux lignes font l'essentiel de l'écart entre un résultat et un flux chez un industriel.",2],
+      ["Une baisse de stock est-elle toujours une bonne nouvelle ?",["Oui, elle libère du cash","Non : elle peut venir d'une rupture de production ou d'un déstockage de fin d'année rattrapé au trimestre suivant","Oui, elle améliore la marge","Non, elle augmente toujours le BFR"],1,"Un bon commentaire d'écart dit d'où vient le cash, pas seulement qu'il est là.",3],
+      ["Chez un industriel à faible marge, d'où vient un free cash flow positif ?",["De la marge brute seule","De trois leviers séparés : marge brute, discipline de capex, rotation du BFR","Des cessions d'actifs","De la baisse des charges financières"],1,"Les nommer séparément est exactement ce qu'on attend d'un contrôleur de gestion sur un écart de clôture.",2]
     ],
     quizSec:[
       ["Pourquoi le chiffre d'affaires est-il discontinu dans ce métier ?",["La demande des abonnés varie selon les saisons","Il se gagne par appels d'offres, contrat par contrat","Les prix changent chaque mois","La production dépend de la météo"],1,"On ne vend pas des box au fil de l'eau : on gagne ou on perd une consultation portant sur un volume annuel et une durée de un à trois ans."],
@@ -1178,7 +1448,32 @@ const GLOSSAIRE = {
     <p>Elle est <b>attachée à l'établissement</b>, pas à son propriétaire : racheter une banque suppose donc l'accord du superviseur sur le nouvel actionnaire. C'est ce qui explique les six mois entre l'annonce du rachat de Nagelmackers et sa finalisation.</p>`},
   "small-cap":{t:"Small cap et capital-développement", d:`
     <p><b>Small cap</b> désigne les petites entreprises — chez Altur, de 2 à 20 M€ de chiffre d'affaires. Le marché y est moins concurrentiel qu'en large cap : moins de fonds en face, des prix d'entrée plus bas, mais un travail d'accompagnement bien plus lourd.</p>
-    <p><b>Capital-développement</b> : on entre au capital d'une société déjà rentable pour financer sa croissance, souvent en minoritaire, sans dette d'acquisition massive. C'est le contraire du [[lbo|LBO]] de transmission, où l'on rachète pour prendre le contrôle.</p>`}
+    <p><b>Capital-développement</b> : on entre au capital d'une société déjà rentable pour financer sa croissance, souvent en minoritaire, sans dette d'acquisition massive. C'est le contraire du [[lbo|LBO]] de transmission, où l'on rachète pour prendre le contrôle.</p>`},
+  sweep:{t:"Cash sweep", d:`
+    <p>La clause qui oblige la société à consacrer <b>tout le cash excédentaire de l'année</b> au remboursement anticipé de sa dette, au lieu de le garder ou de le distribuer. « Balayer la trésorerie », littéralement.</p>
+    <p>Souvent partiel : 50 à 75 % du cash flow disponible après service de la dette. Le solde reste dans la société.</p>
+    <p>Pourquoi ça compte : c'est le <b>mécanisme qui transforme le cash en valeur pour l'actionnaire</b> dans un [[lbo|LBO]]. Un euro remboursé est un euro qui passe du prêteur à l'actionnaire sans que la valeur de l'entreprise ait bougé. Et contrairement à un amortissement contractuel, le sweep s'adapte : si le cash n'est pas là, il n'y a rien à balayer, et pas de défaut.</p>`},
+  tri:{t:"TRI et multiple", d:`
+    <p>Les deux façons de dire la même performance, et elles ne disent pas la même chose.</p>
+    <p>Le <b>multiple</b> (ou <i>cash-on-cash</i>) est le rapport brut : 92 reçus pour 40 investis, c'est <b>2,3×</b>. Il dit <b>combien d'euros ont été créés</b>, et il ignore le temps.</p>
+    <p>Le <b>TRI</b> (taux de rendement interne, <i>IRR</i>) est le taux annuel qui rend la valeur actuelle des flux nulle. Sur un flux unique à cinq ans, c'est simplement 2,3^(1/5) − 1 = <b>18,1 %</b>. Il dit <b>à quelle vitesse</b>, et il récompense donc une sortie rapide — un dividende encaissé en année 2 améliore beaucoup le TRI et pas du tout le multiple.</p>
+    <p>À connaître de tête, sur cinq ans : <b>2× ≈ 15 %</b>, <b>2,5× ≈ 20 %</b>, <b>3× ≈ 25 %</b>. En entretien, donne toujours les deux : un fonds qui n'annonce que son TRI cache souvent une sortie précoce sur un petit montant.</p>`},
+  pik:{t:"PIK — payment in kind", d:`
+    <p>Des intérêts qui ne sont <b>pas payés en cash</b> : ils s'ajoutent chaque année au capital de la dette, qui grossit toute seule et se rembourse en une fois à l'échéance.</p>
+    <p>Exemple : 8 de [[mezz|mezzanine]] à 6 % de PIK deviennent 8 × 1,06⁵ = <b>10,7</b> au bout de cinq ans, sans qu'un euro soit sorti de la trésorerie.</p>
+    <p>Pourquoi on l'utilise : cela <b>préserve le cash flow</b> pour rembourser la dette senior, donc cela permet d'emprunter davantage. Le danger est exactement symétrique : le PIK ne pèse pas sur la trésorerie, il pèse sur la <b>valeur des fonds propres à la sortie</b> — c'est-à-dire là où il est le plus facile de l'oublier, et le plus douloureux de le découvrir.</p>`},
+  sweet:{t:"Sweet equity", d:`
+    <p>La part du capital réservée aux <b>dirigeants</b> de la société rachetée, à des conditions plus favorables que celles du fonds : ils souscrivent des actions ordinaires quand le fonds met l'essentiel de son argent en obligations convertibles ou en actions de préférence.</p>
+    <p>Conséquence mécanique : les dirigeants détiennent une <b>part du capital supérieure à leur apport en euros</b>. Mettre 4 sur 40 peut donner 10 % de l'equity et bien davantage de la plus-value au-delà d'un seuil.</p>
+    <p>C'est le cœur du [[management-package|management package]], avec le [[ratchet|ratchet]] : on ne demande pas à un dirigeant d'investir l'équivalent d'une maison, on lui demande d'investir une somme qu'il peut perdre, en échange d'un effet de levier personnel considérable s'il réussit.</p>`},
+  ratchet:{t:"Ratchet", d:`
+    <p>Une clause qui <b>augmente la part des dirigeants au-delà d'un seuil de performance</b>. Exemple : 10 % de l'equity jusqu'à 2,5× sur la mise du fonds, 18 % au-delà.</p>
+    <p>Économiquement, c'est une <b>option vendue par le fonds aux dirigeants</b> : elle ne coûte rien dans les scénarios moyens ou mauvais, et elle coûte cher dans le bon. Sur un deal à 2,64×, un ratchet qui fait passer les managers de 10 à 18 % retire environ <b>2 points de TRI</b> au fonds.</p>
+    <p>Deux chiffres se négocient : <b>le seuil</b> (à partir de quel multiple) et <b>la pente</b> (combien de points, et par paliers ou en continu). Et une règle de modélisation : on teste toujours le ratchet dans le <b>cas haut</b>, le seul où il joue. L'oublier, c'est confondre le TRI du deal et le TRI du fonds.</p>`},
+  cure:{t:"Equity cure", d:`
+    <p>Le droit, négocié à l'entrée, pour les actionnaires d'<b>injecter du cash afin de réparer un [[covenant|covenant]] franchi</b> — la somme étant, par convention contractuelle, réputée augmenter l'EBITDA ou réduire la dette du test.</p>
+    <p>Pourquoi c'est puissant : réparer un levier de 4,8× ramené à 4,5× sur un EBITDA de 7,5 demande <b>0,5 d'injection</b> si elle est réputée augmenter l'EBITDA (36 ÷ 4,5 = 8,0), contre <b>2,25 de remboursement</b> si l'on passe par la dette. <b>Quatre fois moins cher</b>, pour le même résultat au regard du contrat.</p>
+    <p>Elle est encadrée : nombre limité d'exercices sur la durée du prêt, souvent deux, jamais deux trimestres consécutifs, et un plafond. Elle se négocie à l'entrée, quand elle ne coûte rien ; jamais au moment où on en a besoin.</p>`}
 };
 
 /* [[cle|texte]] devient un bouton ; [[cle]] affiche le titre du terme. */
@@ -1204,10 +1499,31 @@ addEventListener("keydown", e => { if(e.key === "Escape") fermerTerme(); });
 /* ── état ───────────────────────────────────────────────────────── */
 const SKEY = "entretiens:v1";
 let S = load();
-function load(){ try{ return JSON.parse(localStorage.getItem(SKEY)) || {quiz:{}, lang:"fr"}; }catch(e){ return {quiz:{}, lang:"fr"}; } }
+function load(){
+  const d = {quiz:{}, lang:"fr", vu:{}};
+  try{ const o = JSON.parse(localStorage.getItem(SKEY)) || d;
+    if(!o.quiz) o.quiz = {}; if(!o.vu) o.vu = {}; return o;
+  }catch(e){ return d; } }
 function save(){ try{ localStorage.setItem(SKEY, JSON.stringify(S)); }catch(e){} }
 
 let vue = "accueil", ouvert = null, onglet = "rdv";
+/* Niveau courant du filtre : 0 = tous. Il est volontairement commun aux cas et
+   au quiz technique — on le pose une fois, il vaut pour les deux. */
+let niv = 0, casOuv = null, secOuv = {};
+const NIVEAUX = [
+  ["Socle", "On applique une formule, sans piège."],
+  ["Sensibilité", "On fait varier un seul paramètre et on mesure l'écart."],
+  ["Structure", "La dette et le cash changent de nature."],
+  ["Partage", "Qui touche quoi, et dans quel ordre."],
+  ["Stress", "Ça se passe mal, ou l'on remonte le raisonnement à l'envers."]
+];
+function majNiv(n){ niv = (niv === n ? 0 : n); casOuv = null; render(); }
+function basc(k){ secOuv[k] = !secOuv[k]; render(); }
+function toutSec(champ, n, v){ for(let i = 0; i < n; i++) secOuv[champ + "|" + i] = v; render(); }
+function ouvrirCas(k){ casOuv = (casOuv === k ? null : k); render(); }
+function voirEtape(k){ S.vu[k] = 1; save(); render(); }
+function razCas(id){ Object.keys(S.vu).forEach(k => { if(k.indexOf(id + "|") === 0) delete S.vu[k]; });
+  casOuv = null; save(); render(); }
 
 /* ── dates ──────────────────────────────────────────────────────── */
 function auj(){ const d=new Date(); return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0"); }
@@ -1284,7 +1600,7 @@ function theme(){
   try{ localStorage.setItem("entretiens:theme", sombre ? "light" : "dark"); }catch(e){}
 }
 
-const ONGLETS = [["rdv","Le RDV"],["boite","La boîte"],["angles","Tes angles"],["pitch","Présentation"],["qa","Questions"],["poser","À poser"],["secteur","Le secteur"],["metier","Le métier"],["pieges","Pièges"],["quiz","Quiz"],["lex","Lexique"]];
+const ONGLETS = [["rdv","Le RDV"],["boite","La boîte"],["angles","Tes angles"],["pitch","Présentation"],["qa","Questions"],["poser","À poser"],["secteur","Le secteur"],["metier","Le métier"],["cas","Les cas"],["pieges","Pièges"],["quiz","Quiz"],["lex","Lexique"]];
 
 function fiche(){
   const iv = ouvert;
@@ -1296,7 +1612,7 @@ function fiche(){
       </div>
     </header>
     <nav class="secs" style="--c:${iv.couleur}">
-      ${ONGLETS.filter(([id])=>(id!=="secteur"||iv.secteur)&&(id!=="metier"||iv.metier)).map(([id,l])=>`<button aria-pressed="${onglet===id}" onclick="onglets('${id}')">${l}</button>`).join("")}
+      ${ONGLETS.filter(([id])=>(id!=="secteur"||iv.secteur)&&(id!=="metier"||iv.metier)&&(id!=="cas"||iv.cas)).map(([id,l])=>`<button aria-pressed="${onglet===id}" onclick="onglets('${id}')">${l}</button>`).join("")}
     </nav>
     <div class="panel" style="--c:${iv.couleur}">${panneau(iv)}</div>`;
 }
@@ -1324,14 +1640,13 @@ function panneau(iv){
     pieges: () => `<div class="box trap">${iv.pieges.map(x=>`<div>${gl(x)}</div>`).join("")}</div>`,
     quiz: () => quiz(iv),
     metier: () => iv.metier
-      ? `<p>Ce qu'on attend de toi techniquement, et les exercices qui tombent.</p>` +
-        iv.metier.map(b=>`<h3>${esc(b[0])}</h3>` + b[1].map(p=>`<p>${gl(p)}</p>`).join("")).join("") +
-        (iv.quizMet ? `<h3>Quiz technique</h3><p style="color:var(--muted);font-size:15px">Restituer, pas reconnaître.</p>` + quizBloc(iv, "quizMet") : "")
+      ? sections(iv, "metier", "quizMet", "Ce qu'on attend de toi techniquement, et les exercices qui tombent. Touche un titre pour déplier.",
+          "Quiz technique", "Restituer, pas reconnaître. Le filtre de niveau ci-dessous vaut aussi pour le quiz.")
       : `<p>Pas encore de fiche métier.</p>`,
+    cas: () => casBloc(iv),
     secteur: () => iv.secteur
-      ? `<p>Comprendre le métier avant les chiffres. Les termes soulignés s'ouvrent.</p>` +
-        iv.secteur.map(b=>`<h3>${esc(b[0])}</h3>` + b[1].map(p=>`<p>${gl(p)}</p>`).join("")).join("") +
-        (iv.quizSec ? `<h3>Quiz du secteur</h3><p style="color:var(--muted);font-size:15px">Restituer, pas reconnaître : réponds avant de relire.</p>` + quizBloc(iv, "quizSec") : "")
+      ? sections(iv, "secteur", "quizSec", "Comprendre le métier avant les chiffres. Touche un titre pour déplier ; les termes soulignés s'ouvrent.",
+          "Quiz du secteur", "Restituer, pas reconnaître : réponds avant de relire.")
       : `<p>Pas encore de masterclass pour ce secteur.</p>`,
     lex: () => lexique()
   };
@@ -1361,6 +1676,72 @@ function pitch(iv){
    D'où un nom qui n'entre en collision avec rien. */
 function majLangue(l){ S.lang = l; save(); render(); }
 
+/* ═══ niveaux de difficulté ═══
+   Un niveau dit ce que l'exercice demande, pas s'il est « dur » : au niveau 1 on
+   applique une formule, au niveau 5 on remonte le raisonnement à l'envers. */
+function filtreNiv(ens){
+  if(ens.length < 2) return "";
+  return `<div class="nivs"><button class="nv${niv === 0 ? " on" : ""}" onclick="majNiv(0)">Tous</button>` +
+    ens.map(n => `<button class="nv${niv === n ? " on" : ""}" onclick="majNiv(${n})">N${n} · ${esc(NIVEAUX[n-1][0])}</button>`).join("") +
+    `</div>` + (niv ? `<p class="nivd">Niveau ${niv} — ${esc(NIVEAUX[niv-1][1])}</p>` : "");
+}
+
+/* ═══ accordéon des masterclass ═══
+   Une masterclass de treize sections est illisible sur un téléphone si tout est
+   déplié. Le sommaire d'abord, le texte à la demande, rien n'est supprimé. */
+function sections(iv, champ, champQuiz, intro, titreQuiz, sousQuiz){
+  const B = iv[champ], tous = B.every((_, i) => secOuv[champ + "|" + i]);
+  return `<p>${intro}</p>
+    <div class="tout"><button onclick="toutSec('${champ}',${B.length},${tous ? "false" : "true"})">${tous ? "Tout replier" : "Tout déplier"}</button>
+      <span>${B.length} sections</span></div>
+    <div class="acc">${B.map((b, i) => {
+      const k = champ + "|" + i, o = !!secOuv[k];
+      return `<div class="ac${o ? " on" : ""}"><button class="ach" onclick="basc('${k}')">
+          <span class="n">${String(i+1).padStart(2,"0")}</span><b>${esc(b[0])}</b><span class="ar">${o ? "−" : "+"}</span></button>
+        ${o ? `<div class="acb">${b[1].map(p => `<p>${gl(p)}</p>`).join("")}</div>` : ""}</div>`;
+    }).join("")}</div>
+    ${iv[champQuiz] ? `<h3>${titreQuiz}</h3><p style="color:var(--muted);font-size:15px">${sousQuiz}</p>` + quizBloc(iv, champQuiz) : ""}`;
+}
+
+/* ═══ les cas ═══
+   Un cas = [niveau, titre, ce qu'il fait varier, données[], étapes[[question, réponse]], leçon].
+   Chaque cas ne change qu'une chose par rapport au cas socle : c'est la seule
+   façon de voir d'où vient le rendement. La réponse reste cachée jusqu'au clic —
+   lire un corrigé n'apprend rien, le retrouver si. */
+function casBloc(iv){
+  const C = iv.cas, ens = [...new Set(C.map(c => c[0]))].sort();
+  const vis = C.map((c, i) => [c, i]).filter(([c]) => !niv || c[0] === niv);
+  const total = C.reduce((n, c) => n + c[4].length, 0);
+  const faits = Object.keys(S.vu).filter(k => k.indexOf(iv.id + "|") === 0).length;
+  return `<p>${C.length} cas, ${ens.length} niveaux. Le premier est le cas socle ; tous les autres n'en changent qu'<b>une seule chose</b>, pour isoler son effet. Pose le chiffre avant de déplier.</p>
+    ${filtreNiv(ens)}
+    <div class="score"><b>${faits}/${total}</b><div><small>${faits ? "étapes dépliées" : "aucune étape dépliée"}</small>
+      <small>Le but n'est pas de lire le corrigé, c'est de retrouver le chiffre.</small></div>
+      ${faits ? `<button class="reset" onclick="razCas('${iv.id}')">Tout recacher</button>` : ""}</div>
+    <div class="cas">${vis.map(([c, i]) => {
+      const k = iv.id + "|" + i, o = casOuv === k, n = c[4].length;
+      const v = c[4].filter((_, j) => S.vu[k + "|" + j]).length;
+      return `<div class="cs${o ? " on" : ""}">
+        <button class="csh" onclick="ouvrirCas('${k}')">
+          <span class="lvl l${c[0]}">N${c[0]}</span>
+          <span class="csg"><b>${esc(c[1])}</b><small>${esc(c[2])}</small></span>
+          <span class="csp">${o ? "−" : v + "/" + n}</span></button>
+        ${o ? `<div class="csb">
+          <div class="don"><span class="lab">Les données</span><ul>${c[3].map(d => `<li>${gl(d)}</li>`).join("")}</ul></div>
+          ${c[4].map((e, j) => {
+            const vu = S.vu[k + "|" + j];
+            return `<div class="et"><div class="num">Étape ${j+1}</div><div class="txt">${gl(e[0])}</div>
+              ${vu ? `<p class="why">${gl(e[1])}</p>`
+                   : `<button class="voir" onclick="voirEtape('${k}|${j}')">Voir la réponse</button>`}</div>`;
+          }).join("")}
+          ${c[4].every((_, j) => S.vu[k + "|" + j])
+            ? `<div class="key"><span class="lab">La leçon</span>${gl(c[5])}</div>`
+            : `<p class="attente">La leçon s'affiche une fois les ${n} étapes déroulées — elle donne la réponse.</p>`}
+          </div>` : ""}</div>`;
+    }).join("")}
+    ${vis.length ? "" : `<p style="color:var(--muted)">Aucun cas à ce niveau.</p>`}</div>`;
+}
+
 function quiz(iv){ return quizBloc(iv, "quiz"); }
 /* Une fiche peut porter plusieurs séries : celle de l'entreprise et celle
    du secteur. La clé de stockage les sépare, les scores ne se mélangent pas. */
@@ -1370,20 +1751,29 @@ function quizBloc(iv, champ){
   const r = (S.quiz[cle] && S.quiz[cle].rep) || {};
   const faits = Object.keys(r).length;
   const bons = Object.keys(r).filter(i => r[i] === Q[i][2]).length;
-  return `<div class="score"><b>${bons}/${Q.length}</b>
+  /* Une question peut porter un cinquième élément : son niveau. Si la série n'en
+     a aucun, le filtre ne la touche pas — sinon un filtre posé pour les cas
+     viderait le quiz de l'entreprise. */
+  const ens = [...new Set(Q.map(q => q[4]).filter(Boolean))].sort();
+  const vis = Q.map((q, i) => [q, i]).filter(([q]) => !niv || !ens.length || q[4] === niv);
+  return `${filtreNiv(ens)}
+    <div class="score"><b>${bons}/${Q.length}</b>
       <div><small>${faits ? faits+" question"+(faits>1?"s":"")+" répondue"+(faits>1?"s":"") : "Pas encore commencé"}</small>
       <small>${bons === Q.length ? "Tu connais le dossier." : "Réponds, la correction s'affiche aussitôt."}</small></div>
       ${faits ? `<button class="reset" onclick="razQuiz('${cle}')">Recommencer</button>` : ""}</div>
-    <div class="qz">${Q.map((q,i)=>{
-      const rep = r[i];
-      return `<div class="qblock"><div class="num">Question ${i+1}</div><div class="txt">${esc(q[0])}</div>
-        <div class="opts">${q[1].map((o,j)=>{
-          let cls = "";
-          if(rep !== undefined) cls = j === q[2] ? " good" : (j === rep ? " bad" : "");
-          return `<button class="opt${cls}" ${rep!==undefined?"disabled":""} onclick="rep('${iv.id}','${champ}',${i},${j})">${esc(o)}</button>`;
-        }).join("")}</div>
-        ${rep !== undefined ? `<p class="why">${esc(q[3])}</p>` : ""}</div>`;
-    }).join("")}</div>`;
+    <div class="qz">${vis.map(([q, i]) => {
+      const rep = r[i], fait = rep !== undefined;
+      return `<div class="qblock${fait ? " ans" : ""}"><div class="num">Question ${i+1}${q[4] ? " · N"+q[4] : ""}${
+          fait ? (rep === q[2] ? ` <span class="vg">✓</span>` : ` <span class="vb">✗</span>`) : ""}</div>
+        <div class="txt">${esc(q[0])}</div>
+        ${fait
+          ? `<div class="sol">${rep !== q[2] ? `<div class="ko">${esc(q[1][rep])}</div>` : ""}<div class="ok">${esc(q[1][q[2]])}</div></div>
+             <p class="why">${esc(q[3])}</p>`
+          : `<div class="opts">${q[1].map((o, j) =>
+              `<button class="opt" onclick="rep('${iv.id}','${champ}',${i},${j})">${esc(o)}</button>`).join("")}</div>`}
+        </div>`;
+    }).join("")}
+    ${vis.length ? "" : `<p style="color:var(--muted)">Aucune question à ce niveau.</p>`}</div>`;
 }
 function rep(id, champ, i, j){
   const iv = DATA.find(x=>x.id===id), Q = iv[champ], cle = cleQuiz(id, champ);
